@@ -153,12 +153,21 @@ body{
 
 body:not([state='dev_mode']) #devPanel,
 body:not([state='main']) #devBtn,
-body:not([state='settings']) #settingsPanel{
+body:not([state='settings']) #settingsPanel,
+body:not([state='set_bookmark']) #setBookmarkPanel{
     display:none;
 }
 
 body:not([debug='true']) #devBtn{
 	display:none;
+}
+
+#setBookmarkPanel{
+    font-size: 30px;
+    padding-top: 75px;
+    min-height: 800px;
+    min-width: 700px;
+    padding-left: 93px;
 }
 
 #settingsBtn{
@@ -180,7 +189,8 @@ body:not([state="main"]) #main {
 
 body[state='bookmarks'] #mainModeBtn,
 body[state='dev_mode'] #mainModeBtn,
-body[state='settings'] #mainModeBtn{
+body[state='settings'] #mainModeBtn,
+body[state='set_bookmark'] #mainModeBtn{
     display:block;
 }
 
@@ -297,4 +307,8 @@ body:not([state='main']) #setBookmarkBtn{
 
 #errorTextArea{
 	float:left;
+}
+
+#localStorageLength{
+	clear:both;
 }

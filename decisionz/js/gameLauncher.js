@@ -360,6 +360,10 @@ function getBookmark(bk_name){
 											" bookmark[name='" + bk_name + "'] ")
 }
 
+function setBookmarkOkClicked(){
+	 setBookmark($("#bookmarkName").attr("value"))
+}
+
 function setBookmark(label){
 	//Generate bookmark id
 	var jBookmarks = $($(xml).find("config > decisionVars > variable[name='bookmarks']"))
@@ -401,6 +405,10 @@ function setBookmark(label){
 	setTimeout(hideStatusText, 3000)
 	
 	loadBookmarksList()
+	
+	setState('main')
+	
+	writeDecisionVarsToLocalStorage()
 }
 
 function hideStatusText(){
@@ -555,9 +563,17 @@ function loadDecisionVars(container){
 
 function writeDecisionVarsToLocalStorage(){
 	if(params["disableLocalStorage"] == undefined){
-		localStorage.decisionz = new XMLSerializer().serializeToString(
-	        $(xml).find("decisionVars")[0]
-	    )
+		var decisionzVars_xml = new XMLSerializer().serializeToString(
+							        $(xml).find("decisionVars")[0]
+							    )
+		
+		localStorage.decisionz = decisionzVars_xml
+		
+		if(decisionzVars_xml.length != localStorage.decisionz.length){
+			alert("LocalStorage not stored")
+		}
+	    
+	    $("#localStorageLength").text("Local Storage Length Is: " + localStorage.decisionz.length)
 	}
 }
 
@@ -1051,6 +1067,8 @@ function setState(state){
 			break;
 		case "settings":
 			$("body").attr("state", "settings")
+		case "set_bookmark":
+			$("body").attr("state", "set_bookmark")
 			break;
 	}
 }

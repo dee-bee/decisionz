@@ -33,7 +33,7 @@
 		<div id="playPauseBtn" class="fixedBarBtn" onclick="playPauseBtnClicked()"></div>
 		<div id="bookmarksModeBtn" class="fixedBarBtn" onclick="setState('bookmarks')">bookmarks</div>
 		<div id="mainModeBtn" class="fixedBarBtn" onclick="setState('main')">Back</div>
-		<div id="setBookmarkBtn" class="fixedBarBtn" onclick="setBookmark()">set bookmark</div>
+		<div id="setBookmarkBtn" class="fixedBarBtn" onclick="setState('set_bookmark')">set bookmark</div>
 		<div id="settingsBtn" class="fixedBarBtn" onclick="setState('settings')">settings</div>
 		<div id="devBtn" class="fixedBarBtn" onclick="setState('dev_mode')">dev</div>
 	</div>
@@ -44,7 +44,16 @@
 		<p>Load Error Report</p>
 		<textarea id="errorTextArea"></textarea>
 		<div id="loadErrorBtn" onclick="loadErrorReport()">Load</div>
+		<div id="localStorageLength"></div>
 	</div>
+	<div id="setBookmarkPanel">
+		<div id="setBookmark_container">
+			<div id="setBookmarkTitle">Bookmark Name</div>
+			 <input id="bookmarkName" type="text"></input>
+			 <div id="setBookmarkSubmit" onclick="setBookmarkOkClicked()">Ok</div>
+		</div>
+	</div>
+	
 	<div id="settingsPanel">
 		<p>Settings</p>
 		<p><input id="checkbox_soundOn" type="checkbox"
