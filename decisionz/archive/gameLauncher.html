@@ -1,0 +1,58 @@
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">		
+	
+	<link type="text/css" href="css/gameLauncher.css" rel="stylesheet">
+	
+	<!--<script type="text/javascript" src="js/firebug-lite-1_2.js"></script>-->
+	
+	<link type="text/css" href="css/smoothness/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
+	<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
+	<script type="text/javascript" src="js/jquery.ui.touch-punch.js"></script>
+	<!--<script type="text/javascript" src="js/decisionz_audio.js"></script>-->
+	 
+	<script type="text/javascript" src="js/decisionz_utils.js"></script>
+	<script type="text/javascript" src="js/gameLauncher.js"></script>
+		
+</head>
+<body>
+	<div id="audios">
+		<div id="musicPlayerDiv">
+		</div>
+		<div id="narrationPlayerDiv">
+			<audio id="narrationAudioPlayer"  width="0" height="0" > 
+				<!--<source src="assets/narration/wav/s_Jukebox-pageStart.wav" type="audio/wav" ></source>-->
+	       </audio>
+		</div>
+		
+		<!--<div id="flashAudioPlayerDiv"></div>
+		<div id="htmlAudioPlayerDiv"></div>
+		<div id="embeddedAudioPlayerDiv"></div>-->
+	</div>
+	<div id="main">
+		<div id="fixedBar">
+			<div id="playPauseBtn" onclick="playPauseBtnClicked()">"</div>
+		</div>
+		<div id="title">Decisionz</div>
+		<div id="currentTime">Time:</div>
+		
+		<!--<div id="manageBookmarks" onclick="manageBookmarks()">Manage Bookmarks</div>-->
+		<div id="bookmarks">
+			<div id="saveBookmark" onclick="saveBookmark()">Save Bookmark</div>
+			<input id="bookmarkName" ></input>
+			<div id="bookmarks_container"></div>
+		</div>
+			
+		<div id="pageContainer">
+			<div id="pageContent"></div>
+			<div id="nextPageBtn" class="decisionBtn" onclick="loadNextPage()">Next Page</div> 
+		</div>
+
+		<div id="devbar">
+			<div id="clearLocalStorage"onclick="clearLocalStorage()">Reset Game</div>
+			<a id="linkToWiki" target="blank">Edit Content</div>
+		</div>
+	</div>
+</body>
+</html>

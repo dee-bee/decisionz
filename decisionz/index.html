@@ -1,0 +1,31 @@
+<html>
+	<style>
+		#mainLink {
+			background-color: #5C5757;
+			font-size: 40px;
+			cursor: pointer;
+			width: 248px;
+			border-radius: 13px;
+			text-align: center;
+		}
+		
+		#mainLink:hover{
+			color: lightgrey;
+		}
+		
+		body{
+			background-color: black;
+			color: white;
+		}
+	</style>
+	<body>
+		<h1>Welcome to Decisionz.org</h1>
+		<div id="mainLink" 
+		  onclick="window.location = 'gameLauncher.html?configXml=assets/configs/sandbox_noDialog.xml'">
+		  	Play Game
+		</div> <br />
+		
+		<a href="gameLauncher.html?offline=true">Play Game Offline</a>
+		<a href="gameLauncher.html?configXml=test2">Play Game Online</a>
+	</body>
+</html>

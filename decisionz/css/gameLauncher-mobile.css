@@ -1,0 +1,218 @@
+#currentTime{
+    cursor: default;
+    font-size: 3em;
+    text-align: center;
+} 
+
+#pageContent > p {
+    display:none;
+}
+
+#main {
+    width: 100%;
+    padding: 0px;
+    margin-top: 190px;
+} 
+
+.hidden{
+	opacity: 0;
+}
+
+#pageContainer{
+    -webkit-transform: rotateY(0);
+    margin-left: 0px;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: darkgray;
+}
+
+#linkToWiki {
+    color: lightgray;
+    cursor: pointer;
+    left: 230px;
+    position: absolute;
+    text-decoration: none;
+}
+
+#fixedBar{
+    z-index: 101;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    
+    height: 179px;
+    position: fixed;
+    background-color: rgb(48, 47, 47);
+}
+
+.fixedBarBtn:hover{
+	background-color: lightgrey;
+}
+
+.fixedBarBtn{
+    cursor: pointer;
+    background-color: grey;
+    color: white;
+    height: 133px;
+    width: 150px;
+    border-radius: 10px;
+    font-size: 88px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 31px;
+    margin: 5px 5px 10px 5px;
+    float: left;
+}
+
+
+#playPauseBtn{
+    padding-top: 31px;
+}
+
+.decisionBtn{
+	text-align: center;
+	table-layout:fixed;
+	white-space:pre-line;
+	cursor: pointer;
+    margin-right: auto;
+    display: table;
+    
+    clear: both;
+    margin-left: auto;
+    
+	font-size: 66px;
+    
+	padding: 30px;
+    border-radius: 10px;
+    background-color: rgb(46, 45, 45);
+    color: whitesmoke;
+	width: 90%;
+}
+
+/*.decisionBtn:hover{
+    color: lightgray;
+	
+}*/
+
+#linkToWiki:hover{
+	color: lightgrey;
+}
+
+#clearLocalStorage:hover{
+	color: lightgrey;
+	cursor: pointer;
+}
+
+#clearLocalStorage{
+	right: 150px;
+	position: absolute;
+	color: lightgray;
+}
+
+button{
+    font-size: 1em;
+    margin-top: 30px;
+}
+
+#pageContent{
+    color: black;
+    font-size: 1.4em;
+}
+
+body{
+    overflow-x: hidden;
+    background-color: black;
+    color: grey;
+}
+
+#title{
+    position: absolute;
+    width: 100%;
+	
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#devbar{
+    position: relative;
+    margin-top: 25px;
+    
+    margin-bottom: 50px;
+}
+  
+#manageBookmarks{
+    cursor: pointer;
+    
+}
+
+#bookmarkPanel{
+    font-size: 30px;
+    padding-top: 236px;
+    min-height: 800px;
+    min-width: 700px;
+    padding-left: 93px;
+}
+
+body:not([state='bookmarks']) #bookmarkPanel{
+    display:none;
+}
+
+body:not([state="main"]) #main {
+	display: none;
+}
+
+
+body:not([state='bookmarks']) #mainModeBtn{
+    display:none;
+}
+
+body:not([state='main']) #bookmarksModeBtn{
+    display:none;
+}
+
+#mainModeBtn{
+    background-color: lightgrey;
+}
+
+
+.bookmarkLabel{
+    background-color: darkgray;
+    
+    width: 325px;
+    text-align: center;
+    border-radius: 10px;
+    padding: 8px;
+    color: white;
+    font-size: 51px;
+}
+
+.bookmarkItem{
+    cursor: pointer;
+    padding: 7px 0px 0px 58px;
+    
+}
+
+.bookmarkLabel:hover{
+    background-color:lightgrey;
+}
+
+body:not([state='main']) #setBookmarkBtn{
+    display:none;
+}
+
+#statusTxt{
+    display: none;
+    cursor: default;
+    width: 100%;
+    position: absolute;
+    
+    text-align: right;
+}
+
+#titleBar{
+    padding-bottom: 26px;
+    position: relative;
+    
+}

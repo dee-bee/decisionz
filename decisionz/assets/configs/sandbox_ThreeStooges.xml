@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config devTools="true" perspective="MobilePerspective">
+	<characters>
+		<character name="Moe" active="true" start="startSceneMoe"></character>
+		<character name="Larry" active="true" start="startSceneLarry"></character>
+		<character name="Curly" active="true" start="startSceneCurly"></character>
+	</characters>
+	<decisionVars>
+		<variable name="currentTime" value="0000-00-00 15:30:00"/>
+		<variable name="gameMode" value="text"/>
+		<variable name="NoSound" value="true"/>
+		<variable name="UserName" value="DanB"/>
+		<variable name="currentCharacter" value="Moe"/>
+		<variable name="currentSceneName" value=""/>
+		<variable name="currentPageName" value=""/>
+		<!--<variable name="currentLocationName" value="startScene"/>-->
+		<variable name="previousSceneName" value=""/>
+		<variable name="previousLocationName" value=""/>
+		<variable name="gameStartTime" value="0000-00-00 15:30:00"/>
+		<variable name="item_phone" value="Phone:explorePhone"/>
+		<variable name="showMatteInfo" value="false"/>
+		<variable name="gameStartScene" value="introTableCouchDesk"/>
+		<variable name="lastSavedSceneName" value="introTableCouchDesk"/>
+		<variable name="clickMatteResolution" value="640x480"/>
+		<variable name="videoTransitionResolution" value="320x240"/>
+		<variable name="narration" value="false"/>
+		<variable name="music" value="false"/>
+	</decisionVars>
+	<scenes>
+		<scene name="startSceneMoe">
+			<page id="pageStart" nextPage="p2">
+				<content>
+					<p>The day is dragging on and you and your two friends (Larry, Curly)
+						Just got fired from yet another job. It wasn't your fault of 
+						course. You're good friend Curly had a wardrobe malfunction that
+						lead to an unfortunate gas-main lever opening situation that 
+						accidentailly burnt down a toy factory in the Bronx.</p>
+				</content>
+			</page>
+			<page id="p2" nextPage="p3">
+				<content>
+					<p>Money has become so tight for the three of you that your next meal
+						might have to come from the food lines down at the church. You decide
+						that it's time to make a stand in life and rid yourself of the 
+						want that you face many of the days.</p>
+				</content>
+			</page>
+			<page id="p3" location="moeTellsHisIdea">
+				<content>
+					<p>Earilier in the day you recall seeing a armored car shipment 
+						dropping off bags of cash at a local bank. An idea crosses your mind.
+						Unfortunately you're not sure if your companions would realize
+						the genious in your plan. Nevertheless you decide to float the 
+						idea to them knowing that if they shoot it down you can always
+						accuse them of being the morons that they are.</p>
+					<p>You begin to tell your idea being careful to be as sensitive and
+						politically correct as possible.</p>
+				</content>
+			</page>
+		</scene>
+		<scene name="startSceneLarry">
+			<page id="pageStart" nextPage="p2">
+				<content>
+					<p>The day is dragging on and you and your two friends (Moe, Curly)
+						Just got fired from yet another job. It wasn't your fault of 
+						course. You're good friend Curly had a wardrobe malfunction that
+						lead to an unfortunate gas-main lever opening situation that 
+						accidentailly burnt down a toy factory in the Bronx.</p>
+				</content>
+			</page>
+			<page id="p2" location="moeTellsHisIdea">
+				<content>
+					<p>Money has become tight and you don't know what to do. You look to 
+						Moe, the informal leader of your group, for answers. He seems like 
+						he has an idea, but he seems hesitant to present his idea. You get 
+						the feeling that he's sizing you and Curly up. He struggles for 
+						a way to express himself, then he seems to find the courage.</p>
+				</content>
+			</page>
+		</scene>
+		<scene name="startSceneCurly">
+			<page id="pageStart" nextPage="p2">
+				<content>
+					<p>The day is dragging on and you and your two friends (Moe, Larry)
+						Just got fired from yet another job. It wasn't your fault of 
+						course. You had a wardrobe malfunction that
+						lead to an unfortunate gas-main lever opening situation that 
+						accidentailly burnt down a toy factory in the Bronx.</p>
+				</content>
+			</page>
+			<page id="p2" location="moeTellsHisIdea">
+				<content>
+					<p>Money has become tight and you don't know what to do. You look to 
+						Moe, the informal leader of your group, for answers. He seems like 
+						he has an idea, but he seems hesitant to present his idea. You get 
+						the feeling that he's sizing you and Larry up. He struggles for 
+						a way to express himself, then he seems to find the courage.</p>
+				</content>
+			</page>
+		</scene>
+		<scene name="moeTellsHisIdea">
+			<page id="pageStart">
+				<content>
+					<p>Moe says, "Hey you two. I have an idea. You know that bank
+						around the corner there. I know that it's loaded with cash, ya.
+						What if we were to perminantly borrow some of that doe. Would you
+						two numskulls have enough guts to follow me?"</p>
+				</content>
+			</page>
+		</scene>
+	</scenes>
+</config>
