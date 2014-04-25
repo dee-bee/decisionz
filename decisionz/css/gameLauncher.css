@@ -312,3 +312,40 @@ body:not([state='main']) #setBookmarkBtn{
 #localStorageLength{
 	clear:both;
 }
+
+#setBookmarkSubmit:hover{
+	background-color: orange;
+	
+}
+
+#setBookmarkSubmit{
+    background-color: grey;
+	cursor:pointer;
+    color: white;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    padding-top: 10px;
+    border-radius: 7px;
+    margin-left: 330px;
+    margin-top: 20px;
+}
+
+#bookmarkName{
+    font-size: 38px;
+	
+}
+
+#setBookmarkTitle{
+    padding: 10px;
+	
+    text-align: right;
+}
+
+#setBookmark_container{
+    background-color: #111111;
+	
+    width: 440px;
+    padding: 20px;
+    margin-left: 177px;
+}

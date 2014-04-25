@@ -250,7 +250,8 @@ function loadMutationObserver(){
 					
 	var observer =	new MuteObs(function(mutations) {
 	  mutations.forEach(function(mutation) {
-	    if($(mutation.target).attr("name") == "bookmarks" || 
+	    if($(mutation.target).attr("name") == "bookmarks" ||
+	    		$(mutation.target).attr("name") == "currentBookmark" || 
 	    		$(mutation.target).attr("name") == "log" ||
 	    		mutation.target == $(xml).find("decisionVars")[0]){
 	    	return;	
@@ -574,6 +575,50 @@ function writeDecisionVarsToLocalStorage(){
 		}
 	    
 	    $("#localStorageLength").text("Local Storage Length Is: " + localStorage.decisionz.length)
+	}
+	
+	validateDecisionVars()
+}
+
+function validateDecisionVars(){
+	//This function just checks for error situations
+	var variableNameObj = {}
+	var variableNameDuplicatesObj = {}
+	
+	//todo -handle for variables without a value such as bookmarks
+	
+	decisionVars.find("> variable").each(function(i,v){
+		var varName = $(v).attr("name")
+		
+		if(varName == undefined){
+			return
+		}
+		
+		if(variableNameObj[varName] == undefined){
+			variableNameObj[varName] = 1
+		}else{
+			//Duplicate found
+			if(variableNameDuplicatesObj[varName] == undefined){
+				variableNameDuplicatesObj[varName] = 1
+			}else{
+				variableNameDuplicatesObj[varName]++
+			}
+		}
+	})
+	
+	
+	if(Object.keys(variableNameDuplicatesObj).length > 0){
+		var output = ""
+		
+		$.each(Object.keys(variableNameDuplicatesObj), function(i,v){
+			output += "\n" + v + ":" +  variableNameDuplicatesObj[v] + ";"
+		})
+		
+		alert("Duplicate decisionVars found: " + output)
+	}
+	
+	if(decisionVars.find("> variable[name='log'] > variable[name='currentBookmark']").length > 0){
+		alert("CurrentBookmark found in log")
 	}
 }
 
@@ -1073,6 +1118,10 @@ function setState(state){
 	}
 }
 
+function setDV(name, value){
+	decisionVars.find("> variable[name='" + name + "']").attr("value", value)	
+}
+
 function playPauseBtnClicked(){
   if(document.getElementById('narrationAudioPlayer').paused){
       $("#playPauseBtn").text("||")
@@ -1097,6 +1146,8 @@ function loadErrorReport(){
 	rootXml += "</root>"
 	jRootXml = $(rootXml)
 	loadDecisionVars(jRootXml)
+	
+	setDV("currentBookmark", "")
 	
 	writeDecisionVarsToLocalStorage()
 	loadGame()	

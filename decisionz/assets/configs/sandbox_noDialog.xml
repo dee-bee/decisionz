@@ -288,7 +288,7 @@
 							//Check if this decision should be displayed
 							var output = "<p>It worked!</p>"
 						    
-						    output += "<div class='decisionBtn' onclick='loadPage(\"pg_where_to_go\")' >Next Page</div><br />";
+						    output += "<div class='decisionBtn' onclick='loadScene(\"Hallway\")' >Next Page</div><br />";
 							
 							//output page
 							$("body #pageContent").html(output);
@@ -355,7 +355,7 @@
 
 					<!-- Impl - Auction House (testsuite) -->
 					<decision label="Go To Auction House" location="AuctionHouse">
-						<condition startTime="0000-00-01 00:00:00" endTime="0000-00-02 00:00:00">
+						<condition startTime="0000-00-01 06:00:00" endTime="0000-00-02 00:00:00">
 							<condition name="var_went_to_auction">
 								<condition name="pg_after_auction"/>
 							</condition>
