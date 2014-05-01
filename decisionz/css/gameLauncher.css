@@ -259,7 +259,13 @@ body:not([state='main']) #setBookmarkBtn{
 	font-size: 20px;
 }
 
-#devPanel,
+#devPanel{
+    font-size: 30px;
+    min-height: 800px;
+    min-width: 700px;
+    padding-left: 93px;
+}
+
 #settingsPanel{
     font-size: 30px;
     padding-top: 75px;
@@ -348,4 +354,12 @@ body:not([state='main']) #setBookmarkBtn{
     width: 440px;
     padding: 20px;
     margin-left: 177px;
+}
+
+#snippets, #xml{
+	display: none;
+}
+
+#loadEditor{
+	
 }

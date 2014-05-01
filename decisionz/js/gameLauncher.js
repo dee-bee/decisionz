@@ -1,5 +1,5 @@
 var params;
-var configXml = "assets/configs/sandbox.xml";
+var configXml = "../assets/configs/sandbox.xml";
 
 $(document).ready(function () {	
 	//audioInit();
@@ -17,12 +17,18 @@ $(document).ready(function () {
 	if(params["css"] != undefined){
 		loadjscssfile(params["css"], "css")
 	}else{
-		loadjscssfile("css/gameLauncher.css", "css")
+		loadjscssfile("../css/gameLauncher.css", "css")
 	}
 
 	if(params["debug"] != undefined){
 		$("body").attr("debug", "true")
 	}
+	
+
+	$( "#devTabs" ).tabs();
+	
+	$("#xml_editor").text("<decisionz><test>Hi</test></decisionz>")
+	//$("#xml_editor").append($("<decisionz><test>Hi</test></decisionz>"))
 	
 	loadGame();
 });
@@ -112,18 +118,25 @@ function loadGame(){
 	}
 	
 	
-	if(params["forceLocalStorageReset"] != undefined){
+	if(params["forceLocalStorageReset"] != undefined || 
+			localStorage.decisionz == undefined){
 		localStorage.decisionz = "";
 	}
 	
-	//Load config
-	$.ajax({
-	    type: "GET",
-	    url: configXml,
-	    dataType: "xml",
-	    success: parseXml,
-	    error: ajaxErrorFunc
-	});
+	if(localStorage.decisionz.length > 0 &&
+			params["configXml"] == null){
+		parseXml(( new window.DOMParser() ).
+						parseFromString(localStorage.decisionz, "text/xml"))
+	}else{
+		//Load config
+		$.ajax({
+		    type: "GET",
+		    url: configXml,
+		    dataType: "xml",
+		    success: parseXml,
+		    error: ajaxErrorFunc
+		});
+	}
 }
 
 var xml;
@@ -182,11 +195,11 @@ function parseXml(t_xml){
 	xml = t_xml;
 	
 	convertXMLtoNewFormat()
-	
+
 	if(localStorage.decisionz != undefined &&
 		 localStorage.decisionz.length > 0 &&
 		 params["disableLocalStorage"] == undefined){
-		$(xml).find("config > decisionVars").empty().html($($(localStorage.decisionz).html()));
+		$(xml).find("config > decisionVars").empty().html($($(localStorage.decisionz).find("> decisionVars").html()));
 	}
 	
 	decisionVars = $(xml).find("config > decisionVars");
@@ -230,6 +243,8 @@ function parseXml(t_xml){
 	//loadDecisionzLog()
 	
 	loadMutationObserver()
+	
+	writeDecisionVarsToLocalStorage()
 	
 	start();
 	
@@ -460,18 +475,16 @@ function start(){
 		remotePageContentURL = jRemoteUrl.attr("value");
 	}
 	
-	
-	
 	loadScene(currentSceneVar.attr("value"), currentPageVar.attr("value"))
 }
 
 function loadMusic(name){
 	parts = /(.+)([.][\w]+$)/.exec(name)
 	$("#musicPlayerDiv").empty().append($('<audio id="musicAudioPlayer" width="0" height="0">' + 
-												'<source src="assets/music/' +
+												'<source src="../assets/music/' +
 												parts[1] + '.ogg"' +
             									'type="audio/ogg"></source>' + 
-            									'<source src="assets/music/' +
+            									'<source src="../assets/music/' +
 												parts[1] + '.mp3"' +
             									'type="audio/mp3"></source>' + 
             								'</audio>'));
@@ -564,14 +577,15 @@ function loadDecisionVars(container){
 
 function writeDecisionVarsToLocalStorage(){
 	if(params["disableLocalStorage"] == undefined){
-		var decisionzVars_xml = new XMLSerializer().serializeToString(
-							        $(xml).find("decisionVars")[0]
-							    )
+		var config_xml_string = new XMLSerializer().serializeToString(xml)
 		
-		localStorage.decisionz = decisionzVars_xml
+		localStorage.decisionz = config_xml_string
 		
-		if(decisionzVars_xml.length != localStorage.decisionz.length){
-			alert("LocalStorage not stored")
+		//$("#xml_editor").val(config_xml_string)
+		//$("#xml_editor").val("<decisionz><test>HI</test></decisonz>")
+		
+		if(config_xml_string.length != localStorage.decisionz.length){
+			alert("LocalStorage was not completeley stored")
 		}
 	    
 	    $("#localStorageLength").text("Local Storage Length Is: " + localStorage.decisionz.length)
