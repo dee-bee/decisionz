@@ -56,9 +56,9 @@ function multiplayerEvent(scene, page){
 	
 	updateTimeDiv();
 	
-	currentSceneVar = $(xml).find("config > decisionvars > variable:[name='currentSceneName']");
+	currentSceneVar = $(xml).find("config > decisionVars > variable:[name='currentSceneName']");
 
-	currentPageVar = $(xml).find("config  > decisionvars > variable:[name='currentPageName']");
+	currentPageVar = $(xml).find("config  > decisionVars > variable:[name='currentPageName']");
 	
 	currentSceneVar.attr("value", scene);
 	currentPageVar.attr("value", page);
@@ -191,10 +191,6 @@ function convertXMLtoNewFormat(){
 var jCurrentCharacterVar;
 
 function parseXml(t_xml){
-	/*$("#xml").append($(t_xml).find("config").clone())
-	
-	xml = $("#xml");*/
-	
 	xml = t_xml;
 	
 	convertXMLtoNewFormat()
@@ -202,10 +198,10 @@ function parseXml(t_xml){
 	if(localStorage.decisionz != undefined &&
 		 localStorage.decisionz.length > 0 &&
 		 params["disableLocalStorage"] == undefined){
-		$(xml).find("config > decisionvars").empty().html($($(localStorage.decisionz).find("> decisionvars").html()));
+		$(xml).find("config > decisionVars").empty().html($($(localStorage.decisionz).find("> decisionVars").html()));
 	}
 	
-	decisionVars = $(xml).find("config > decisionvars");
+	decisionVars = $(xml).find("config > decisionVars");
 	
 	if(params["character"] != null){
 		currentCharacterName = params["character"].toLowerCase();
@@ -213,10 +209,10 @@ function parseXml(t_xml){
 									    return $(this).attr("name").toLowerCase() == currentCharacterName;
 									});
 	    
-		jCurrentCharacterVar = $($(xml).find("config > decisionvars > variable:[name='currentCharacter']"));
+		jCurrentCharacterVar = $($(xml).find("config > decisionVars > variable:[name='currentCharacter']"));
 		jCurrentCharacterVar.attr("value",currentCharacterName)
 	}else{
-		jCurrentCharacterVar = $($(xml).find("config > decisionvars > variable:[name='currentCharacter']"));
+		jCurrentCharacterVar = $($(xml).find("config > decisionVars > variable:[name='currentCharacter']"));
 		currentCharacterName = jCurrentCharacterVar.attr("value").toLowerCase()
 		jCurrentCharacter = $($(xml).find("> characters > character[name='" + currentCharacterName + "']")[0])
 		
@@ -258,34 +254,23 @@ function parseXml(t_xml){
 }
 
 function loadMutationObserver(){
-	//var target = document.querySelector('#xml > config > decisionvars');
-	var target = xml.documentElement.querySelector('decisionvars');
-	
+	var target = xml.documentElement.querySelector('decisionVars');
+	 
 	// create an observer instance
 	var MuteObs= window.WebKitMutationObserver 
 					|| window.MutationObserver 
 					|| window.MozMutationObserver 
 					|| null 
-	
-	var lastMutatedDecisionVar	
+					
 	var observer =	new MuteObs(function(mutations) {
-		
-		mutations.forEach(function(mutation) {
-		  
+	  mutations.forEach(function(mutation) {
 	    if($(mutation.target).attr("name") == "bookmarks" ||
 	    		$(mutation.target).attr("name") == "currentBookmark" || 
 	    		$(mutation.target).attr("name") == "log" ||
-	    		$(mutation.target).prop("tagName") == "bookmark" ||
-	    		mutation.target == $(xml).find("decisionvars")[0] ){
+	    		mutation.target == $(xml).find("decisionVars")[0]){
 	    	return;	
 	    }
-	    
-	    if(lastMutatedDecisionVar != undefined 
-				&& $(mutation.target).attr("name") == lastMutatedDecisionVar.attr("name")
-				&& $(mutation.target).attr("value") == lastMutatedDecisionVar.attr("value")){
-	    	return;
-	    }
-	    
+	    	
 	    /*switch(mutation.type){
 	    	case "childList": 
 	    		break;
@@ -293,9 +278,7 @@ function loadMutationObserver(){
 	    		break;
 	    }*/
 	    
-	    lastMutatedDecisionVar = $(mutation.target).clone()
-	    
-	    $(xml).find("decisionvars > variable[name='log']").append($(mutation.target).clone())
+	    $(xml).find("decisionVars > variable[name='log']").append($(mutation.target).clone())
 	  });    
 	});
 	 
@@ -345,16 +328,16 @@ function recursiveGenerateBookmarkItem(jBookmarkParent){
 }
 
 function bookmarkClicked(bk_id){
-	var bookmarks = $(xml).find("config > decisionvars > variable[name='bookmarks']").clone()
+	var bookmarks = $(xml).find("config > decisionVars > variable[name='bookmarks']").clone()
 	var newDVs = $(bookmarks).find("bookmark[name='" + bk_id + "'] > dvdata").clone().children()
 	
 	if(newDVs == undefined || newDVs.length == 0){
 		alert("newDVs undefined")
 	}
 	
-	$(xml).find("config > decisionvars").empty().append(bookmarks).append(newDVs);
+	$(xml).find("config > decisionVars").empty().append(bookmarks).append(newDVs);
 	
-	$(xml).find("config > decisionvars > variable[name='currentBookmark']").attr("value", bk_id)
+	$(xml).find("config > decisionVars > variable[name='currentBookmark']").attr("value", bk_id)
 	
 	start();
 }
@@ -371,7 +354,7 @@ function soundOnChange(){
 		}
 		
 		$("body").attr("sound", "true")	
-		$(xml).find("decisionvars > variable[name='Sound']").attr("value", "true")
+		$(xml).find("decisionVars > variable[name='Sound']").attr("value", "true")
 	}else{
 		//Disable sound
 		if($("#musicAudioPlayer")[0] != null &&
@@ -381,14 +364,14 @@ function soundOnChange(){
 		}
 		
 		$("body").attr("sound", "false")	
-		$(xml).find("decisionvars > variable[name='Sound']").attr("value", "false")
+		$(xml).find("decisionVars > variable[name='Sound']").attr("value", "false")
 	}
 	
 	writeDecisionVarsToLocalStorage()
 }
 
 function getBookmark(bk_name){
-	return $(xml).find("config > decisionvars > variable[name='bookmarks'] " +
+	return $(xml).find("config > decisionVars > variable[name='bookmarks'] " +
 											" bookmark[name='" + bk_name + "'] ")
 }
 
@@ -398,7 +381,7 @@ function setBookmarkOkClicked(){
 
 function setBookmark(label){
 	//Generate bookmark id
-	var jBookmarks = $($(xml).find("config > decisionvars > variable[name='bookmarks']"))
+	var jBookmarks = $($(xml).find("config > decisionVars > variable[name='bookmarks']"))
 	var bookmarkList = jBookmarks.find("bookmark")
 	var bookmarkName = "bkm_" + (bookmarkList.length + 1);
 		
@@ -448,7 +431,7 @@ function hideStatusText(){
 }
 
 function jDV(name){
-	return $($(decisionVars).find("> variable:[name='" + name + "']"))
+	return $($(xml).find("config > decisionVars > variable:[name='" + name + "']"))
 }
 
 function updateTimeDiv(){
@@ -482,9 +465,9 @@ function start(){
 	
 	updateTimeDiv();
 	
-	currentSceneVar = $(xml).find("config > decisionvars > variable:[name='currentSceneName']");
+	currentSceneVar = $(xml).find("config > decisionVars > variable:[name='currentSceneName']");
 
-	currentPageVar = $(xml).find("config > decisionvars > variable:[name='currentPageName']");
+	currentPageVar = $(xml).find("config > decisionVars > variable:[name='currentPageName']");
 	
 	var jRemoteUrl = $(decisionVars).find('> variable:[name="remotePageContentURL"]')
 	if(jRemoteUrl != undefined){
@@ -526,7 +509,7 @@ function loadLocation(name){
     if(locationTag.length == 0){
     	loadScene(name);
     }else{
-	    $(locationTag).find("> scenecondition").each(function(){
+	    $(locationTag).find("> sceneCondition").each(function(){
 	    	if(checkConditions(this)){
 	    		//Condition passes. Now load appropriate page/scene
 	    		if($(this).attr("setScene") != undefined && 
@@ -579,7 +562,7 @@ function loadScene(name, pageName){
 }
 
 function loadDecisionVars(container){	
-	$(container).find("> decisionvar").each(function(){
+	$(container).find("> decisionVar").each(function(){
 		var dv = $(decisionVars).find('> variable:[name="' + $(this).attr("name") +  '"]');
 		if(dv.length > 0){
 			dv.attr("value", $(this).attr("value"));
@@ -681,12 +664,6 @@ function decisionClicked(index){
 	}
 	
 	var decision = jCurrentPage.find("> decisions > decision")[index];
-	
-	jDV("narrationLog").append("<p> You chose: " + $(decision).attr("label") +  "</p>\n")
-	
-	$("#narrationLog").empty().append($(jDV("narrationLog").html()))
-	
-	
 	if($(decision).attr("nextpage") != undefined){
 		loadPage($(decision).attr("nextpage"));
 	}else if($(decision).attr("location")){
@@ -695,7 +672,6 @@ function decisionClicked(index){
 	
 	clickLock = false
 }
-
 
 function remotePageContent(text){
 	//jCurrentPage.find("content").html($(html).find("#mw-content-text").html());
@@ -736,16 +712,6 @@ function generatePage(){
 	
 	//output page
 	$("body #pageContent").html(output);
-	
-	if(jDV("narrationLog").length == 0){
-		setDV("narrationLog", "")
-	}
-	
-	jDV("narrationLog").append(output)
-	jDV("narrationLog").find("div.decisionBtn").removeAttr("onclick")
-	
-	$("#narrationLog").empty().append($(jDV("narrationLog").html()))
-	
 
 	if(jCurrentPage.find("> script")[0] != undefined){
 		eval($(jCurrentPage.find("> script")[0]).text())
@@ -878,6 +844,8 @@ function addDurationToCurrentTime(duration){
 		
 		$(currentTimeVar).attr("value",
 			calculateTimeStringFromTicks(currentTimeTicks));
+		
+		updateTimeDiv()
 }
 
 function loadPage(pageId){
@@ -901,9 +869,6 @@ function loadPage(pageId){
 		addDurationToCurrentTime(jCurrentPage.attr("duration"))
 	}
 
-	//A decisionVar might have set this, or a duration might have incrimented this
-	updateTimeDiv()
-	
 	if(handlePageForward()){
 		//A pageCondition of pageForward has been loaded so so nothing
 	}else{
@@ -929,8 +894,6 @@ function loadPage(pageId){
 			generatePage();
 		}
 	}
-	
-	window.scrollTo(0, 0)
 }
 
 var DAY_INDEX = 3;
@@ -1098,8 +1061,7 @@ var matchFound = false;
 
 function handlePageForward(){
 	 //loop through page conditions
-	var forceReturn = false
-    jCurrentPage.find("> pagecondition").each(function(){
+    jCurrentPage.find("> pageCondition").each(function(){
     	if(checkConditions(this)){
     		//Condition passes. Now load appropriate page/scene
     		if($(this).attr("location") != undefined && 
@@ -1110,15 +1072,10 @@ function handlePageForward(){
     			loadPage($(this).attr("nextpage"));
     		}
     		
-    		forceReturn = true
-    		return false
+    		return true
     	}
     });
     
-	if(forceReturn){
-		return true
-	}
-	
     //No match found so load the nextpage or the location if this is a pageForward
     if(jCurrentPage.attr("type") == "pageForward"){
 	    if(jCurrentPage.attr("location") != undefined  && 
@@ -1170,25 +1127,14 @@ function setState(state){
 			break;
 		case "settings":
 			$("body").attr("state", "settings")
-			break
 		case "set_bookmark":
 			$("body").attr("state", "set_bookmark")
 			break;
 	}
-	
-	window.scrollTo(0, 0)
 }
 
-//Will create the dv if it is undefined
 function setDV(name, value){
-	var dv = decisionVars.find("> variable[name='" + name + "']")
-	
-	if(dv.length == 0){
-		dv = $("<variable name='" + name + "' " + " value='" + value + "'/>")
-		$(decisionVars).append(dv);
-	}else{
-		dv.attr("value", value)	
-	}
+	decisionVars.find("> variable[name='" + name + "']").attr("value", value)	
 }
 
 function playPauseBtnClicked(){
@@ -1209,7 +1155,7 @@ function loadErrorReport(){
 	
 	$.each($("#errorTextArea").attr("value").split(","), function(i,v){
 		var arr = v.split("=")
-		rootXml += "<decisionvar name='" + arr[0] + "' value='" + arr[1] + "' />" 			
+		rootXml += "<decisionVar name='" + arr[0] + "' value='" + arr[1] + "' />" 			
 	})
 	
 	rootXml += "</root>"

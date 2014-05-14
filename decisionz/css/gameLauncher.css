@@ -23,11 +23,13 @@
 }
 
 #linkToWiki {
+	display:none;
     color: lightgray;
     cursor: pointer;
     left: 230px;
-    position: absolute;
     text-decoration: none;
+    margin-left: 100px;
+	float: left;
 }
 
 #fixedBar{
@@ -101,9 +103,9 @@ body[sound='true'][state='main'] #playPauseBtn{
 }
 
 #clearLocalStorage{
-	right: 150px;
-	position: absolute;
 	color: lightgray;
+	float: left;
+	margin-left: 62px;
 }
 
 button{
@@ -362,4 +364,37 @@ body:not([state='main']) #setBookmarkBtn{
 
 #loadEditor{
 	
+}
+
+#linkToJSEditor{
+	display: none;
+    color: lightgray;
+    cursor: pointer;
+    text-decoration: none;
+	float:left;
+    margin-left: 100px;
+}
+
+body[debug='true'] #linkToWiki,
+body[debug='true'] #linkToJSEditor{
+	display: block;
+}
+
+#xml{
+	display:none;
+}
+
+#devTabs{
+	font-size: .5em;
+}
+
+.ui-tabs-panel{
+	background-color: black;
+	color: white;
+}
+
+#narrationLog{
+    font-size: .7em;
+	
+    width: 700px;
 }

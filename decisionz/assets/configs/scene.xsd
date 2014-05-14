@@ -1,0 +1,302 @@
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="scene" maxOccurs="unbounded" minOccurs="0">
+		<xs:annotation>
+			<xs:documentation>Impl - Impl - Your Cabin (text-only) Impl -
+				Butterfly Lounge (testsuite) (needs cleaning) Impl - Hallway
+				(testsuite) (needs cleaning) Impl - Containment Area Impl -
+				Auction House (testsuite) Impl - Ghost Den (testsuite) Impl -
+				Farse (testsuite) Impl - Manny (testsuite) Impl - Mark
+				(testsuite) Impl - Transporter
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded" minOccurs="0">
+				<xs:element name="page">
+					<xs:annotation>
+						<xs:documentation><![CDATA[<page id="pg_fast_forward_1_hour" location="Hallway" duration="0000-00-00 1:00:00">
+				<content/>
+			</page> Impl - Ghost Den (testsuite)  Impl - Mark (testsuite) <page id="pf_bernard_pc_list" type="pageForward" nextPage="pg_default_intro"><page id="pageStart" type="pageForward"  nextPage="pf_bernard_pc_list">
+				<content/>
+		</page> Impl - Ghost Den (testsuite)  Impl - Manny (testsuite)  Impl - Mark (testsuite)  Impl - Transporter]]></xs:documentation>
+					</xs:annotation>
+					<xs:complexType mixed="true">
+						<xs:choice maxOccurs="unbounded" minOccurs="0">
+							<xs:element name="decisions">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="decision" maxOccurs="unbounded"
+											minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>&lt;decision label="Fast forward 1
+													hour" nextPage="pg_fast_forward_1_hour"/> Impl -
+													Butterfly Lounge (testsuite) (needs cleaning) Impl -
+													Auction House (testsuite) Impl - Ghost Den (testsuite)
+													Impl - Farse (testsuite) Impl - Manny (testsuite) Impl -
+													Mark (testsuite) Impl - Transporter Impl - Auction House
+													(testsuite) Impl - Ghost Den (testsuite) Impl - Manny
+													(testsuite) Impl - Mark (testsuite) Impl - Transporter
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType mixed="true">
+												<xs:sequence>
+													<xs:element name="condition" minOccurs="0">
+														<xs:complexType mixed="true">
+															<xs:sequence>
+																<xs:element name="condition" minOccurs="0">
+																	<xs:complexType mixed="true">
+																		<xs:sequence>
+																			<xs:element name="condition" maxOccurs="unbounded"
+																				minOccurs="0">
+																				<xs:complexType mixed="true">
+																					<xs:sequence>
+																						<xs:element name="condition" minOccurs="0">
+																							<xs:complexType>
+																								<xs:simpleContent>
+																									<xs:extension base="xs:string">
+																										<xs:attribute type="xs:string"
+																											name="name" use="optional" />
+																										<xs:attribute type="xs:string"
+																											name="value" use="optional" />
+																									</xs:extension>
+																								</xs:simpleContent>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																					<xs:attribute type="xs:string" name="name"
+																						use="optional" />
+																					<xs:attribute type="xs:string" name="value"
+																						use="optional" />
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																		<xs:attribute type="xs:string" name="endTime"
+																			use="optional" />
+																		<xs:attribute type="xs:string" name="name"
+																			use="optional" />
+																		<xs:attribute type="xs:string" name="value"
+																			use="optional" />
+																		<xs:attribute type="xs:string" name="startTime"
+																			use="optional" />
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute type="xs:string" name="name"
+																use="optional" />
+															<xs:attribute type="xs:string" name="value"
+																use="optional" />
+															<xs:attribute type="xs:string" name="startTime"
+																use="optional" />
+															<xs:attribute type="xs:string" name="endTime"
+																use="optional" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute type="xs:string" name="label"
+													use="optional" />
+												<xs:attribute type="xs:string" name="location"
+													use="optional" />
+												<xs:attribute type="xs:string" name="nextPage"
+													use="optional" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="pageCondition">
+								<xs:annotation>
+									<xs:documentation><![CDATA[Impl - Ghost Den (testsuite)  Impl - Farse (testsuite)  <pageCondition location="s_farseUpdatesYou">
+				<condition startTime="0000-00-02 09:00:00" endTime="0000-00-02 23:00:00">
+				<condition name="s_farseUpdatesYou">
+				<condition name="s_IntroduceFarseSecurityRoom" value="true"> </condition>
+				<condition name="pg_farse_finds_you" value="true"> </condition>
+				</condition>
+				</condition>
+				</pageCondition> Impl - Mark (testsuite)  Impl - Auction House (testsuite)]]></xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="condition" maxOccurs="unbounded"
+											minOccurs="0">
+											<xs:complexType mixed="true">
+												<xs:sequence>
+													<xs:element name="condition" minOccurs="0">
+														<xs:complexType mixed="true">
+															<xs:sequence>
+																<xs:element name="condition" minOccurs="0">
+																	<xs:complexType mixed="true">
+																		<xs:sequence>
+																			<xs:element name="condition" minOccurs="0">
+																				<xs:complexType>
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute type="xs:string" name="startTime"
+																								use="optional" />
+																							<xs:attribute type="xs:string" name="endTime"
+																								use="optional" />
+																							<xs:attribute type="xs:string" name="name"
+																								use="optional" />
+																							<xs:attribute type="xs:string" name="value"
+																								use="optional" />
+																						</xs:extension>
+																					</xs:simpleContent>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																		<xs:attribute type="xs:string" name="name"
+																			use="optional" />
+																		<xs:attribute type="xs:string" name="startTime"
+																			use="optional" />
+																		<xs:attribute type="xs:string" name="value"
+																			use="optional" />
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute type="xs:string" name="name"
+																use="optional" />
+															<xs:attribute type="xs:string" name="value"
+																use="optional" />
+															<xs:attribute type="xs:string" name="startTime"
+																use="optional" />
+															<xs:attribute type="xs:string" name="endTime"
+																use="optional" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute type="xs:string" name="name" use="optional" />
+												<xs:attribute type="xs:string" name="value"
+													use="optional" />
+												<xs:attribute type="xs:string" name="endTime"
+													use="optional" />
+												<xs:attribute type="xs:string" name="startTime"
+													use="optional" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute type="xs:string" name="nextPage"
+										use="optional" />
+									<xs:attribute type="xs:string" name="location"
+										use="optional" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="decisionVar">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute type="xs:string" name="name" use="optional" />
+											<xs:attribute type="xs:string" name="value" use="optional" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element type="xs:string" name="content">
+								<xs:annotation>
+									<xs:documentation>Todo Figure out why setting the current
+										time here takes us to 1 30:00:00&lt;decisionVar
+										name="currentTime" value="0000-00-02 01:15:00"/>
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element type="xs:string" name="script" />
+						</xs:choice>
+						<xs:attribute type="xs:string" name="id" use="optional" />
+						<xs:attribute type="xs:string" name="location" use="optional" />
+						<xs:attribute type="xs:string" name="type" use="optional" />
+						<xs:attribute type="xs:string" name="content_id" use="optional" />
+						<xs:attribute type="xs:string" name="nextPage" use="optional" />
+						<xs:attribute type="xs:string" name="notes" use="optional" />
+						<xs:attribute type="xs:string" name="duration" use="optional" />
+						<xs:attribute type="xs:string" name="checkpoint" use="optional" />
+						<xs:attribute type="xs:string" name="dontLoadContent"
+							use="optional" />
+						<xs:attribute type="xs:string" name="music" use="optional" />
+						<xs:attribute type="xs:string" name="name" use="optional" />
+						<xs:attribute type="xs:string" name="value" use="optional" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="link">
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:element type="xs:string" name="content" minOccurs="0" />
+							<xs:element name="condition" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="condition">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute type="xs:string" name="endTime" />
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute type="xs:string" name="name" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="decisionVar" minOccurs="0">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute type="xs:string" name="name" use="optional" />
+											<xs:attribute type="xs:string" name="value" use="optional" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute type="xs:string" name="linkName" use="optional" />
+						<xs:attribute type="xs:string" name="linkType" use="optional" />
+						<xs:attribute type="xs:string" name="location" use="optional" />
+						<xs:attribute type="xs:string" name="clickedVideoDirection"
+							use="optional" />
+						<xs:attribute type="xs:string" name="enableClickedVideo"
+							use="optional" />
+						<xs:attribute type="xs:string" name="id" use="optional" />
+						<xs:attribute type="xs:string" name="linkTyype" use="optional" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="decisionVar">
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:element name="decisions" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="decision" maxOccurs="unbounded"
+											minOccurs="0">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute type="xs:string" name="label"
+															use="optional" />
+														<xs:attribute type="xs:string" name="nextPage"
+															use="optional" />
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element type="xs:string" name="content" minOccurs="0" />
+						</xs:sequence>
+						<xs:attribute type="xs:string" name="name" use="optional" />
+						<xs:attribute type="xs:string" name="value" use="optional" />
+						<xs:attribute type="xs:string" name="id" use="optional" />
+						<xs:attribute type="xs:string" name="location" use="optional" />
+						<xs:attribute type="xs:string" name="nextPage" use="optional" />
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:attribute type="xs:string" name="groupName" use="optional" />
+			<xs:attribute type="xs:string" name="music" use="optional" />
+			<xs:attribute type="xs:string" name="musicPlayThrough"
+				use="optional" />
+			<xs:attribute type="xs:string" name="backgroundSimpleClickMatteScene"
+				use="optional" />
+			<xs:attribute type="xs:string" name="musicRepeat" use="optional" />
+			<xs:attribute type="xs:string" name="name" use="optional" />
+			<xs:attribute type="xs:string" name="sceneType" use="optional" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
