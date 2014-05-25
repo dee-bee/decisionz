@@ -62,10 +62,21 @@
 	</div>
 	
 	<div id="settingsPanel">
-		<p>Settings</p>
-		<p><input id="checkbox_soundOn" type="checkbox"
-							 onclick='soundOnChange()' >Sound On<br></p>
-		<div id="narrationLog"></div>
+		<div id="setTabs">
+			  <ul>
+			    <li><a href="#set_tabs-1">General</a></li>
+			    <li><a href="#set_tabs-2">Narration Log</a></li>
+			  </ul>
+			  <div id="set_tabs-1">
+				<p><input id="checkbox_soundOn" type="checkbox"
+							 onclick='soundOnChange()' >Sound On<br></p>  
+				<p><input id="checkbox_disableDialog" type="checkbox"
+							 onclick='showDialogOnChange()' >Hide Dialog<br></p> 
+			  </div>
+			  <div id="set_tabs-2">
+			  		<div id="narrationLog"></div>
+			  </div>
+		</div>
 	</div>
 	<div id="main">
 		<div id="titleBar">

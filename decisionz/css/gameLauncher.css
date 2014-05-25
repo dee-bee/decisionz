@@ -69,6 +69,9 @@ body[sound='true'][state='main'] #playPauseBtn{
     display:none;
 }
 
+#narrationLog .decisionBtn{
+}
+
 .decisionBtn{
 	text-align: center;
 	table-layout:fixed;
@@ -86,6 +89,7 @@ body[sound='true'][state='main'] #playPauseBtn{
     border-radius: 10px;
     background-color: rgb(46, 45, 45);
     color: whitesmoke;
+	margin-bottom: 10px;
 }
 
 /*.decisionBtn:hover{
@@ -270,7 +274,6 @@ body:not([state='main']) #setBookmarkBtn{
 
 #settingsPanel{
     font-size: 30px;
-    padding-top: 75px;
     min-height: 800px;
     min-width: 700px;
     padding-left: 93px;
@@ -384,11 +387,11 @@ body[debug='true'] #linkToJSEditor{
 	display:none;
 }
 
-#devTabs{
+#devTabs, #setTabs{
 	font-size: .5em;
 }
 
-.ui-tabs-panel{
+.ui-tabs > div.ui-tabs-panel{
 	background-color: black;
 	color: white;
 }
@@ -397,4 +400,12 @@ body[debug='true'] #linkToJSEditor{
     font-size: .7em;
 	
     width: 700px;
+}
+
+body[disableDialog="true"] #pageContent > p{
+	display:none;
+}
+
+.youChose{
+	
 }

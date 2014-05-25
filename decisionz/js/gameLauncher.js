@@ -26,6 +26,7 @@ $(document).ready(function () {
 	
 
 	$( "#devTabs" ).tabs();
+	$( "#setTabs" ).tabs();
 	
 	$("#xml_editor").text("<decisionz><test>Hi</test></decisionz>")
 	//$("#xml_editor").append($("<decisionz><test>Hi</test></decisionz>"))
@@ -232,6 +233,13 @@ function parseXml(t_xml){
 	}else{
 		$("#checkbox_soundOn").removeAttr("checked")
 	}
+
+	if(checkDecisionVarI("disableDialog", "true")){
+		$("body").attr("disableDialog", "true")
+		$("#checkbox_disableDialog").attr("checked", "checked")
+	}else{
+		$("#checkbox_disableDialog").removeAttr("checked")
+	}
 	
 	if(jCurrentCharacter.attr("start")!= null &&
 			jDV("currentSceneName").attr("value").length == 0){
@@ -275,6 +283,7 @@ function loadMutationObserver(){
 	    if($(mutation.target).attr("name") == "bookmarks" ||
 	    		$(mutation.target).attr("name") == "currentBookmark" || 
 	    		$(mutation.target).attr("name") == "log" ||
+	    		$(mutation.target).attr("name") == "narrationLog" ||
 	    		$(mutation.target).prop("tagName") == "bookmark" ||
 	    		mutation.target == $(xml).find("decisionvars")[0] ){
 	    	return;	
@@ -357,6 +366,20 @@ function bookmarkClicked(bk_id){
 	$(xml).find("config > decisionvars > variable[name='currentBookmark']").attr("value", bk_id)
 	
 	start();
+}
+
+function showDialogOnChange(){
+	if($("#checkbox_disableDialog").attr("checked") == "checked"){
+		//Disable dialog
+		$("body").attr("disableDialog", "true")
+		setDV('disableDialog', "true")
+	}else{
+		//Enabling dialog
+		$("body").attr("disableDialog", "false")
+		setDV('disableDialog', "false")
+	}
+	
+	writeDecisionVarsToLocalStorage()
 }
 
 function soundOnChange(){
@@ -591,16 +614,27 @@ function loadDecisionVars(container){
 	});
 }
 
+var pass = "new XMLSerializer().serializeToString($(xml).clone())"
+
 function writeDecisionVarsToLocalStorage(){
+	//alert("writeDecisionVarsToLocalStorage start")
 	if(params["disableLocalStorage"] == undefined){
-		var xmlClone = $(xml).clone()
+		//alert("writeDecisionVarsToLocalStorage clone")
+		
+		//Doesn't seem to work on IPad
+		//var xmlClone = $(xml).clone()
 		
 		//Don't save the local content if we're loading remotely
 		if(remotePageContentURL.length > 0){
-			$(xmlClone).find("config > scenes > scene > page > content").empty()
+			//$(xmlClone).find("config > scenes > scene > page > content").empty()
+			$(xml).find("config > scenes > scene > page > content").empty()
 		}
 		
-		var config_xml_string = new XMLSerializer().serializeToString(xmlClone[0])
+		//var config_xml_string = new XMLSerializer().serializeToString(xmlClone)
+		var config_xml_string = new XMLSerializer().serializeToString(xml)
+		
+		
+		//alert("writeDecisionVarsToLocalStorage string = " + config_xml_string)
 		
 		localStorage.decisionz = config_xml_string
 		
@@ -615,6 +649,8 @@ function writeDecisionVarsToLocalStorage(){
 	}
 	
 	validateDecisionVars()
+
+	//alert("writeDecisionVarsToLocalStorage end")
 }
 
 function validateDecisionVars(){
@@ -682,7 +718,10 @@ function decisionClicked(index){
 	
 	var decision = jCurrentPage.find("> decisions > decision")[index];
 	
-	jDV("narrationLog").append("<p> You chose: " + $(decision).attr("label") +  "</p>\n")
+	//append doesn't seem to work on IOS with xml
+	//jDV("narrationLog").append("<p> You chose: " + $(decision).attr("label") +  "</p>\n")
+	
+	jDV("narrationLog").html(jDV("narrationLog").html() + "\n<p class='youChose'> You chose: " + $(decision).attr("label") +  "</p>\n")
 	
 	$("#narrationLog").empty().append($(jDV("narrationLog").html()))
 	
@@ -726,7 +765,7 @@ function generatePage(){
         //Check if this decision should be displayed
         if(checkConditions(this)){
         	output = output + "<div class='decisionBtn' onclick='decisionClicked(" + tally + 
-        								")' >" + $(this).attr("label") + "</div><br />";
+        								")' >" + $(this).attr("label") + "</div>";
 		}
 		tally++;
 	});
@@ -737,15 +776,26 @@ function generatePage(){
 	//output page
 	$("body #pageContent").html(output);
 	
-	if(jDV("narrationLog").length == 0){
+	if(jDV("narrationLog").length == 0 ||
+		jDV("narrationLog").html().length == 0){
+		if(params["debug"] != undefined){
+			alert("narrationLog is empty")
+		}
+		
 		setDV("narrationLog", "")
 	}
 	
-	jDV("narrationLog").append(output)
+	
+	//Doesn't seem to work on IOS
+	//jDV("narrationLog").append(output)
+	if(jDV("narrationLog").children().last().hasClass("youChose")){
+		jDV("narrationLog").html(jDV("narrationLog").html() + output)
+
+	}
+
 	jDV("narrationLog").find("div.decisionBtn").removeAttr("onclick")
-	
+
 	$("#narrationLog").empty().append($(jDV("narrationLog").html()))
-	
 
 	if(jCurrentPage.find("> script")[0] != undefined){
 		eval($(jCurrentPage.find("> script")[0]).text())
@@ -1221,3 +1271,4 @@ function loadErrorReport(){
 	writeDecisionVarsToLocalStorage()
 	loadGame()	
 }
+
