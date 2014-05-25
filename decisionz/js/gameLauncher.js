@@ -70,15 +70,17 @@ function multiplayerEvent(scene, page){
 function multiplayerWaiting(){
 	$("#pageContent").html("<h1>Waiting</h1>")
 	//todo $("#nextPageBtn").css("display", "none");
-	$("body").attr("sound", "false")
+	//todo $("body").attr("sound", "false")
 	$("#linkToWiki").css("display", "none");
 }
 
 
 
 function updatePlayBtn(){
-	if(document.getElementById('narrationAudioPlayer') != null && 
-			document.getElementById('narrationAudioPlayer').paused){
+	if((document.getElementById('narrationAudioPlayer') == null || 
+			document.getElementById('narrationAudioPlayer').paused) &&
+		(document.getElementById('musicAudioPlayer') == null || 
+			document.getElementById('musicAudioPlayer').paused)){
       $("#playPauseBtn").text(">")
   }else{
       $("#playPauseBtn").text("||")
@@ -98,11 +100,13 @@ function pauseAudio(){
 }
 
 function unpauseAudio(){
-	if(checkDecisionVarI("Sound", "true")){
+	if(checkDecisionVarI("music", "true")){
 		if(document.getElementById('musicAudioPlayer') != null){
 			document.getElementById('musicAudioPlayer').play()	
 		}
-		
+	}
+
+	if(checkDecisionVarI("narrationAudio", "true")){
 		if(document.getElementById('narrationAudioPlayer') != null){
 			document.getElementById('narrationAudioPlayer').play()		
 		}
@@ -190,7 +194,7 @@ function convertXMLtoNewFormat(){
 }
 
 var jCurrentCharacterVar;
-
+var SoundMediaPath = "assets/"
 function parseXml(t_xml){
 	/*$("#xml").append($(t_xml).find("config").clone())
 	
@@ -226,14 +230,28 @@ function parseXml(t_xml){
 									});
 	}
 	
-	
-	if(checkDecisionVarI("Sound", "true")){
-		$("body").attr("sound", "true")
-		$("#checkbox_soundOn").attr("checked", "checked")
+	if(checkDecisionVarI("music", "true")){
+		$("body").attr("music", "true")
+		$("#checkbox_musicOn").attr("checked", "checked")
 	}else{
-		$("#checkbox_soundOn").removeAttr("checked")
+		$("#checkbox_musicOn").removeAttr("checked")
 	}
-
+	
+	if(checkDecisionVarI("narrationAudio", "true")){
+		$("body").attr("narration_audio", "true")
+		$("#checkbox_narrationAudioOn").attr("checked", "checked")
+	}else{
+		$("#checkbox_narrationAudioOn").removeAttr("checked")
+	}
+	
+	if(jDV("SoundMediaPath").length > 0){
+		SoundMediaPath = jDV("SoundMediaPath").text()
+	}
+	
+	if(params["SoundMediaPath"] != null){
+		SoundMediaPath = params["SoundMediaPath"]
+	}
+	
 	if(checkDecisionVarI("disableDialog", "true")){
 		$("body").attr("disableDialog", "true")
 		$("#checkbox_disableDialog").attr("checked", "checked")
@@ -382,33 +400,44 @@ function showDialogOnChange(){
 	writeDecisionVarsToLocalStorage()
 }
 
-function soundOnChange(){
-	if($("#checkbox_soundOn").attr("checked") == "checked"){
-		//Enabling sound
-		//todo - add support for loading the audio if it isn't loaded yet
+function musicOnChange(){
+	if($("#checkbox_musicOn").attr("checked") == "checked"){
+		//Enabling music
+		$("body").attr("music", "true")	
+		setDV("music", "true")
 		
-		if($("#musicAudioPlayer")[0] != null &&
-				$("#narrationAudioPlayer")[0]){
-			$("#musicAudioPlayer")[0].play()
-			$("#narrationAudioPlayer")[0].play()
-		}
-		
-		$("body").attr("sound", "true")	
-		$(xml).find("decisionvars > variable[name='Sound']").attr("value", "true")
+		loadMusic(jCurrentScene.attr("music"));
+		unpauseAudio()
 	}else{
 		//Disable sound
-		if($("#musicAudioPlayer")[0] != null &&
-				$("#narrationAudioPlayer")[0]){
-			$("#musicAudioPlayer")[0].pause()
-			$("#narrationAudioPlayer")[0].pause()
-		}
-		
-		$("body").attr("sound", "false")	
-		$(xml).find("decisionvars > variable[name='Sound']").attr("value", "false")
+		$("body").attr("music", "false")		
+		setDV("music", "false")
+		pauseAudio()
+		$("#musicPlayerDiv").empty()
 	}
 	
 	writeDecisionVarsToLocalStorage()
 }
+
+function narrationAudioOnChange(){
+	if($("#checkbox_narrationAudioOn").attr("checked") == "checked"){
+		//Enabling narration audio
+		$("body").attr("narration_audio", "true")				
+		setDV("narrationAudio", "true")
+	
+		loadNarrationAudio(jCurrentScene.attr("name"), jCurrentPage.attr("id"))
+		unpauseAudio()
+	}else{
+		//Disable sound
+		$("body").attr("narration_audio", "false")			
+		setDV("narrationAudio", "false")
+		pauseAudio()
+		$("#narrationPlayerDiv").empty()
+	}
+	
+	writeDecisionVarsToLocalStorage()
+}
+
 
 function getBookmark(bk_name){
 	return $(xml).find("config > decisionvars > variable[name='bookmarks'] " +
@@ -517,21 +546,39 @@ function start(){
 	loadScene(currentSceneVar.attr("value"), currentPageVar.attr("value"))
 }
 
+function loadNarrationAudio(name, id){
+	if(name == undefined || id == undefined){
+		return;	
+	}
+	
+	if(checkDecisionVarI("narrationAudio", "true")){
+		$("#narrationPlayerDiv").empty().append($('<audio id="narrationAudioPlayer" width="0" height="0"' +
+								'><source src="' + SoundMediaPath + "narration/wav/" +
+										name + '-' + id + '.wav"' +
+										'type="audio/wav"></source>' + 
+								'</audio>'));
+   	}
+}
+
+
 function loadMusic(name){
-	parts = /(.+)([.][\w]+$)/.exec(name)
-	$("#musicPlayerDiv").empty().append($('<audio id="musicAudioPlayer" width="0" height="0">' + 
-												'<source src="../assets/music/' +
-												parts[1] + '.ogg"' +
-            									'type="audio/ogg"></source>' + 
-            									'<source src="../assets/music/' +
-												parts[1] + '.mp3"' +
-            									'type="audio/mp3"></source>' + 
-            								'</audio>'));
-    
-    
-	if(checkDecisionVarI("Sound", "true")){
-	    document.getElementById('musicAudioPlayer').play();	
-	    document.getElementById('musicAudioPlayer').volume = .25;
+	if(name == undefined){
+		return;	
+	}
+	
+	if(checkDecisionVarI("music", "true")){
+		parts = /(.+)([.][\w]+$)/.exec(name)
+		$("#musicPlayerDiv").empty().append($('<audio id="musicAudioPlayer" width="0" height="0">' + 
+													'<source src="' + SoundMediaPath + "music/" +
+													parts[1] + '.ogg"' +
+													'type="audio/ogg"></source>' + 
+													'<source src="../assets/music/' +
+													parts[1] + '.mp3"' +
+													'type="audio/mp3"></source>' + 
+												'</audio>'));
+
+
+		document.getElementById('musicAudioPlayer').volume = .25;
    	}
 }
 
@@ -587,10 +634,9 @@ function loadScene(name, pageName){
 	
 	jCurrentScene = $(xml).find("config > scenes > scene:[name='" + name + "']");
 	
-	if(checkDecisionVarI("music", "true") && 
-		jCurrentScene.attr("music") != undefined){
-		loadMusic(jCurrentScene.attr("music"));
-	}
+
+	loadMusic(jCurrentScene.attr("music"));
+	unpauseAudio()
 	
 	if(pageName != undefined){
 		//Loading a bookmark
@@ -810,44 +856,14 @@ function generatePage(){
 
 	writeDecisionVarsToLocalStorage();
 
-	//if audio is present and the narrative is on load the audio
-	if(jCurrentPage.attr("dontLoadContent") == undefined){
-		if(checkDecisionVarI("narration", "true")){
-			//$("#narrationAudioPlayer")[0].pause()
-			$("#narrationPlayerDiv").empty().append($('<audio id="narrationAudioPlayer" width="0" height="0"' +
-														//'oncanplay="audioCanPlay()">' + 
-														'><source src="assets/narration/wav/' +
-		            											jCurrentScene.attr("name") + '-' + 
-		            											jCurrentPage.attr("id") + '.wav"' +
-		            											'type="audio/wav"></source>' + 
-		            									'</audio>'));
-	   	
-	   		
-			if(checkDecisionVarI("Sound", "true")){
-		   		$("#narrationAudioPlayer")[0].play()
-		   	}
-	   	}
-	   	
-	   	
-		if(checkDecisionVarI("music", "true") && 
-			jCurrentPage.attr("music") != undefined){
-			loadMusic(jCurrentPage.attr("music"));
-		}
-   	}
-   	/* todo
-   	if(nextPageAvailable()){
-		$("#nextPageBtn").css("display", "inherit");
-	}else{
-		$("#nextPageBtn").css("display", "none");
-	}*/
-}
 
-function audioCanPlay(){
-	if(checkDecisionVarI("Sound", "true")){
-		document.getElementById('narrationAudioPlayer').play();	
-		alert("hi audio2");
+	if(jDV("dontLoadContent").length == 0){ //todo We need to define further what dontLoadContent is
+		loadNarrationAudio(jCurrentScene.attr("name"), jCurrentPage.attr("id"))
+		loadMusic(jCurrentPage.attr("music"));
+		unpauseAudio()
 	}
 }
+
 
 function sendMail() {
     var link = "mailto:me@example.com"
@@ -882,39 +898,6 @@ function clearLocalStorage(){
 		//loadGame();
 	}
 }
-
-/* todo
-function loadNextPage(){
-	//Multiplayer conditions trump so if the characters are present 
-	//  then the condition is tested
-	var disableNextPage = false;
-	jCurrentPage.find("multiplayerCondition").each(function(){
-    	if($(xml).find("characters > character[name='" + 
-    	           $(this).attr("character") + "'][active='true']").length > 0){
-    	    //We have an active character for this multiplayerCondition
-    	    // so test the conditions        
-    	    if( checkConditions(this)){
-    	        //Conditions pass so dispatch the event
-    	        disableNextPage = true; //only if a multiplayer dispatch is sent
-    	        window.parent.frames['iframe' + $(this).attr("character")].
-    	                multiplayerEvent($(this).attr("scene"), $(this).attr("page"))
-    	    
-    	        if($(this).attr("type") == "waitForResponse"){
-                    multiplayerWaiting() 
-                }
-    	    }
-    	}
-    });
-	
-	todo
-	if(!disableNextPage){ 
-	    if(jCurrentPage.attr("nextPage") != undefined){
-    		loadPage(jCurrentPage.attr("nextPage"));
-    	}else if(jCurrentPage.attr("location") != undefined){
-    		loadLocation(jCurrentPage.attr("location"));	
-    	}
-	}
-}*/
 
 var jCurrentScene;
 
@@ -1242,7 +1225,12 @@ function setDV(name, value){
 }
 
 function playPauseBtnClicked(){
-  if(document.getElementById('narrationAudioPlayer').paused){
+  if((document.getElementById('narrationAudioPlayer') != undefined 
+  			|| document.getElementById('musicAudioPlayer') != undefined) &&
+  		(document.getElementById('narrationAudioPlayer') == undefined 
+  			|| document.getElementById('narrationAudioPlayer').paused) && 
+  		(document.getElementById('musicAudioPlayer') == undefined 
+			|| document.getElementById('musicAudioPlayer').paused)){
       $("#playPauseBtn").text("||")
       unpauseAudio()
   }else{

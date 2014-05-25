@@ -60,7 +60,8 @@
     padding-top: 23px;
 }
 
-body[sound='true'][state='main'] #playPauseBtn{
+body[music='true'][state='main'] #playPauseBtn,
+body[narration_audio='true'][state='main'] #playPauseBtn{
     display:block;
 }
 
