@@ -22,6 +22,16 @@
     background-color: darkgray;
 }
 
+#linkToConfigFile{
+	display:none;
+    color: lightgray;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 100px;
+	float: left;
+}
+
+
 #linkToWiki {
 	display:none;
     color: lightgray;
@@ -152,7 +162,7 @@ body{
 
 #bookmarkPanel{
     font-size: 30px;
-    padding-top: 75px;
+    /* padding-top: 75px; */
     min-height: 800px;
     min-width: 700px;
     padding-left: 93px;
@@ -218,17 +228,21 @@ body:not([state='main']) #bookmarksModeBtn{
 .bookmarkLabel{
     background-color: darkgray;
     
-    width: 200px;
+    width: 350px;
     text-align: center;
-    border-radius: 10px;
-    padding: 8px;
+    border-radius: 10px 0px 0px 10px;
+    padding: 16px;
     color: white;
+    overflow: hidden;
+    float: left;
 }
 
 .bookmarkItem{
     cursor: pointer;
     padding: 7px 0px 0px 58px;
     
+    margin: 5px;
+    clear: both;
 }
 
 .bookmarkLabel:hover{
@@ -346,6 +360,7 @@ body:not([state='main']) #setBookmarkBtn{
 #bookmarkName{
     font-size: 38px;
 	
+    width: 442;
 }
 
 #setBookmarkTitle{
@@ -357,7 +372,7 @@ body:not([state='main']) #setBookmarkBtn{
 #setBookmark_container{
     background-color: #111111;
 	
-    width: 440px;
+    width: 443px;
     padding: 20px;
     margin-left: 177px;
 }
@@ -380,7 +395,8 @@ body:not([state='main']) #setBookmarkBtn{
 }
 
 body[debug='true'] #linkToWiki,
-body[debug='true'] #linkToJSEditor{
+body[debug='true'] #linkToJSEditor,
+body[debug='true'] #linkToConfigFile{
 	display: block;
 }
 
@@ -396,7 +412,7 @@ body[debug='true'] #linkToJSEditor{
 	background-color: black;
 	color: white;
 }
-
+ 
 #narrationLog{
     font-size: .7em;
 	
@@ -409,4 +425,24 @@ body[disableDialog="true"] #pageContent > p{
 
 .youChose{
 	
+}
+
+#bookmarkNameInvalid{
+	color: red;
+	font-size: 20px;
+	display:none;
+}
+
+.bookmarkDelete:hover{
+    background-color: red;
+}
+
+.bookmarkDelete{
+    background-color: rgb(177, 36, 36);
+	
+    width: 24px;
+    padding: 16px;
+    border-radius: 0px 4px 4px 0px;
+    color: white;
+    float: left;
 }

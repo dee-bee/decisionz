@@ -23,8 +23,15 @@ $(document).ready(function () {
 	if(params["debug"] != undefined){
 		$("body").attr("debug", "true")
 	}
-	
 
+	if(params["configXml"] != null){
+		if(params["databaseConfig"] != null){
+			configXml = "config.php?config=" + params["configXml"];	
+		}else{
+			configXml = params["configXml"];		
+		} 
+	}
+	
 	$( "#devTabs" ).tabs();
 	$( "#setTabs" ).tabs();
 	
@@ -114,15 +121,6 @@ function unpauseAudio(){
 }
 
 function loadGame(){
-	if(params["configXml"] != null){
-		if(params["databaseConfig"] != null){
-			configXml = "config.php?config=" + params["configXml"];	
-		}else{
-			configXml = params["configXml"];		
-		} 
-	}
-	
-	
 	if(params["forceLocalStorageReset"] != undefined || 
 			localStorage.decisionz == undefined){
 		localStorage.decisionz = "";
@@ -132,14 +130,13 @@ function loadGame(){
 	//Othewise attempt to load from config file
 	if(localStorage.decisionz != undefined 
 			&& localStorage.decisionz.length > 0){
-		parseXml(( new window.DOMParser() ).
-						parseFromString(localStorage.decisionz, "text/xml"))
+		parseXml(localStorage.decisionz)
 	}else{
 		//Load config
 		$.ajax({
 		    type: "GET",
 		    url: unescape(configXml),
-		    dataType: "xml",
+		    dataType: "text",
 		    success: parseXml,
 		    error: ajaxErrorFunc
 		});
@@ -194,13 +191,19 @@ function convertXMLtoNewFormat(){
 }
 
 var jCurrentCharacterVar;
-var SoundMediaPath = "assets/"
-function parseXml(t_xml){
+var SoundMediaPath = "../assets/"
+function parseXml(text_xml){
 	/*$("#xml").append($(t_xml).find("config").clone())
 	
 	xml = $("#xml");*/
 	
-	xml = t_xml;
+	//If the line starts with [[ then remove it
+	while(text_xml.match(".*\n")[0].match("^[ ]*[\[][\[]") != undefined){
+		text_xml = text_xml.substr(text_xml.match(".*\n")[0].length, text_xml.length)
+	}
+	
+	xml = ( new window.DOMParser() ).
+				parseFromString(text_xml, "text/xml")
 	
 	convertXMLtoNewFormat()
 
@@ -243,6 +246,11 @@ function parseXml(t_xml){
 	}else{
 		$("#checkbox_narrationAudioOn").removeAttr("checked")
 	}
+	
+	setDV("configXml", configXml)
+		
+	$("#linkToConfigFile").attr("href", unescape(configXml))
+
 	
 	if(jDV("SoundMediaPath").length > 0){
 		SoundMediaPath = jDV("SoundMediaPath").text()
@@ -356,6 +364,10 @@ function loadBookmarksList(){
 	$(bookmarkPanel).empty().append(recursiveGenerateBookmarkItem(jBookmarks))
 }
 
+function bookmarkDelete(bookmarkName){
+	alert("delete " + bookmarkName)
+}
+
 function recursiveGenerateBookmarkItem(jBookmarkParent){
 	var output = ""
 	
@@ -364,6 +376,8 @@ function recursiveGenerateBookmarkItem(jBookmarkParent){
 		output +=   "<div class='bookmarkItem' id='" + $(v).attr("name") + "'>" + 
 						"<div class='bookmarkLabel' onclick='bookmarkClicked(\"" + 
 									$(v).attr("name") + "\")'>" + $(v).attr("label") + "</div>" + 
+						"<div class='bookmarkDelete' onclick='bookmarkDelete(\"" 
+											+ $(v).attr("name") + "\")'>X</div>" + 
 						recursiveGenerateBookmarkItem($(v))	+
 					"</div>"				
 	})
@@ -445,7 +459,15 @@ function getBookmark(bk_name){
 }
 
 function setBookmarkOkClicked(){
-	 setBookmark($("#bookmarkName").attr("value"))
+	var bkName = $("#bookmarkName").attr("value")
+	
+	//Validate name
+	if(bkName.match(/[^a-zA-Z0-9 ]/) != undefined){
+		$("#bookmarkNameInvalid").css("display", "block")
+	}else{
+		$("#bookmarkNameInvalid").css("display", "none")
+		setBookmark(bkName)
+	}
 }
 
 function setBookmark(label){
@@ -454,7 +476,7 @@ function setBookmark(label){
 	var bookmarkList = jBookmarks.find("bookmark")
 	var bookmarkName = "bkm_" + (bookmarkList.length + 1);
 		
-	if(label == undefined){
+	if(label == undefined || label.length == 0){
 		bookmarkLabel = "Bookmark " + (bookmarkList.length + 1);
 	}else{
 		bookmarkLabel = label
@@ -764,10 +786,19 @@ function decisionClicked(index){
 	
 	var decision = jCurrentPage.find("> decisions > decision")[index];
 	
+	if($(decision).attr("calculate_duration") != undefined){
+		//Find route duration
+		addDurationToCurrentTime(
+			calculateRouteDuration($(decision).attr("calculate_duration"))
+		)
+	}else if($(decision).attr("duration") != undefined){
+		addDurationToCurrentTime($(decision).attr("duration"))
+	}
+	
 	//append doesn't seem to work on IOS with xml
 	//jDV("narrationLog").append("<p> You chose: " + $(decision).attr("label") +  "</p>\n")
 	
-	jDV("narrationLog").html(jDV("narrationLog").html() + "\n<p class='youChose'> You chose: " + $(decision).attr("label") +  "</p>\n")
+	jDV("narrationLog").html(jDV("narrationLog").html() + "\n<p class='youChose' decision_index='" + index + "'> You chose: " + $(decision).attr("label") +  "</p>\n")
 	
 	$("#narrationLog").empty().append($(jDV("narrationLog").html()))
 	
@@ -844,26 +875,53 @@ function generatePage(){
 	$("#narrationLog").empty().append($(jDV("narrationLog").html()))
 
 	if(jCurrentPage.find("> script")[0] != undefined){
-		eval($(jCurrentPage.find("> script")[0]).text())
+		loadJSAttrSuccess($(jCurrentPage.find("> script")[0]).text())
+	}else if(jCurrentPage.attr('loadJS') != undefined){
+		var remotePageUrl = ""
+		
+		if(jCurrentPage.attr('loadJS') == ""){
+			//Generate the page name automatically
+			remotePageUrl = remotePageContentURL + "?title=JS_" + 
+			    				jCurrentScene.attr("name") +  ":" + 
+			    				jCurrentPage.attr("id");
+
+		}else{
+			//Generate the page name automatically
+			remotePageUrl = remotePageContentURL + "?title=" + 
+								jCurrentPage.attr('loadJS')
+		}
+		
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: remotePageUrl + "&action=raw",
+			dataType: "text",
+			success: generatePage_part2,
+			error: ajaxErrorFunc
+		});
 	}
 
+}
+
+function generatePage_part2(text){
+	eval(text)
+	
 	//Launch a load function if present
 	if(sceneReturnObj != undefined && 
 		sceneReturnObj.initPageScript != undefined) {
 	    sceneReturnObj.initPageScript()
 	}
-	
 
 	writeDecisionVarsToLocalStorage();
 
 
-	if(jDV("dontLoadContent").length == 0){ //todo We need to define further what dontLoadContent is
+	if(jDV("dontLoadContent").length == 0 
+			&& jCurrentPage.attr("dontLoadContent") == undefined){ //todo We need to define further what dontLoadContent is
 		loadNarrationAudio(jCurrentScene.attr("name"), jCurrentPage.attr("id"))
 		loadMusic(jCurrentPage.attr("music"));
 		unpauseAudio()
 	}
 }
-
 
 function sendMail() {
     var link = "mailto:me@example.com"
@@ -1205,6 +1263,7 @@ function setState(state){
 			$("body").attr("state", "settings")
 			break
 		case "set_bookmark":
+			$("#bookmarkName").attr("value", "")
 			$("body").attr("state", "set_bookmark")
 			break;
 	}
@@ -1260,3 +1319,31 @@ function loadErrorReport(){
 	loadGame()	
 }
 
+function calculateRouteDuration(locString){
+	var locs = locString.trim().split(",")
+		
+	//Trim to make sure clean
+	$.each(locs, function(i,v){
+		v = v.trim
+	})
+
+	//Add up all of the routes
+	var totalDuration = 0
+	$.each(locs, function(i,v){
+		if(locs.length -1 == i){
+			return false
+		}
+
+		var route = jDV("routes").find("route[startLocation='" + v 
+								+ "'][endLocation='" + locs[i+1] + "']")
+
+		if(route.length ==  0){
+			alert("Error: Route not found start:" + v + " end:" + locs[i+1])
+			return false
+		}
+		
+		totalDuration += calculateTicksFromTimeString($(route).attr("duration")) 
+	})	
+	
+	return calculateTimeStringFromTicks(totalDuration)
+}

@@ -56,8 +56,10 @@
 	<div id="setBookmarkPanel">
 		<div id="setBookmark_container">
 			<div id="setBookmarkTitle">Bookmark Name</div>
-			 <input id="bookmarkName" type="text"></input>
-			 <div id="setBookmarkSubmit" onclick="setBookmarkOkClicked()">Ok</div>
+			<div id="bookmarkNameInvalid">Invalid characters in bookmark name. 
+							Only alpha numberic characters and spaces allowed.</div>
+			<input id="bookmarkName" type="text"></input>
+			<div id="setBookmarkSubmit" onclick="setBookmarkOkClicked()">Ok</div>
 		</div>
 	</div>
 	
@@ -96,7 +98,8 @@
 		<div id="devbar">
 			<div id="clearLocalStorage"onclick="clearLocalStorage();location.reload()">Reset Game</div>
 			<a id="linkToWiki" target="blank">Edit Content</a>
-			<a id="linkToJSEditor" href="../../../JSEditor/JSEditor/jsEditor.html" target="blank">Edit Config (refresh to reload)</a>
+			<a id="linkToJSEditor" href="../../../JSEditor/JSEditor/jsEditor.html" target="blank">JSEdit Config (refresh to reload)</a>
+			<a id="linkToConfigFile" href="" target="blank">Edit Config</a>
 		</div>
 	</div>
 	<div id="snippets"></div>

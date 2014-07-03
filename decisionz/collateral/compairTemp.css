@@ -1,0 +1,565 @@
+.noSelect{
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+
+  /* No support for these yet, use at own risk */
+  -o-user-select: none;
+  user-select: none;          
+}
+
+#setTitle {
+    background-image: url("../../common/img/bg_btn_set.png") !important;
+    border-bottom-left-radius: 4px;
+    border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
+    border-top-left-radius: 4px;
+    float: left;
+    font-size: 14px;
+    margin-left: 0;
+    padding-left: 6px;
+    padding-top: 7px;
+}
+#setText {
+    border-radius: 0 4px 4px 0;
+    bottom: auto;
+    font-size: 14px;
+    height: 20px;
+    left: 0;
+    padding-left: 10px;
+    padding-top: 7px;
+    position: relative;
+    top: 0;
+    max-width: 100%;
+    text-align: center;
+}
+.btn_set {
+    background-color: #999999;
+    background-image: url("../../common/img/bg_btn_set.png") !important;
+    background-position: center bottom !important;
+    background-repeat: repeat-x !important;
+    color: #FFFFFF;
+    left: 3px;
+    letter-spacing: 2px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.bootstrapLabel {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #F5F5F5;
+    background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
+    border-image: none;
+    border-radius: 0 0 0 0;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: default;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+    margin-left: -1px;
+    padding: 4px 12px;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    vertical-align: middle;
+}
+#container_setDiv {
+    background-color: #FBFAFA;
+    cursor: default;
+    height: 40px;
+    margin: 15px 0 0 5px;
+    position: absolute;
+    width: 146px;
+    top: 451px;
+    left: 667px;
+    height: 73px;
+    border-radius: 7px;
+    padding: 9px;
+}
+#setDiv {
+    background-color: transparent;
+    cursor: default;
+    height: 30px;
+	
+    width: 110px;
+    z-index: 0;
+    left: 0px;
+    float: right;
+    margin-right: 18px;
+}
+#clickGuard {
+    background-color: grey;
+    display: none;
+    height: 353px;
+    left: -11px;
+    opacity: 0.3;
+    position: absolute;
+    top: 0;
+    width: 191px;
+    z-index: 166;
+}
+.activity_description {
+    display: block;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    margin-left: 26px;
+    margin-top: -19px;
+    cursor: default;
+}
+.activity_hd {
+    color: grey;
+    display: block;
+    font-family: inherit;
+    font-size: 22px;
+    margin-left: 26px;
+    margin-top: 4px;
+    cursor: default;
+}
+html body {
+    background-color: #F5F5F5;
+    color: #444444;
+    font-family: Arial,Helvetica,sans-serif;
+    letter-spacing: 2px;
+    line-height: 20px;
+    position: absolute;
+}
+.roundCorners {
+    border-radius: 0 0 0 0;
+}
+
+#feedback {
+    -moz-user-select: none;
+    border: 1px solid #BDBDBD;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 2px 4px #BDBDBD;
+    display: block;
+    max-height: 495px;
+    min-height: 495px;
+    position: inherit;
+    top: 176px;
+    width: 198px;
+    z-index: 0;
+    float: left;
+    background-color: white;
+    padding: 10px;
+    opacity: 0;
+}
+#feedbackHeader {
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+#feedbackText {
+    margin-top: -13px;
+    /*background-color: navajowhite;*/
+}
+
+body[state_feedback="true"] #feedback{
+   opacity:1; 
+}
+
+#feedbackBtn:hover{
+   background-color: rgb(180, 180, 180);
+}
+
+#feedbackBtn {
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(213, 213, 213);
+    margin-top: 4px;
+    width: 89px;
+    height: 26px;
+    margin-left: 105px;
+    padding: 5px 0px 0px 5px;
+    text-align: center;
+}
+#pageBtns {
+    float: right;
+    width: 137px;
+    border: 1px solid #949494;
+    border-radius: 3px;
+    margin-top: 13px;
+    clear: both;
+    margin-right: 2px;
+}
+
+
+
+.hidden {
+     display: none; 
+}
+.invisible {
+    opacity: 0;
+}
+#nextDiv {
+    float: left;
+    height: 28px;
+    left: 51px;
+    top: 11px;
+    width: 68px;
+    background-color: lightgray;
+    cursor: pointer;
+}
+#prevDiv {
+    float: left;
+    height: 28px;
+    background: lightgray;
+    border-right: 1px solid #BBBBBB;
+    width: 68px;
+    cursor: pointer;
+}
+#nextBtnClickGuard {
+    display: block;
+    position: relative;
+    top: -30px;
+}
+#prevBtnClickGuard {
+    display: block;
+    position: relative;
+    top: -30px;
+}
+#rightContainer {
+    height: 548px;
+    width: 210px;
+    float: left;
+    /*background-color: greenyellow;*/
+}
+
+body[state_clickGuard="true"] #stageClickGuard {
+    display:block;
+}
+
+#stageClickGuard {
+    background-color: grey;
+    height: 518px;
+    opacity: .6;
+    width: 628px;
+    margin-left: 222px;
+    position: absolute;
+    display:none; 
+}
+#main{
+    
+    /*background-color: orange;*/
+    height: 559px;
+    width: 847px;
+}
+
+#keyboardContainer{
+    width: 410px;
+    
+    /*background-color: magenta;*/
+    margin-left: 14px;
+    height: 100px;
+}
+
+body[state_letter_grid_key="true"] #keyboardContainer{
+   display:none; 
+    
+}
+
+#letterGrid{
+    width: 410px;
+    
+    height: 410px;
+    /*background-color: lightblue;*/
+}
+
+#letterGridContainer{
+    width: 412px;
+    
+    /*background-color: green;*/
+    float: left;
+    height: 549px;
+    margin-left: 2px;
+}
+
+#feedbackTextContainer{
+    height: 461px;
+    
+    overflow-y: auto;
+    /*background-color: thistle;*/
+}
+
+#nextBtnLink{
+    padding: 5px 0px 0px 12px;
+    
+}
+
+#prevBtnLink{
+    padding: 5px 0px 0px 12px;
+    
+}
+
+#prevBtnLink:hover{
+    color: dimGray;
+    
+}
+
+#nextBtnLink:hover{
+    color: dimGray;
+    
+}
+
+#letterGridSubContainer{
+    position: relative;
+}
+
+#letterGridKey{
+   width: 171px;
+   display:none;     
+   height: 80px;
+   /*background-color: red;*/
+   margin-left: 126px;
+}
+
+body[state_letter_grid_key="true"] #letterGridKey{
+   display:block; 
+    
+}
+
+.wordContainer{
+    
+    width: 212px;
+    height: 40px;
+}
+
+.playWordBtn:hover{
+    /*background-color: yellow;*/
+    background-image: url("../../common/Library/images/playBtn_s2.png");
+}
+
+.playWordBtn{
+    /*background-color: darkcyan;*/
+    
+    width: 40px;
+    height: 40px;
+    float: left;
+    background-image: url("../../common/Library/images/playBtn_s1.png");
+    background-size: 100% auto;
+    cursor: pointer;
+}
+
+.wordContainer[completed='true'] .wordTextContainer{
+    display:block;
+}
+
+.wordContainer[completed='true'] .wordTextContainer .wordText{
+    display:block;
+}
+
+.wordContainer[completed='true'] .wordTextContainer .wordLetters{
+    display:none;
+}
+
+.wordTextContainer{
+    /*background-color: lightcoral;*/
+    
+    width: 133px;
+    height: 40px;
+    float: left;
+    display: none;
+}
+
+.wordText{
+    margin-top: 10px;
+    font-size: 17px;
+    margin-left: 7px;
+    cursor: default;
+}
+
+.wordContainer[has_missing_letters="true"] .wordText{
+    display:none;
+}
+
+.wordContainer[has_missing_letters="true"] .wordLetters{
+    display:block;
+}
+
+.wordContainer[word_played="true"] .wordTextContainer{
+    display:block;
+}
+
+.wordLetters{
+    display: none;
+    margin-top: 10px;
+    margin-left: 5px;
+    font-size: 22px;
+    cursor: default;
+}
+
+.wordHelp:hover{
+    /*background-color: blue;*/
+    font-size: 30px;
+}
+
+#letterGridClickGuard{
+    width: 100%;
+    height: 100%;
+    background-color:grey;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: .5;
+}
+
+#letterGridSubContainerClickGuard{
+    width: 100%;
+    height: 100%;
+    background-color:grey;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: .5;
+    display: none;    
+}
+
+#letterGridLetters{
+    position: relative;
+    
+}
+
+body[state_all_words_finished="true"] #letterGridClickGuard{
+    display: none;
+}
+
+
+body:not([state_all_words_finished="true"]) .wordHelp{
+    display: none;
+}
+
+.wordHelp{
+    /*background-color: lightgreen;*/
+    
+    height: 30px;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 26px;
+    cursor: pointer;
+    width: 40px;
+    float: left;
+}
+
+.wordContainer[state="lettersMode"] .wordLetters{
+    display: block;
+}
+
+.wordContainer[state="lettersMode"] .wordText{
+    display: none;
+}
+
+.missing{
+    /*background-color:red;*/
+}
+
+.wordLetter{
+    width: 14px;
+    
+    float: left;
+    text-align: center;
+    font-size: 17px;
+}
+
+.letter{
+    cursor: default;
+    width: 20px;
+    height: 20px;
+    float: left;
+    background-color: lightgray;
+    margin: 2px 0px 0px 3px;
+    padding: 4px 2px 4px 14px;
+    border-radius: 3px;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+
+  /* No support for these yet, use at own risk */
+  -o-user-select: none;
+  user-select: none; 
+}
+
+.letterGridLetter{
+    float:left;
+    padding: 3px 3px 3px 4px;
+    font-size: 22px;
+    width: 20px;
+    height: 21px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.letterGridRow{
+    clear:both;
+}
+
+.currentLetterGridLetter{
+    background-color:yellow;
+}
+
+#wordFinderContainer{
+    padding-top: 10px;
+	
+    padding-left: 10px;
+}
+
+#wordFinderKey{
+    float: left;
+	
+    background-color: yellow;
+    width: 25px;
+    height: 25px;
+    border: 3px solid blue;
+    margin-right: 7px;
+}
+
+#wordFinderText{
+    padding-top: 5px;
+	
+    color: black;
+    font-weight: bold;
+    cursor: default;
+}
+
+#highlightText{
+    float: left;
+	
+    clear: both;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: bold;
+    color: black;
+    cursor: default;
+}
+
+.selectedLetterGridLetter{
+    background-color: lightseagreen;
+    
+}
+
+.highlightFirstLetter{
+	color: red;
+}
+
+#feedbackContentMedia > img{
+    max-width: 193px;
+    
+}
+
+#videoTag{
+    max-width: 190px;
+    
+}
+
+body > .letter{
+	opacity: .7;
+}
+
+.dragOver{
+	background-color:yellow;
+}
