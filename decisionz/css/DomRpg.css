@@ -1,0 +1,49 @@
+body div.pause{
+	-webkit-animation-play-state: paused;
+}
+
+#ok:hover{
+    background-color: gray;
+}
+
+#ok{
+	cursor: pointer;
+    background-color: lightgray;
+    
+	width: 44px;
+    text-align: center;
+    color: black;
+    border-radius: 10px;
+    
+	padding: 7px;
+    position: absolute;
+    
+	bottom: 7px;
+    
+	right: 10px;
+	font-size: 16px;
+}
+
+#dialog{
+    width: 86%;
+}
+
+#dialogBox{
+    background-color: rgb(76, 111, 123);
+    width: 420px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid black;
+    color: white;
+    font-size: 19px;
+    padding: 20px;
+    display: none;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: 9999999;
+}
+
+#dialogBox[show="true"]{
+	display:block;
+}

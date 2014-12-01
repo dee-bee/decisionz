@@ -1,0 +1,95 @@
+#edgarContainer{
+	position:absolute;
+	transform: scale(.4);
+	-webkit-transform: scale(.4);
+}
+
+#edgar{
+	position:absolute;
+	width: 33px;
+	height: 50px;
+	background-image: url('../images/Edgar_alpha.png');
+	background-size: 736px;
+	background-position: -35px -104px;
+	left: -0px;
+	top: 0px;}
+
+#edgar.standingLeft{
+	background-position: -35px -104px;
+}
+
+#edgar.standingUp{
+    background-position: 0px 0px;
+}
+
+#edgar.standingRight{
+	background-position: -35px -104px;
+	transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+}
+
+#edgar.standingDown{
+	background-position: -35px -51px;
+}
+
+#edgar.walkingLeft{
+	-webkit-animation: animEdgarWalking .5s steps(1,end) infinite;
+	animation: animEdgarWalking .5s steps(1,end) infinite;
+}
+
+#edgar.walkingRight{
+	-webkit-animation: animEdgarWalking .5s steps(1,end) infinite;
+	animation: animEdgarWalking .5s steps(1,end) infinite;
+	transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+}
+
+#edgar.walkingDown{
+	width: 33px;
+	-webkit-animation: animEdgarWalkingDown .5s steps(1,end) infinite;
+	animation: animEdgarWalkingDown .5s steps(1,end) infinite;
+}
+
+#edgar.walkingUp{	
+	width: 33px;
+	-webkit-animation: animEdgarWalkingUp .5s steps(1,end) infinite;
+	animation: animEdgarWalkingUp .5s steps(1,end) infinite;
+}
+
+@-webkit-keyframes animEdgarWalking{
+    0%   {background-position: -35px -104px;}
+    33%  {background-position: 0px -104px;}
+    66%  {background-position: -65px -104px;}
+}
+
+@keyframes animEdgarWalking{
+    0%   {background-position: -35px -104px;}
+    33%  {background-position: 0px -104px;}
+    66%  {background-position: -65px -104px;}
+}
+
+
+@-webkit-keyframes animEdgarWalkingUp{
+    0%   {background-position: -35px 0px;}
+    33%  {background-position: 0px 0px;}
+    66%  {background-position: -65px 0px;}
+}
+
+@keyframes animEdgarWalkingUp{
+    0%   {background-position: -35px 0px;}
+    33%  {background-position: 0px 0px;}
+    66%  {background-position: -65px 0px;}
+}
+
+
+@-webkit-keyframes animEdgarWalkingDown{
+    0%   {background-position: -35px -51px;}
+    33%  {background-position: 0px -51px;}
+    66%  {background-position: -65px -51px;}
+}
+
+@keyframes animEdgarWalkingDown{
+    0%   {background-position: -35px -51px;}
+    33%  {background-position: 0px -51px;}
+    66%  {background-position: -65px -51px;}
+}

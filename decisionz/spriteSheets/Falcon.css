@@ -1,0 +1,18 @@
+#falconContainer{
+	position:absolute;
+	left: 0px;
+}
+
+#falcon{
+	position: absolute;
+	width: 483;
+	height: 241px;
+	background-image: url('../images/Falcon_alpha.png');
+	/* background-size: 2965px; */
+	background-position: -16px -15px;
+	left: 0px;
+	top: 0px;
+	/* transform: scale(3); */
+	/* transition: transform 3s; */
+	animation: bobbleFalcon 3s infinite;
+}
