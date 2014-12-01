@@ -7,7 +7,6 @@
 		<variable name="bookmarks" />
 		<variable name="currentTime" value="0000-00-00 15:32:00" />
 		<variable name="gameMode" value="text" />
-		<variable name="Sound" value="false" />
 		<variable name="UserName" value="DanB" />
 		<variable name="remotePageContentURL" value="http://wiki.decisionz.org/index.php" />
 		<variable name="currentBookmark" value="" />
@@ -26,9 +25,15 @@
 		<variable name="videoTransitionResolution" value="320x240" />
 		<variable name="testsub1" value="text" />
 		<variable name="test2" value="text" />
-		<variable name="narration" value="true" />
+		<variable name="narrationAudio" value="true" />
 		<variable name="music" value="true" />
 		<variable name="log">
+		</variable>
+		<variable name="routes">
+			<route startLocation="Hallway" endLocation="TestLoc"
+				duration="0000-00-00 00:03:00" />
+			<route startLocation="TestLoc" endLocation="BernardsCabin"
+				duration="0000-00-00 00:04:00" />
 		</variable>
 	</decisionvars>
 	<itemsTypes />
@@ -66,8 +71,8 @@
 			musicRepeat="true" name="introTableCouchDesk" sceneType="SimpleDialogBuilder">
 			<page id="pg_receipt">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pf_game_mode_test" type="pageForward">
@@ -81,20 +86,20 @@
 			</page>
 			<page id="p3" content_id="cid_introTableCouchDesk_pg3">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_game_mode_test"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_game_mode_test" />
 				</decisions>
 			</page>
 			<page id="p2" content_id="cid_introTableCouchDesk_pg2">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="p3"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="p3" />
 				</decisions>
 			</page>
 			<page id="pageStart" content_id="cid_introTableCouchDesk_pg1">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="p2"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="p2" />
 				</decisions>
 			</page>
 		</scene>
@@ -107,7 +112,8 @@
 		</scene>
 		<scene name="s_Jukebox">
 			<page id="pageStart"
-				notes="todo- In the video enabled version change this to a flash component.">
+				notes="todo- In the video enabled version change this to a flash component."
+				duration="0000-00-00 00:01:00">
 				<decisions>
 					<decision label="Save it for another time" location="exploreButterflyLounge" />
 					<decision label="Look through the song selection"
@@ -121,17 +127,18 @@
 				</pagecondition>
 				<content />
 			</page>
-			<page id="pg_know_the_song">
+			<page id="pg_know_the_song" duration="0000-00-00 00:09:00"
+				checkpoint="Jukebox Room Number">
 				<decisionvar name="pg_know_the_song" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="exploreButterflyLounge"></decision>
+				<decisions>
+					<decision label="Next Page" location="exploreButterflyLounge" />
 				</decisions>
 			</page>
-			<page id="pg_dont_know_song">
+			<page id="pg_dont_know_song" duration="0000-00-00 00:03:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="exploreButterflyLounge"></decision>
+				<decisions>
+					<decision label="Next Page" location="exploreButterflyLounge" />
 				</decisions>
 			</page>
 		</scene>
@@ -149,46 +156,46 @@
 			<link linkName="Left-exploreButterflyLounge" linkType="left"
 				location="exploreButterflyLounge" clickedVideoDirection="reverse"
 				enableClickedVideo="true" />
-			<page id="pg7">
+			<page id="pg7" duration="0000-00-00 00:04:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="exploreButterflyLounge"></decision>
+				<decisions>
+					<decision label="Next Page" location="exploreButterflyLounge" />
 				</decisions>
 			</page>
 			<page id="pg6" duration="0000-00-00 00:02:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg7"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg7" />
 				</decisions>
 			</page>
-			<page id="pg5">
+			<page id="pg5" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg6"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg6" />
 				</decisions>
 			</page>
-			<page id="pg4" duration="0000-00-00 00:02:00">
+			<page id="pg4" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg5"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg5" />
 				</decisions>
 			</page>
-			<page id="pg3" duration="0000-00-00 00:02:00">
+			<page id="pg3" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg4"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg4" />
 				</decisions>
 			</page>
-			<page id="pg2" duration="0000-00-00 00:03:00">
+			<page id="pg2" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg3"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg3" />
 				</decisions>
 			</page>
 			<page id="pageStart" duration="0000-00-00 00:02:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg2"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg2" />
 				</decisions>
 			</page>
 			<decisionvar name="nr_introRudolphe" value="true" />
@@ -201,7 +208,7 @@
 				</pagecondition>
 				<content />
 			</page>
-			<page id="pg_bl_index" duration="0000-00-00 00:10:00">
+			<page id="pg_bl_index" duration="0000-00-00 00:07:00">
 				<decisions>
 					<decision label="Go talk with Rudolphe" location="introRudolphe">
 						<condition name="nr_introRudolphe">
@@ -230,26 +237,26 @@
 				</pagecondition>
 				<content />
 			</page>
-			<page id="pg2">
+			<page id="pg2" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg3"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg3" />
 				</decisions>
 			</page>
-			<page id="pageStart" checkpoint="The Butterfly Lounge" duration="0000-00-00 00:10:00">
+			<page id="pageStart" checkpoint="The Butterfly Lounge" duration="0000-00-00 00:15:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg2"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg2" />
 				</decisions>
 			</page>
 			<decisionvar name="noRepeat_introButterflyLounge" value="true" />
-			<page id="pg5_doNothing">
+			<page id="pg5_doNothing" duration="0000-00-00 00:05:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="exploreButterflyLounge"></decision>
+				<decisions>
+					<decision label="Next Page" location="exploreButterflyLounge" />
 				</decisions>
 			</page>
-			<page id="pg4">
+			<page id="pg4" duration="0000-00-00 00:02:00">
 				<decisions>
 					<decision label="Sit And Enjoy Your Beer Quietly"
 						nextpage="pg5_doNothing" />
@@ -259,50 +266,15 @@
 			</page>
 			<page id="pg3" duration="0000-00-00 00:03:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_RudolphePresent"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_RudolphePresent" />
 				</decisions>
 			</page>
 		</scene>
 
 		<!-- Impl - Hallway (testsuite) (needs cleaning) -->
 		<scene name="Hallway">
-			<page id="pg_fast_forward" dontLoadContent="true">
-				<script><![CDATA[
-					sceneReturnObj = {
-						//# sourceURL=dynamicScript.js
-						
-						//Loads a content panel with a number input up to 60 minutes
-						//When a user selects a number and hits OK, then that ammount of time is added
-						// and text appears confirming the change
-						// the next button takes you back to the hallway
-						initPageScript : function(){
-							$("#pageContent").html("<div>1 minute</div>" + 
-														"<input type='range' id='ff_mins' value='60' min='1' max='60'>" +
-														"<div>60 minutes</div>" + 
-														"<input type='submit' onclick='sceneReturnObj.Hallway_pg_fast_forward_submit()'>")
-						},
-						
-						Hallway_pg_fast_forward_submit : function(){
-							var ff_mins = $("#ff_mins").attr("value")
-							
-							if(ff_mins < 10){
-								ff_mins = "0" + ff_mins
-							}
-							
-							addDurationToCurrentTime("0000-00-00 00:" + ff_mins  + ":00")
-							
-							//Check if this decision should be displayed
-							var output = "<p>Time Flies By!</p>"
-						    
-						    output += "<div class='decisionBtn' onclick='loadScene(\"Hallway\")' >Next Page</div><br />";
-							
-							//output page
-							$("body #pageContent").html(output);
-						}
-					}
-					]]>
-				</script>
+			<page id="pg_fast_forward" loadJS="" dontLoadContent="true">
 				<content />
 			</page>
 			<!--<page id="pg_fast_forward_1_hour" location="Hallway" duration="0000-00-00 
@@ -310,57 +282,57 @@
 			<page id="pg_bedtime_reminder_day_2">
 				<decisionvar name="nr_pg_bedtime_reminder_day_2" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_bedtime_day_3">
 				<decisionvar name="nr_pg_bedtime_day_3" value="true" />
 				<decisionvar name="currentTime" value="0000-00-03 05:15:00" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_awake_day_4"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_awake_day_4" />
 				</decisions>
 			</page>
 			<page id="pg_awake_day_4">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_bedtime_reminder_day_3">
 				<decisionvar name="nr_pg_bedtime_reminder_day_3" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_david_follow_ghost" duration="0000-00-00 00:11:00">
 				<decisionvar name="nr_pg_david_follow_ghost" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_bedtime_day_1">
 				<decisionvar name="nr_pg_bedtime_day_1" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="s_containmentAreaDreamDay1"></decision>
+				<decisions>
+					<decision label="Next Page" location="s_containmentAreaDreamDay1" />
 				</decisions>
 			</page>
 			<page id="pg_bedtime_reminder_day_1">
 				<decisionvar name="nr_pg_bedtime_reminder_day_1" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_IntroHallway" duration="0000-00-00 00:02:00">
 				<decisionvar name="nr_pg_IntroHallway" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_default_ending">
@@ -425,7 +397,8 @@
 					</decision>
 
 					<!-- Impl - Manny (testsuite) -->
-					<decision label="Go to Bernards cabin" location="BernardsCabin" />
+					<decision label="Go to Bernards cabin" location="BernardsCabin"
+						calculate_duration="Hallway,TestLoc,BernardsCabin" />
 					<decision label="You missed a meeting with Manny. Talk to him."
 						location="Casino">
 						<condition name="meeting_Manny_top_deck" value="true">
@@ -649,29 +622,29 @@
 			<page id="pg_haunting_3" duration="0000-00-00 00:09:00">
 				<decisionvar name="pg_haunting_3" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_haunting_2" duration="0000-00-00 00:07:00">
 				<decisionvar name="pg_haunting_2" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_haunting_1" duration="0000-00-00 00:05:00">
 				<decisionvar name="pg_haunting_1" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_ghost_mid_deck" duration="0000-00-00 00:05:00">
 				<decisionvar name="pg_ghost_mid_deck" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 
@@ -683,22 +656,22 @@
 				<decisionvar name="pg_mark_confronts_you_about_missing_meeting"
 					value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_mark_finds_you" duration="0000-00-00 00:07:00">
 				<decisionvar name="pg_mark_finds_you" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_message_from_mark">
 				<decisionvar name="pg_message_from_mark" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pf_went_to_meeting_with_Catherine_check" type="pageForward"
@@ -710,16 +683,16 @@
 			</page>
 			<page id="pg_awake_day_3">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_went_to_meeting_with_Catherine_check"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_went_to_meeting_with_Catherine_check" />
 				</decisions>
 			</page>
 			<page id="pg_bedtime_day_2">
 				<decisionvar name="nr_pg_bedtime_day_2" value="true" />
 				<decisionvar name="currentTime" value="0000-00-02 06:00:00" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_awake_day_3"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_awake_day_3" />
 				</decisions>
 			</page>
 
@@ -728,48 +701,48 @@
 		<!-- Impl - Containment Area -->
 		<scene name="s_containmentAreaDreamDay1">
 			<decisionvar name="s_containmentAreaDreamDay1" value="true" />
-			<page id="pg_day_2_intro">
+			<page id="pg_day_2_intro" duration="0000-00-00 00:21:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_day_2">
+			<page id="pg_day_2" checkpoint="Day 2">
 				<decisionvar name="currentTime" value="0000-00-01 06:00:00" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_day_2_intro"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_day_2_intro" />
 				</decisions>
 			</page>
-			<page id="pg_head_back">
+			<page id="pg_head_back" duration="0000-00-00 00:08:00">
 				<decisionvar name="pg_head_back" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_day_2"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_day_2" />
 				</decisions>
 			</page>
-			<page id="pg_containment_area" music="DearEster.mp3">
+			<page id="pg_containment_area" music="DearEster.mp3" duration="0000-00-00 01:05:00">
 				<decisionvar name="pg_containment_area" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_day_2"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_day_2" />
 				</decisions>
 			</page>
-			<page id="pg_dont_follow_flames">
+			<page id="pg_dont_follow_flames" duration="0000-00-00 00:08:00">
 				<decisionvar name="pg_dont_follow_flames" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_day_2"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_day_2" />
 				</decisions>
 			</page>
-			<page id="pg_follow_blue_flame">
+			<page id="pg_follow_blue_flame" duration="0000-00-00 00:24:00">
 				<decisions>
 					<decision label="Pick the lock" nextpage="pg_containment_area" />
 					<decision label="Head back to your cabin" nextpage="pg_head_back" />
 				</decisions>
 				<content />
 			</page>
-			<page id="pageStart">
+			<page id="pageStart" checkpoint="Day 1 Nightime" duration="0000-00-00 01:00:00">
 				<decisions>
 					<decision label="Stay in bed and hope it goes away"
 						nextpage="pg_dont_follow_flames" />
@@ -931,52 +904,52 @@
 				<decisionvar name="pg_tell_bernard_about_rudolphe"
 					value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pg_what_is_facial_recognition">
 				<decisionvar name="pg_what_is_facial_recognition" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pg_what_do_ian_and_mark">
 				<decisionvar name="pg_what_do_ian_and_mark" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pg_video_liang_entering_marks_room">
 				<decisionvar name="pg_video_liang_entering_marks_room"
 					value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pg_identify_photo_mr_liang">
 				<decisionvar name="pg_identify_photo_mr_liang" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pg_missed_auction_house_breakin">
 				<decisionvar name="pg_missed_auction_house_breakin"
 					value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pg_a_little_late_tag">
 				<decisionvar name="pg_a_little_late_tag" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="s_AuctionHouseBreakIn"></decision>
+				<decisions>
+					<decision label="Next Page" location="s_AuctionHouseBreakIn" />
 				</decisions>
 			</page>
 			<!--<page id="pageStart" type="pageForward" nextpage="pf_bernard_pc_list"> 
@@ -984,14 +957,14 @@
 			<page id="pg_containment_area_research">
 				<decisionvar name="pg_containment_area_research" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pg_tell_about_log_book" duration="0000-00-00 00:55:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pf_log_book_check" type="pageForward" nextpage="pg_index">
@@ -1002,29 +975,29 @@
 			</page>
 			<page id="pg_story_about_esmeralda">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_log_book_check"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_log_book_check" />
 				</decisions>
 			</page>
 			<page id="pg_tell_about_blue_flames">
 				<decisionvar name="pg_tell_about_blue_flames" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_story_about_esmeralda"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_story_about_esmeralda" />
 				</decisions>
 			</page>
 			<page id="pg_saved_rudolphe">
 				<decisionvar name="pg_saved_rudolphe" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pg_return_to_bernards_cabin">
 				<decisionvar name="pg_return_to_bernards_cabin" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pf_did_you_find_rudolphe" type="pageForward"
@@ -1039,22 +1012,22 @@
 				<decisionvar name="pg_investigate_containment_area_with_bernard"
 					value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_did_you_find_rudolphe"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_did_you_find_rudolphe" />
 				</decisions>
 			</page>
 			<page id="pg_tell_bernard_about_containment_area" duration="0000-00-00 00:13:00">
 				<decisionvar name="pg_tell_bernard_about_containment_area"
 					value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_story_about_esmeralda"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_story_about_esmeralda" />
 				</decisions>
 			</page>
-			<page id="pg_default_intro" duration="0000-00-00 00:05:00">
+			<page id="pg_default_intro">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 
@@ -1062,8 +1035,8 @@
 			<page id="pg_tell_not_first_PIs" duration="0000-00-00 00:07:00">
 				<decisionvar name="pg_tell_Bernard_not_first_PIs" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 
@@ -1085,16 +1058,16 @@
 			<page id="pg_talk_about_Mark" duration="0000-00-00 00:09:00">
 				<decisionvar name="pg_talk_about_Mark" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 
 			<!-- Impl - Transporter -->
 			<page id="pg_show_bernard_plaque">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="s_youIanAndJonasTalk"></decision>
+				<decisions>
+					<decision label="Next Page" location="s_youIanAndJonasTalk" />
 				</decisions>
 			</page>
 			<page id="pf_check_for_plaque" type="pageForward" nextpage="pg_show_bernard_plaque">
@@ -1105,8 +1078,8 @@
 			</page>
 			<page id="pg_didnt_transport">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pf_check_transport_to_ghost_world" type="pageForward"
@@ -1119,21 +1092,21 @@
 			<page id="pg_talk_about_costume_ball">
 				<decisionvar name="pg_talk_about_costume_ball" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_check_transport_to_ghost_world"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_check_transport_to_ghost_world" />
 				</decisions>
 			</page>
 			<page id="pg_mark_took_plaque">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_index" />
 				</decisions>
 			</page>
 			<page id="pg_transported_to_ghost_world">
 				<decisionvar name="pg_transported_to_ghost_world" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_check_for_plaque"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_check_for_plaque" />
 				</decisions>
 			</page>
 
@@ -1141,17 +1114,17 @@
 
 		<!-- Impl - Auction House (testsuite) -->
 		<scene name="s_TellBernardAboutAsiagoAtAuction">
-			<page id="pg_already_told_bernard_about_rudolphe">
+			<page id="pg_already_told_bernard_about_rudolphe" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_time_check_for_auction_house_breakin"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_time_check_for_auction_house_breakin" />
 				</decisions>
 			</page>
 			<decisionvar name="var_bernard_intro_skip" value="true" />
-			<page id="pg_not_enough_time_for_breakin">
+			<page id="pg_not_enough_time_for_breakin" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="BernardsCabin"></decision>
+				<decisions>
+					<decision label="Next Page" location="BernardsCabin" />
 				</decisions>
 			</page>
 			<page id="pf_time_check_for_auction_house_breakin" type="pageForward"
@@ -1161,10 +1134,10 @@
 				</pagecondition>
 				<content />
 			</page>
-			<page id="pg_tell_about_your_bidding">
+			<page id="pg_tell_about_your_bidding" duration="0000-00-00 00:03:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_already_told_bernard_about_rudolphe"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_already_told_bernard_about_rudolphe" />
 				</decisions>
 			</page>
 			<page id="pf_bid_at_auction_check" type="pageForward"
@@ -1181,20 +1154,20 @@
 				</pagecondition>
 				<content />
 			</page>
-			<page id="pg_decide_to_breakin_to_auction_house">
+			<page id="pg_decide_to_breakin_to_auction_house" duration="0000-00-00 00:01:00">
 				<decisionvar name="pg_break_into_auction_house" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="BernardsCabin"></decision>
+				<decisions>
+					<decision label="Next Page" location="BernardsCabin" />
 				</decisions>
 			</page>
-			<page id="pg_dont_break_into_auction_house">
+			<page id="pg_dont_break_into_auction_house" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="BernardsCabin"></decision>
+				<decisions>
+					<decision label="Next Page" location="BernardsCabin" />
 				</decisions>
 			</page>
-			<page id="pg_auction_house_breakin_time_check_pass">
+			<page id="pg_auction_house_breakin_time_check_pass" duration="0000-00-00 00:09:00">
 				<decisions>
 					<decision label="You might be right. Lets not risk it."
 						nextpage="pg_dont_break_into_auction_house" />
@@ -1203,20 +1176,20 @@
 				</decisions>
 				<content />
 			</page>
-			<page id="pageStart">
+			<page id="pageStart" duration="0000-00-00 00:02:00">
 				<decisionvar name="pg_tell_about_auction_results" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_bid_at_auction_check"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_bid_at_auction_check" />
 				</decisions>
 			</page>
 		</scene>
 		<scene name="s_AuctionHouseBreakIn">
 			<decisionvar name="s_AuctionHouseBreakIn" value="true" />
-			<page id="pg_late_for_breakin">
+			<page id="pg_late_for_breakin" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_auction_house_breakin"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_auction_house_breakin" />
 				</decisions>
 			</page>
 			<page id="pageStart" type="pageForward" nextpage="pg_auction_breakin_default_intro">
@@ -1225,19 +1198,19 @@
 				</pagecondition>
 				<content />
 			</page>
-			<page id="pg_auction_house_breakin">
+			<page id="pg_auction_house_breakin" duration="0000-00-00 00:52:00">
 				<decisionvar name="pg_auction_house_breakin" value="true" />
 				<!--Todo Figure out why setting the current time here takes us to 1 30:00:00 -->
 				<!--<decisionvar name="currentTime" value="0000-00-02 01:15:00"/> -->
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_auction_breakin_default_intro">
+			<page id="pg_auction_breakin_default_intro" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_auction_house_breakin"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_auction_house_breakin" />
 				</decisions>
 			</page>
 		</scene>
@@ -1273,45 +1246,46 @@
 		</scene>
 		<scene name="AuctionHouse">
 			<decisionvar name="S_AuctionHouse" value="true" />
-			<page id="pg_auctionIntro_before_painting_auctioned" duration="0000-00-00 00:05:00">
+			<page id="pg_auctionIntro_before_painting_auctioned" duration="0000-00-00 00:05:00"
+				checkpoint="Late For Auction">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_can_you_bid_on_painting"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_can_you_bid_on_painting" />
 				</decisions>
 			</page>
 			<page id="pg_way_early" duration="0000-00-00 00:09:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_after_auction" duration="0000-00-00 00:09:00">
 				<decisionvar name="pg_after_auction" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_after_painting_auctioned">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_leave_auction"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_leave_auction" />
 				</decisions>
 			</page>
-			<page id="pg_bid_on_painting" duration="0000-00-00 00:03:00">
+			<page id="pg_bid_on_painting" duration="0000-00-00 00:07:00">
 				<decisionvar name="var_bid_at_auction" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_leave_auction"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_leave_auction" />
 				</decisions>
 			</page>
-			<page id="pg_dont_bid">
+			<page id="pg_dont_bid" duration="0000-00-00 00:09:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_leave_auction"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_leave_auction" />
 				</decisions>
 			</page>
-			<page id="pg_bid_option_available" duration="0000-00-00 00:30:00">
+			<page id="pg_bid_option_available" duration="0000-00-00 00:12:00">
 				<decisions>
 					<decision label="No" nextpage="pg_dont_bid" />
 					<decision label="Yes" nextpage="pg_bid_on_painting" />
@@ -1319,10 +1293,10 @@
 				<decisionvar name="pg_bid_option_available" value="true" />
 				<content />
 			</page>
-			<page id="pg_no_bid_option">
+			<page id="pg_no_bid_option" duration="0000-00-00 01:00:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_leave_auction"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_leave_auction" />
 				</decisions>
 			</page>
 			<page id="pf_can_you_bid_on_painting" type="pageForward"
@@ -1332,31 +1306,32 @@
 				</pagecondition>
 				<content />
 			</page>
-			<page id="pg_auction_intro" duration="0000-00-00 00:13:00">
+			<page id="pg_auction_intro" duration="0000-00-00 00:23:00"
+				checkpoint="Auction Starts">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_can_you_bid_on_painting"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_can_you_bid_on_painting" />
 				</decisions>
 			</page>
 			<page id="pg_wait_until_auction">
 				<decisionvar name="currentTime" value="0000-00-01 11:00:00" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_auction_intro"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_auction_intro" />
 				</decisions>
 			</page>
 			<page id="pg_decide_to_come_back_later" duration="0000-00-00 00:09:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_leave_auction">
 				<decisionvar name="var_went_to_auction" value="true" />
 				<decisionvar name="currentTime" value="0000-00-01 13:00:00" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_wait_until_auction_decision">
@@ -1387,10 +1362,10 @@
 		</scene>
 		<scene name="s_AuctionHouseBreakInResults">
 			<decisionvar name="var_bernard_intro_skip" value="true" />
-			<page id="pageStart">
+			<page id="pageStart" duration="0000-00-00 00:18:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="BernardsCabin"></decision>
+				<decisions>
+					<decision label="Next Page" location="BernardsCabin" />
 				</decisions>
 			</page>
 			<decisionvar name="s_AuctionHouseBreakInResults" value="true" />
@@ -1404,19 +1379,19 @@
 		</scene>
 		<scene name="s_giveJonasDocumentsToGhosts">
 			<decisionvar name="s_giveJonasDocumentsToGhosts" value="true" />
-			<page id="pageStart" duration="0000-00-00 00:32:00">
+			<page id="pageStart" duration="0000-00-00 01:07:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 		</scene>
 		<scene name="s_findJonasDocuments">
 			<decisionvar name="s_findJonasDocuments" value="true" />
-			<page id="pageStart" duration="0000-00-00 00:42:00">
+			<page id="pageStart" duration="0000-00-00 01:12:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 		</scene>
@@ -1424,8 +1399,8 @@
 			<decisionvar name="s_GhostDenIntro" value="true" />
 			<page id="pageStart" duration="0000-00-00 00:34:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 		</scene>
@@ -1436,21 +1411,21 @@
 				<decisionvar name="var_dont_tell_farse_about_mark"
 					value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_tell_farse_about_mark" duration="0000-00-00 00:16:00">
 				<decisionvar name="var_tell_farse_about_mark" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_didnt_meet_mark" duration="0000-00-00 00:13:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_met_mark">
@@ -1469,252 +1444,254 @@
 			<decisionvar name="s_farseUpdatesYou" value="true" />
 			<page id="pageStart">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_met_mark"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_met_mark" />
 				</decisions>
 			</page>
 		</scene>
 
-		<scene xmlns="http://www.w3.org/1999/xhtml" name="s_IntroduceFarseSecurityRoom">
+		<scene name="s_IntroduceFarseSecurityRoom">
 			<page id="pg_do_you_tell_farse_about_painting">
 				<decisions>
-					<decision label="No" nextpage="pg_dont_tell_farse_about_painting"></decision>
-					<decision label="Yes" nextpage="pg_tell_farse_about_painting"></decision>
+					<decision label="No" nextpage="pg_dont_tell_farse_about_painting" />
+					<decision label="Yes" nextpage="pg_tell_farse_about_painting" />
 				</decisions>
-				<content></content>
+				<content />
 			</page>
 			<page id="pg_trishas_job_incorrect" duration="0000-00-00 00:02:00">
-				<decisionvar name="pg_trishas_job_incorrect" value="true"></decisionvar>
-				<content></content>
+				<decisionvar name="pg_trishas_job_incorrect" value="true" />
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_auction_memory"></decision>
+					<decision label="Next Page" nextpage="pg_auction_memory" />
 				</decisions>
 			</page>
 			<page id="pg_farse_throws_you_in_brig">
-				<content></content>
+				<content />
 			</page>
-			<page id="pg_farse_ends_good" duration="0000-00-00 00:04:38">
-				<content></content>
+			<page id="pg_farse_ends_good" duration="0000-00-00 00:04:00">
+				<content />
 				<decisions>
-					<decision label="Next Page" location="Hallway"></decision>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_farse_ends_bad" duration="0000-00-00 00:01:11">
-				<content></content>
+			<page id="pg_farse_ends_bad" duration="0000-00-00 00:01:00">
+				<content />
 				<decisions>
-					<decision label="Next Page" location="Hallway"></decision>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_talk_back_to_farse" duration="0000-00-00 00:02:03">
+			<page id="pg_talk_back_to_farse" duration="0000-00-00 00:02:00">
 				<decisions>
 					<decision label="Bite your tougue and say nothing"
-						nextpage="pg_farse_ends_bad"></decision>
-					<decision label="Let him know who you are!" nextpage="pg_farse_throws_you_in_brig"></decision>
+						nextpage="pg_farse_ends_bad" />
+					<decision label="Let him know who you are!" nextpage="pg_farse_throws_you_in_brig" />
 				</decisions>
-				<decisionvar name="pg_talk_back_to_farse" value="true"></decisionvar>
-				<content></content>
+				<decisionvar name="pg_talk_back_to_farse" value="true" />
+				<content />
 			</page>
-			<page id="pg_tell_farse_you_were_in_casino" duration="0000-00-00 00:02:51">
+			<page id="pg_tell_farse_you_were_in_casino" duration="0000-00-00 00:04:00">
 				<decisions>
-					<decision label="Say nothing" nextpage="pg_farse_ends_bad"></decision>
-					<decision label="Tell him what you think of him" nextpage="pg_talk_back_to_farse"></decision>
+					<decision label="Say nothing" nextpage="pg_farse_ends_bad" />
+					<decision label="Tell him what you think of him" nextpage="pg_talk_back_to_farse" />
 				</decisions>
 				<decisionvar name="pg_tell_farse_you_were_in_casino"
-					value="true"></decisionvar>
-				<content></content>
+					value="true" />
+				<content />
 			</page>
-			<page id="pg_farse_asks_where_you_were" duration="0000-00-00 00:02:38">
+			<page id="pg_farse_asks_where_you_were" duration="0000-00-00 00:02:00">
 				<decisions>
-					<decision label="Lie to Farse" nextpage="pg_tell_farse_you_were_in_casino"></decision>
-					<decision label="Tell the truth" nextpage="pg_farse_ends_good"></decision>
+					<decision label="Lie to Farse" nextpage="pg_tell_farse_you_were_in_casino" />
+					<decision label="Tell the truth" nextpage="pg_farse_ends_good" />
 				</decisions>
-				<content></content>
+				<content />
 			</page>
-			<page id="pg_dont_tell_farse_about_painting" duration="0000-00-00 00:03:13">
-				<content></content>
+			<page id="pg_dont_tell_farse_about_painting" duration="0000-00-00 00:01:00">
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_farse_asks_where_you_were"></decision>
-				</decisions>
-			</page>
-			<page id="pg_tell_farse_about_painting" duration="0000-00-00 00:07:42">
-				<decisionvar name="pg_tell_farse_about_painting" value="true"></decisionvar>
-				<content></content>
-				<decisions>
-					<decision label="Next Page" nextpage="pg_farse_asks_where_you_were"></decision>
+					<decision label="Next Page" nextpage="pg_farse_asks_where_you_were" />
 				</decisions>
 			</page>
-			<page id="pg_auction_memory" duration="0000-00-00 00:02:32">
-				<content></content>
+			<page id="pg_tell_farse_about_painting" duration="0000-00-00 00:06:00">
+				<decisionvar name="pg_tell_farse_about_painting" value="true" />
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_do_you_tell_farse_about_painting"></decision>
+					<decision label="Next Page" nextpage="pg_farse_asks_where_you_were" />
+				</decisions>
+			</page>
+			<page id="pg_auction_memory" duration="0000-00-00 00:04:00">
+				<content />
+				<decisions>
+					<decision label="Next Page" nextpage="pg_do_you_tell_farse_about_painting" />
 				</decisions>
 			</page>
 			<page id="pg_refuse_to_answer_question" duration="0000-00-00 00:05:00">
-				<decisionvar name="pg_refuse_to_answer_question" value="true"></decisionvar>
-				<content></content>
+				<decisionvar name="pg_refuse_to_answer_question" value="true" />
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_auction_memory"></decision>
+					<decision label="Next Page" nextpage="pg_auction_memory" />
 				</decisions>
 			</page>
-			<page id="pg_trishas_job_correct" duration="0000-00-00 00:02:00">
-				<decisionvar name="pg_trishas_job_correct" value="true"></decisionvar>
-				<content></content>
+			<page id="pg_trishas_job_correct" duration="0000-00-00 00:03:00">
+				<decisionvar name="pg_trishas_job_correct" value="true" />
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_auction_memory"></decision>
+					<decision label="Next Page" nextpage="pg_auction_memory" />
 				</decisions>
 			</page>
-			<page id="pg_meet_farse" music="DearEster.mp3" duration="0000-00-00 00:05:00">
+			<page id="pg_meet_farse" music="DearEster.mp3" duration="0000-00-00 00:06:00">
 				<decisions>
-					<!--<decision label="Refuse to answer the question" nextpage="pg_refuse_to_answer_question"></decision> 
-						<decision label="Editor for a book publishing company" nextpage="pg_trishas_job_incorrect"></decision> -->
-					<decision label="Regional sales manager" nextpage="pg_trishas_job_correct"></decision>
+					<!--<decision label="Refuse to answer the question" nextpage="pg_refuse_to_answer_question" 
+						/> <decision label="Editor for a book publishing company" nextpage="pg_trishas_job_incorrect" 
+						/> -->
+					<decision label="Regional sales manager" nextpage="pg_trishas_job_correct" />
 				</decisions>
-				<content></content>
+				<content />
 			</page>
 			<page id="pg_knock_on_door" duration="0000-00-00 00:00:30">
-				<content></content>
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_meet_farse"></decision>
+					<decision label="Next Page" nextpage="pg_meet_farse" />
 				</decisions>
 			</page>
 			<page id="pg_evesdrop_on_conversation" duration="0000-00-00 00:05:00">
-				<decisionvar name="pg_evesdrop_on_conversation" value="true"></decisionvar>
-				<content></content>
+				<decisionvar name="pg_evesdrop_on_conversation" value="true" />
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_meet_farse"></decision>
+					<decision label="Next Page" nextpage="pg_meet_farse" />
 				</decisions>
 			</page>
-			<page id="pageStart" duration="0000-00-00 00:09:00">
+			<page id="pageStart" duration="0000-00-00 00:11:00" checkpoint="Meet Farse At Security Room">
 				<decisions>
-					<decision label="Evesdrop on the conversation" nextpage="pg_evesdrop_on_conversation"></decision>
-					<decision label="Knock on the door" nextpage="pg_knock_on_door"></decision>
+					<decision label="Evesdrop on the conversation" nextpage="pg_evesdrop_on_conversation" />
+					<decision label="Knock on the door" nextpage="pg_knock_on_door" />
 				</decisions>
-				<content></content>
+				<content />
 			</page>
-			<decisionvar name="s_IntroduceFarseSecurityRoom" value="true"></decisionvar>
+			<decisionvar name="s_IntroduceFarseSecurityRoom" value="true" />
 		</scene>
 
 		<!-- Impl - Manny (testsuite) -->
-		<scene xmlns="http://www.w3.org/1999/xhtml" name="s_FarseFindsYou">
+		<scene name="s_FarseFindsYou">
 			<page id="pageStart" duration="0000-00-00 00:07:00">
 				<decisions>
 					<decision label="Tell him you never received the message"
-						nextpage="pg_lie_about_note"></decision>
+						nextpage="pg_lie_about_note" />
 					<decision label="Tell him the truth that you did."
-						nextpage="pg_say_received_note"></decision>
+						nextpage="pg_say_received_note" />
 				</decisions>
-				<decisionvar name="pg_farse_finds_you" value="true"></decisionvar>
-				<content></content>
+				<decisionvar name="pg_farse_finds_you" value="true" />
+				<content />
 			</page>
 			<page id="pg_do_you_tell_farse_about_painting">
 				<decisions>
-					<decision label="No" nextpage="pg_dont_tell_farse_about_painting"></decision>
-					<decision label="Yes" nextpage="pg_tell_farse_about_painting"></decision>
+					<decision label="No" nextpage="pg_dont_tell_farse_about_painting" />
+					<decision label="Yes" nextpage="pg_tell_farse_about_painting" />
 				</decisions>
-				<content></content>
+				<content />
 			</page>
 			<page id="pg_trishas_job_incorrect" duration="0000-00-00 00:02:00">
-				<decisionvar name="pg_trishas_job_incorrect" value="true"></decisionvar>
-				<content></content>
+				<decisionvar name="pg_trishas_job_incorrect" value="true" />
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_auction_memory"></decision>
+					<decision label="Next Page" nextpage="pg_auction_memory" />
 				</decisions>
 			</page>
 			<page id="pg_farse_throws_you_in_brig">
-				<content></content>
+				<content />
 			</page>
-			<page id="pg_farse_ends_good" duration="0000-00-00 00:04:38">
-				<content></content>
+			<page id="pg_farse_ends_good" duration="0000-00-00 00:04:00">
+				<content />
 				<decisions>
-					<decision label="Next Page" location="Hallway"></decision>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_farse_ends_bad" duration="0000-00-00 00:01:11">
-				<content></content>
+			<page id="pg_farse_ends_bad" duration="0000-00-00 00:01:00">
+				<content />
 				<decisions>
-					<decision label="Next Page" location="Hallway"></decision>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_talk_back_to_farse" duration="0000-00-00 00:02:03">
+			<page id="pg_talk_back_to_farse" duration="0000-00-00 00:02:00">
 				<decisions>
 					<decision label="Bite your tougue and say nothing"
-						nextpage="pg_farse_ends_bad"></decision>
-					<decision label="Let him know who you are!" nextpage="pg_farse_throws_you_in_brig"></decision>
+						nextpage="pg_farse_ends_bad" />
+					<decision label="Let him know who you are!" nextpage="pg_farse_throws_you_in_brig" />
 				</decisions>
-				<decisionvar name="pg_talk_back_to_farse" value="true"></decisionvar>
-				<content></content>
+				<decisionvar name="pg_talk_back_to_farse" value="true" />
+				<content />
 			</page>
-			<page id="pg_tell_farse_you_were_in_casino" duration="0000-00-00 00:02:51">
+			<page id="pg_tell_farse_you_were_in_casino" duration="0000-00-00 00:04:00">
 				<decisions>
-					<decision label="Say nothing" nextpage="pg_farse_ends_bad"></decision>
-					<decision label="Tell him what you think of him" nextpage="pg_talk_back_to_farse"></decision>
+					<decision label="Say nothing" nextpage="pg_farse_ends_bad" />
+					<decision label="Tell him what you think of him" nextpage="pg_talk_back_to_farse" />
 				</decisions>
 				<decisionvar name="pg_tell_farse_you_were_in_casino"
-					value="true"></decisionvar>
-				<content></content>
+					value="true" />
+				<content />
 			</page>
-			<page id="pg_farse_asks_where_you_were" duration="0000-00-00 00:02:38">
+			<page id="pg_farse_asks_where_you_were" duration="0000-00-00 00:02:00">
 				<decisions>
-					<decision label="Lie to Farse" nextpage="pg_tell_farse_you_were_in_casino"></decision>
-					<decision label="Tell the truth" nextpage="pg_farse_ends_good"></decision>
+					<decision label="Lie to Farse" nextpage="pg_tell_farse_you_were_in_casino" />
+					<decision label="Tell the truth" nextpage="pg_farse_ends_good" />
 				</decisions>
-				<content></content>
+				<content />
 			</page>
-			<page id="pg_dont_tell_farse_about_painting" duration="0000-00-00 00:03:13">
-				<content></content>
+			<page id="pg_dont_tell_farse_about_painting" duration="0000-00-00 00:01:00">
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_farse_asks_where_you_were"></decision>
-				</decisions>
-			</page>
-			<page id="pg_tell_farse_about_painting" duration="0000-00-00 00:07:42">
-				<decisionvar name="pg_tell_farse_about_painting" value="true"></decisionvar>
-				<content></content>
-				<decisions>
-					<decision label="Next Page" nextpage="pg_farse_asks_where_you_were"></decision>
+					<decision label="Next Page" nextpage="pg_farse_asks_where_you_were" />
 				</decisions>
 			</page>
-			<page id="pg_auction_memory" duration="0000-00-00 00:02:32">
-				<content></content>
+			<page id="pg_tell_farse_about_painting" duration="0000-00-00 00:06:00">
+				<decisionvar name="pg_tell_farse_about_painting" value="true" />
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_do_you_tell_farse_about_painting"></decision>
+					<decision label="Next Page" nextpage="pg_farse_asks_where_you_were" />
+				</decisions>
+			</page>
+			<page id="pg_auction_memory" duration="0000-00-00 00:04:00">
+				<content />
+				<decisions>
+					<decision label="Next Page" nextpage="pg_do_you_tell_farse_about_painting" />
 				</decisions>
 			</page>
 			<page id="pg_refuse_to_answer_question" duration="0000-00-00 00:05:00">
-				<decisionvar name="pg_refuse_to_answer_question" value="true"></decisionvar>
-				<content></content>
+				<decisionvar name="pg_refuse_to_answer_question" value="true" />
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_auction_memory"></decision>
+					<decision label="Next Page" nextpage="pg_auction_memory" />
 				</decisions>
 			</page>
-			<page id="pg_trishas_job_correct" duration="0000-00-00 00:02:00">
-				<decisionvar name="pg_trishas_job_correct" value="true"></decisionvar>
-				<content></content>
+			<page id="pg_trishas_job_correct" duration="0000-00-00 00:03:00">
+				<decisionvar name="pg_trishas_job_correct" value="true" />
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_auction_memory"></decision>
+					<decision label="Next Page" nextpage="pg_auction_memory" />
 				</decisions>
 			</page>
 			<page id="pg_meet_farse" duration="0000-00-00 00:05:00">
 				<decisions>
-					<!--<decision label="Refuse to answer the question" nextpage="pg_refuse_to_answer_question"></decision> 
-						<decision label="Editor for a book publishing company" nextpage="pg_trishas_job_incorrect"></decision> -->
-					<decision label="Regional sales manager" nextpage="pg_trishas_job_correct"></decision>
+					<!--<decision label="Refuse to answer the question" nextpage="pg_refuse_to_answer_question" 
+						/> <decision label="Editor for a book publishing company" nextpage="pg_trishas_job_incorrect" 
+						/> -->
+					<decision label="Regional sales manager" nextpage="pg_trishas_job_correct" />
 				</decisions>
-				<content></content>
+				<content />
 			</page>
-			<page id="pg_say_received_note" duration="0000-00-00 00:00:30">
-				<content></content>
+			<page id="pg_say_received_note" duration="0000-00-00 00:01:00">
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_meet_farse"></decision>
+					<decision label="Next Page" nextpage="pg_meet_farse" />
 				</decisions>
 			</page>
-			<page id="pg_lie_about_note" duration="0000-00-00 00:05:00">
-				<decisionvar name="pg_lie_about_note" value="true"></decisionvar>
-				<content></content>
+			<page id="pg_lie_about_note" duration="0000-00-00 00:02:00">
+				<decisionvar name="pg_lie_about_note" value="true" />
+				<content />
 				<decisions>
-					<decision label="Next Page" nextpage="pg_meet_farse"></decision>
+					<decision label="Next Page" nextpage="pg_meet_farse" />
 				</decisions>
 			</page>
-			<decisionvar name="s_IntroduceFarseSecurityRoom" value="true"></decisionvar>
+			<decisionvar name="s_IntroduceFarseSecurityRoom" value="true" />
 		</scene>
 		<scene name="Testsuite-Manny">
 			<link linkName="Item4-11PMDay1" linkTyype="item4">
@@ -1738,15 +1715,15 @@
 		<scene name="Casino">
 			<page id="pg_havent_heard_of_manny" duration="0000-00-00 00:08:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_miss_meeting_with_manny" duration="0000-00-00 00:10:00">
+			<page id="pg_miss_meeting_with_manny" duration="0000-00-00 00:13:00">
 				<decisionvar name="pg_miss_meeting_with_manny" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pageStart" type="pageForward" nextpage="pg_havent_heard_of_manny">
@@ -1781,65 +1758,65 @@
 				</pagecondition>
 				<content />
 			</page>
-			<page id="pg_meet_after_day_1" duration="0000-00-00 00:10:00">
+			<page id="pg_meet_after_day_1" duration="0000-00-00 00:12:00">
 				<decisionvar name="met_manny" value="true" />
 				<decisionvar name="pg_meet_after_day_1" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 			<page id="pg_meet_manny_day_1" duration="0000-00-00 00:15:00">
 				<decisionvar name="met_manny" value="true" />
 				<decisionvar name="meeting_Manny_top_deck" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 		</scene>
 		<scene name="topDeck">
 			<decisionvar name="l_topDeck" value="true" />
 			<decisionvar name="s_topDeck_NoOneThere" value="true" />
-			<page id="pageStart" duration="0000-00-00 00:20:00">
+			<page id="pageStart" duration="0000-00-00 00:21:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 		</scene>
 		<scene name="topDeckMeetingWithManny">
-			<page id="pg_dont_confront">
+			<page id="pg_dont_confront" duration="0000-00-00 00:01:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_manny_tells_about_cameras"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_manny_tells_about_cameras" />
 				</decisions>
 			</page>
-			<page id="pg_leave_top_deck">
+			<page id="pg_leave_top_deck" duration="0000-00-00 00:05:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_info_on_Bernard">
+			<page id="pg_info_on_Bernard" duration="0000-00-00 00:01:00">
 				<decisionvar name="pg_info_on_Bernard" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_top_deck_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_top_deck_index" />
 				</decisions>
 			</page>
-			<page id="pg_learn_of_library">
+			<page id="pg_learn_of_library" duration="0000-00-00 00:03:00">
 				<decisionvar name="pg_learn_of_library" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_top_deck_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_top_deck_index" />
 				</decisions>
 			</page>
-			<page id="pg_more_info_cameras">
+			<page id="pg_more_info_cameras" duration="0000-00-00 00:01:00">
 				<decisionvar name="pg_more_info_cameras" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_top_deck_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_top_deck_index" />
 				</decisions>
 			</page>
 			<page id="pg_top_deck_index">
@@ -1865,34 +1842,34 @@
 				</decisions>
 				<content />
 			</page>
-			<page id="pg_what_meant_sticking_nose_out">
+			<page id="pg_what_meant_sticking_nose_out" duration="0000-00-00 00:02:00">
 				<decisionvar name="pg_what_meant_sticking_nose_out"
 					value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_top_deck_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_top_deck_index" />
 				</decisions>
 			</page>
-			<page id="pg_offer_to_help">
+			<page id="pg_offer_to_help" duration="0000-00-00 00:01:00">
 				<decisionvar name="pg_offer_to_help" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_top_deck_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_top_deck_index" />
 				</decisions>
 			</page>
-			<page id="pg_manny_tells_about_cameras">
+			<page id="pg_manny_tells_about_cameras" duration="0000-00-00 00:07:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_top_deck_index"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_top_deck_index" />
 				</decisions>
 			</page>
-			<page id="pg_end_top_deck_conversation">
+			<page id="pg_end_top_deck_conversation" duration="0000-00-00 00:10:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_confront_about_name">
+			<page id="pg_confront_about_name" duration="0000-00-00 00:01:00">
 				<decisions>
 					<decision label="Let it slide for now" nextpage="pg_manny_tells_about_cameras" />
 					<decision label="End the conversation" nextpage="pg_end_top_deck_conversation" />
@@ -1901,7 +1878,7 @@
 			</page>
 			<decisionvar name="l_topDeck" value="true" />
 			<decisionvar name="s_topDeckMeetingWithManny" value="true" />
-			<page id="pageStart">
+			<page id="pageStart" duration="0000-00-00 00:13:00" checkpoint="Meeting With Manny">
 				<decisions>
 					<decision label="Say nothing for the moment" nextpage="pg_dont_confront" />
 					<decision label="Confront Manny about using your real name"
@@ -1914,19 +1891,19 @@
 		<!-- Impl - Mark (testsuite) -->
 		<scene name="S_chatWithMarkAboutJoiningTeam">
 			<decisionvar name="S_chatWithMarkAboutJoiningTeam" value="true" />
-			<page id="pageStart" duration="0000-00-00 00:38:00">
+			<page id="pageStart" duration="0000-00-00 00:28:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 		</scene>
 		<scene name="S_meetingMarkAndCatherine">
 			<decisionvar name="var_s_meetingMarkAndCathering" value="true" />
-			<page id="pageStart" duration="0000-00-00 02:10:00">
+			<page id="pageStart" duration="0000-00-00 00:55:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 		</scene>
@@ -1934,8 +1911,8 @@
 			<decisionvar name="nr_introMark" value="true" />
 			<page id="pageStart" duration="0000-00-00 00:15:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 		</scene>
@@ -1943,10 +1920,10 @@
 		<!-- Impl - Transporter -->
 		<scene name="s_talkWithAnton">
 			<decisionvar name="s_talkWithAnton" value="true" />
-			<page id="pageStart">
+			<page id="pageStart" duration="0000-00-00 01:40:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="s_youIanAndJonasTalk"></decision>
+				<decisions>
+					<decision label="Next Page" location="s_youIanAndJonasTalk" />
 				</decisions>
 			</page>
 		</scene>
@@ -1954,7 +1931,7 @@
 			<page id="pg_you_and_bernard_escape">
 				<content />
 			</page>
-			<page id="pg_madeline_finds_you">
+			<page id="pg_madeline_finds_you" duration="0000-00-00 00:07:00">
 				<decisions>
 					<decision label="Go on your own" nextpage="pg_jonas_kills_you" />
 					<decision label="Go with Madeline" nextpage="pg_you_and_bernard_escape" />
@@ -1964,10 +1941,10 @@
 			<page id="pg_jonas_kills_you">
 				<content />
 			</page>
-			<page id="pg_lie_to_jonus">
+			<page id="pg_lie_to_jonus" duration="0000-00-00 00:14:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_check_saved_rudolphe"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_check_saved_rudolphe" />
 				</decisions>
 			</page>
 			<page id="pf_check_saved_rudolphe" type="pageForward" nextpage="pg_madeline_finds_you">
@@ -1982,7 +1959,7 @@
 			<page id="pg_go_with_rudolphe">
 				<content />
 			</page>
-			<page id="pg_rudolphe_finds_you">
+			<page id="pg_rudolphe_finds_you" duration="0000-00-00 00:01:00">
 				<decisions>
 					<decision label="Dont go with Rudolphe" nextpage="pg_dont_go_with_rudolphe" />
 					<decision label="Go with Rudolphe" nextpage="pg_go_with_rudolphe" />
@@ -1993,7 +1970,7 @@
 			<page id="pg_go_with_jonus">
 				<content />
 			</page>
-			<page id="pg_talk_with_jonus">
+			<page id="pg_talk_with_jonus" duration="0000-00-00 00:32:00">
 				<decisions>
 					<decision label="Lie to Jonus and tell him youll join his team"
 						nextpage="pg_lie_to_jonus" />
@@ -2007,91 +1984,93 @@
 				</pagecondition>
 				<content />
 			</page>
-			<page id="pg_with_bernard">
+			<page id="pg_with_bernard" checkpoint="You And Bernard Talk With Ian"
+				duration="0000-00-00 00:22:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_talk_with_jonus"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_talk_with_jonus" />
 				</decisions>
 			</page>
-			<page id="pg_with_farse">
+			<page id="pg_with_farse" duration="0000-00-00 00:22:00"
+				checkpoint="You And Farse Talk With Ian">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_talk_with_jonus"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_talk_with_jonus" />
 				</decisions>
 			</page>
 		</scene>
 		<scene name="s_TellFarseAboutPlaqueAfterMark">
 			<decisionvar name="s_TellFarseAboutPlaqueAfterMark"
 				value="true" />
-			<page id="pageStart">
+			<page id="pageStart" duration="0000-00-00 00:12:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 		</scene>
 		<scene name="s_showMarkItemFromGhostWorld">
 			<decisionvar name="s_showMarkItemFromGhostWorld" value="true" />
-			<page id="pageStart">
+			<page id="pageStart" duration="0000-00-00 00:05:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
 		</scene>
 		<scene name="s_showFarseItemFromGhostWorld">
-			<page id="pageStart">
+			<page id="pageStart" duration="0000-00-00 00:17:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="s_talkWithAnton"></decision>
+				<decisions>
+					<decision label="Next Page" location="s_talkWithAnton" />
 				</decisions>
 			</page>
 			<decisionvar name="s_showFarseItemFromGhostWorld" value="true" />
 		</scene>
 		<scene name="s_CostumeBall">
 			<decisionvar name="s_CostumeBall" value="true" />
-			<page id="pg_dont_pick_lock">
+			<page id="pg_dont_pick_lock" duration="0000-00-00 00:12:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_dont_go_through_portal">
+			<page id="pg_dont_go_through_portal" duration="0000-00-00 01:10:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_go_through_portal">
+			<page id="pg_go_through_portal" duration="0000-00-00 00:50:00">
 				<decisionvar name="pg_go_through_portal" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" location="Hallway"></decision>
+				<decisions>
+					<decision label="Next Page" location="Hallway" />
 				</decisions>
 			</page>
-			<page id="pg_intro_max">
+			<page id="pg_intro_max" duration="0000-00-00 00:50:00">
 				<decisions>
 					<decision label="No way, you cant make me." nextpage="pg_dont_go_through_portal" />
 					<decision label="Venture through the portal" nextpage="pg_go_through_portal" />
 				</decisions>
 				<content />
 			</page>
-			<page id="pg_gave_docs_to_david">
+			<page id="pg_gave_docs_to_david" duration="0000-00-00 00:07:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_intro_max"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_intro_max" />
 				</decisions>
 			</page>
-			<page id="pg_know_of_docs_but_didnt_find_them">
+			<page id="pg_know_of_docs_but_didnt_find_them" duration="0000-00-00 00:02:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_intro_max"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_intro_max" />
 				</decisions>
 			</page>
-			<page id="pg_have_docs_but_didnt_give">
+			<page id="pg_have_docs_but_didnt_give" duration="0000-00-00 00:07:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_intro_max"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_intro_max" />
 				</decisions>
 			</page>
 			<page id="pf_jonus_docs_check" type="pageForward" nextpage="pg_intro_max">
@@ -2116,26 +2095,26 @@
 				</pagecondition>
 				<content />
 			</page>
-			<page id="pg_meet_madeline">
+			<page id="pg_meet_madeline" duration="0000-00-00 00:06:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pg_intro_max"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pg_intro_max" />
 				</decisions>
 			</page>
-			<page id="pg_see_madeline">
+			<page id="pg_see_madeline" duration="0000-00-00 00:05:00">
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_jonus_docs_check"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_jonus_docs_check" />
 				</decisions>
 			</page>
-			<page id="pg_costume_ball_intro">
+			<page id="pg_costume_ball_intro" duration="0000-00-00 00:21:00">
 				<decisionvar name="pg_costume_ball_intro" value="true" />
 				<content />
-				<decisions xmlns="http://www.w3.org/1999/xhtml">
-					<decision label="Next Page" nextpage="pf_know_of_madeline"></decision>
+				<decisions>
+					<decision label="Next Page" nextpage="pf_know_of_madeline" />
 				</decisions>
 			</page>
-			<page id="pageStart">
+			<page id="pageStart" checkpoint="Costume Ball" duration="0000-00-00 00:09:00">
 				<decisions>
 					<decision label="Nope" nextpage="pg_dont_pick_lock" />
 					<decision label="Yes, pick the lock" nextpage="pg_costume_ball_intro" />
@@ -2419,13 +2398,13 @@
 		<pageDiagram sceneName="topDeck" pageName="pageStart" dx="0"
 			dy="0" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_dont_confront"
-			dx="163.5" dy="18.5" />
+			dx="325.5" dy="21.5" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_leave_top_deck"
 			dx="296.5" dy="207.5" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_info_on_Bernard"
 			dx="218.5" dy="151.5" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_learn_of_library"
-			dx="337.5" dy="111.5" />
+			dx="358.5" dy="135.5" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_more_info_cameras"
 			dx="41.5" dy="201.5" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_top_deck_index"
@@ -2433,15 +2412,15 @@
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_what_meant_sticking_nose_out"
 			dx="477.5" dy="227.5" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_offer_to_help"
-			dx="477.5" dy="32.5" />
+			dx="21.5" dy="13.5" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_manny_tells_about_cameras"
-			dx="309.5" dy="17.5" />
+			dx="173.5" dy="22.5" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_end_top_deck_conversation"
 			dx="635.5" dy="213.5" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pg_confront_about_name"
 			dx="480.5" dy="115.5" />
 		<pageDiagram sceneName="topDeckMeetingWithManny" pageName="pageStart"
-			dx="11.5" dy="15.5" />
+			dx="483.5" dy="32.5" />
 		<pageDiagram sceneName="S_chatWithMarkAboutJoiningTeam"
 			pageName="pageStart" dx="0" dy="0" />
 		<pageDiagram sceneName="S_meetingMarkAndCatherine"
@@ -2596,5 +2575,7 @@
 			dx="318.5" dy="10.5" />
 		<pageDiagram sceneName="Hallway" pageName="pg_bedtime_day_2"
 			dx="165.5" dy="6.5" />
+		<pageDiagram sceneName="Hallway" pageName="pg_fast_forward"
+			dx="0" dy="0" />
 	</diagrams>
 </config>

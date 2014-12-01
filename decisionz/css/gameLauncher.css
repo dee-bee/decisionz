@@ -20,6 +20,7 @@
     border-radius: 10px;
     padding: 20px;
     background-color: darkgray;
+    position: relative;
 }
 
 #linkToConfigFile{
@@ -131,6 +132,7 @@ button{
 #pageContent{
     color: black;
     font-size: 1.4em;
+    position: relative;
 }
 
 body{
@@ -200,7 +202,7 @@ body:not([state='bookmarks']) #bookmarkPanel{
 }
 
 body:not([state="main"]) #main {
-	display: none;
+	opacity: 0;
 }
 
 
@@ -235,6 +237,10 @@ body:not([state='main']) #bookmarksModeBtn{
     color: white;
     overflow: hidden;
     float: left;
+}
+
+.currentBookmark > .bookmarkLabel{
+    background-color: rgb(167, 154, 61);
 }
 
 .bookmarkItem{
