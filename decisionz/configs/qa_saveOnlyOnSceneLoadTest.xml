@@ -35,6 +35,7 @@
 			<route startLocation="TestLoc" endLocation="BernardsCabin"
 				duration="0000-00-00 00:04:00" />
 		</variable>
+		<variable name='writeToLocalStorageOnlyOnSceneLoad' value='true'></variable>
 	</decisionvars>
 	<itemsTypes />
 	<linkTypes>

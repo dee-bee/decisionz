@@ -1,0 +1,51 @@
+<config devTools="true" perspective="MobilePerspective">
+	<characters>
+		<character name="Travis" defaultCharacter="true" startPage="true" />
+		<character name="Farse" />
+	</characters>
+	<decisionvars>
+		<variable name="bookmarks" />
+		<variable name="currentTime" value="0000-00-00 15:32:00" />
+		<variable name="gameMode" value="text" />
+		<variable name="UserName" value="DanB" />
+		<variable name="remotePageContentURL" value="" />
+		<variable name="currentBookmark" value="" />
+		<variable name="currentCharacter" value="Travis" />
+		<variable name="currentSceneName" value="startScene" />
+		<variable name="currentPageName" value="pageStart" />
+		<variable name="currentLocationName" value="introTableCouchDesk" />
+		<variable name="previousSceneName" value="" />
+		<variable name="previousLocationName" value="" />
+		<variable name="gameStartTime" value="0000-00-00 15:30:00" />
+		<variable name="item_phone" value="Phone:explorePhone" />
+		<variable name="showMatteInfo" value="false" />
+		<variable name="gameStartScene" value="introTableCouchDesk" />
+		<variable name="lastSavedSceneName" value="introTableCouchDesk" />
+		<variable name="clickMatteResolution" value="640x480" />
+		<variable name="videoTransitionResolution" value="320x240" />
+		<variable name="testsub1" value="text" />
+		<variable name="test2" value="text" />
+		<variable name="narrationAudio" value="true" />
+		<variable name="music" value="true" />
+		<variable name="log">
+		</variable>
+		<variable name="routes">
+			<route startLocation="Hallway" endLocation="TestLoc"
+				duration="0000-00-00 00:03:00" />
+			<route startLocation="TestLoc" endLocation="BernardsCabin"
+				duration="0000-00-00 00:04:00" />
+		</variable>
+	</decisionvars>
+	<scenes>
+		<!-- Impl - Impl - Your Cabin (text-only) -->
+		<scene name="startScene"
+				loadIFrameTemplate="templates/RTLScramble_html/RTLScramble.html?debug=true">
+		</scene>
+	</scenes>
+	<locations>
+
+	</locations>
+	<diagrams>
+		
+	</diagrams>
+</config>

@@ -36,43 +36,15 @@
 				duration="0000-00-00 00:04:00" />
 		</variable>
 	</decisionvars>
-	<itemsTypes />
-	<linkTypes>
-		<linkType name="dragItem" color="654321" cursor="goCursor" />
-		<linkType name="dropTarget" color="123456" cursor="goCursor" />
-		<linkType name="forwardLinkLocation" color="FF0000" cursor="goCursor" />
-		<linkType name="forward" color="FF0000" cursor="goCursor" />
-		<linkType name="backwardLinkLocation" color="cf986b" cursor="linkDown" />
-		<linkType name="backward" color="cf986b" cursor="linkDown" />
-		<linkType name="back" color="cf986b" cursor="linkDown" />
-		<linkType name="rightLinkLocation" color="ffffff" cursor="linkRight" />
-		<linkType name="right" color="ffffff" cursor="linkRight" />
-		<linkType name="leftLinkLocation" color="000000" cursor="linkLeft" />
-		<linkType name="left" color="000000" cursor="linkLeft" />
-		<linkType name="item1LinkLocation" color="00ff00" cursor="goCursor" />
-		<linkType name="item1" color="00ff00" cursor="goCursor" />
-		<linkType name="item2LinkLocation" color="ffff00" cursor="goCursor" />
-		<linkType name="item2" color="ffff00" cursor="goCursor" />
-		<linkType name="item3LinkLocation" color="2efffd" cursor="goCursor" />
-		<linkType name="item3" color="2efffd" cursor="goCursor" />
-		<linkType name="item4LinkLocation" color="F900FC" cursor="goCursor" />
-		<linkType name="item4" color="F900FC" cursor="goCursor" />
-		<linkType name="variableLink" color="0000Ff" cursor="goCursor" />
-		<linkType name="variable" color="0000Ff" cursor="goCursor" />
-		<linkType name="topLinkLocation" color="686834" cursor="linkUp" />
-		<linkType name="top" color="696834" cursor="linkUp" />
-		<linkType name="bottomLinkLocation" color="147f0d" cursor="linkDown" />
-		<linkType name="bottom" color="14800d" cursor="linkDown" />
-	</linkTypes>
 	<scenes>
 		<!-- Impl - Impl - Your Cabin (text-only) -->
-		<scene name="introTableCouchDesk"
-				loadAnimation="animations/falconTerraEdgarDecideToRescueLocke.xml">
-			<page id="pageStart" animation="zoomFalcon" animNextPage="p2" >
+		<scene name="introTableCouchDesk" disableLocalStorageWritesOnPageLoad="true"
+				loadClassimation="animations/falconTerraEdgarDecideToRescueLocke.xml">
+			<page id="pageStart" classimation="zoomFalcon" classimationNextPage="p2" >
 				<content ></content>
 			</page>
 			
-			<page id="p2" animation="edgarTerraIntro_end">
+			<page id="p2" classimation="edgarTerraIntro_end">
 				<content >
 					<p>Edgar: We need to think this through.</p>
 				</content>
@@ -81,7 +53,7 @@
 				</decisions>
 			</page>
 
-			<page id="p3" animation="edgarTerraIntro_end" >
+			<page id="p3" classimation="edgarTerraIntro_end" >
 				<content >
 					<p>Edgar: Is it wise to fly right into Doom Gaze's lair?</p>
 				</content>
@@ -90,11 +62,11 @@
 				</decisions>
 			</page>
 
-			<page id="a2" animation="terraLookDown" animNextPage="p4" >
+			<page id="a2" classimation="terraLookDown" classimationNextPage="p4" >
 				<content ></content>
 			</page>
 						
-			<page id="p4" animation="terraLookDown_end">
+			<page id="p4" classimation="terraLookDown_end">
 				<content >
 					<p>Terra: ...</p>
 				</content>
@@ -103,11 +75,11 @@
 				</decisions>
 			</page>
 
-			<page id="a3" animation="terraWalkDown" animNextPage="p5" >
+			<page id="a3" classimation="terraWalkDown" classimationNextPage="p5" >
 				<content ></content>
 			</page>
 			
-			<page id="p5" animation="terraWalkDown_end" >
+			<page id="p5" classimation="terraWalkDown_end" >
 				<content >
 					<p>Terra: I just can't think of anything else we can do...</p>
 				</content>
@@ -116,11 +88,11 @@
 				</decisions>
 			</page>
 
-			<page id="a4" animation="edgarLockTrapped" animNextPage="p6" >
+			<page id="a4" classimation="edgarLockTrapped" classimationNextPage="p6" >
 				<content ></content>
 			</page>
 			
-			<page id="p6" animation="edgarLockTrapped_end" >
+			<page id="p6" classimation="edgarLockTrapped_end" >
 				<content >
 					<p>Edgar: Locke is trapped, but should we risk everything to try and save him?</p>
 				</content>
@@ -129,11 +101,11 @@
 				</decisions>
 			</page>
 
-			<page id="a5" animation="terraThatTime" animNextPage="p7" >
+			<page id="a5" classimation="terraThatTime" classimationNextPage="p7" >
 				<content ></content>
 			</page>
 
-			<page id="p7" animation="terraThatTime_end">
+			<page id="p7" classimation="terraThatTime_end">
 				<content >
 					<p>Terra: That time that he saved me from Kefka, he risked everything ... for me ...</p>
 				</content>
@@ -142,11 +114,11 @@
 				</decisions>
 			</page>
 			
-			<page id="a6" animation="edgarThenItIs" animNextPage="p8" >
+			<page id="a6" classimation="edgarThenItIs" classimationNextPage="p8" >
 				<content ></content>
 			</page>
 			
-			<page id="p8" animation="edgarThenItIs_end" >
+			<page id="p8" classimation="edgarThenItIs_end" >
 				<content >
 					<p>Edgar: Then it is...</p>
 				</content>
@@ -155,11 +127,11 @@
 				</decisions>
 			</page>
 			
-			<page id="a7" animation="edgarHereWeCome" animNextPage="p9" >
+			<page id="a7" classimation="edgarHereWeCome" classimationNextPage="p9" >
 				<content ></content>
 			</page>
 			
-			<page id="p9" animation="edgarHereWeCome_end">
+			<page id="p9" classimation="edgarHereWeCome_end">
 				<content >
 					<p>Edgar: Locke, here we come old friend!</p>
 				</content>
@@ -168,7 +140,7 @@
 				</decisions>
 			</page>
 
-			<page id="a8" animation="falconFliesAway" >
+			<page id="a8" classimation="falconFliesAway" >
 				<content ></content>
 			</page>
 		</scene>

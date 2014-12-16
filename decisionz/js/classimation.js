@@ -2,7 +2,7 @@
 
 var animXml
 
-function loadAnimation(filename, callback){	
+function loadClassimation(filename, callback){	
 	//Load xml
 	$.ajax({
 			type: "GET",

@@ -16,6 +16,7 @@ var jCurrentScene;
 
 
 var disableMutationObserver = true;
+//Todo- get rid of this function
 function loadMutationObserver(){
 	//var target = document.querySelector('#xml > config > decisionvars');
 	var target = xml.documentElement.querySelector('decisionvars');
@@ -221,7 +222,10 @@ function parseXml(text_xml){
 	
 	//loadMutationObserver()
 	
-	writeDecisionVarsToLocalStorage()
+	if(!checkDecisionVarI(
+			"writeToLocalStorageOnlyOnSceneLoad","true")){
+		writeDecisionVarsToLocalStorage()
+	}
 	
 	updateDVS()
 	
@@ -290,16 +294,27 @@ function loadLocation(name){
 
 function loadScene(name, pageName){	
 	setDV("currentSceneName", name)
+	setDV("currentPageName", "pageStart");
 	
 	jCurrentScene = $(xml).find("config > scenes > scene:[name='" + name + "']");
 	
-
-	loadMusic(jCurrentScene.attr("music"));
-	unpauseAudio()
+	//Don't load any music, page content, or templates in routeMode
+	if(!routeMode){
+		$("#pageContainer").html($("#pageContent_snippet").html())
+		
+		loadMusic(jCurrentScene.attr("music"));
+		unpauseAudio()
 	
-	if(jCurrentScene.attr("loadAnimation")){
-		loadAnimation(jCurrentScene.attr("loadAnimation"), true)
+		if(jCurrentScene.attr("loadClassimation")){
+			loadClassimation(jCurrentScene.attr("loadClassimation"), true)
+		}
+	
+		if(jCurrentScene.attr("loadIFrameTemplate")){
+			loadIFrame(jCurrentScene.attr("loadIFrameTemplate"))
+		}
 	}
+	
+	writeDecisionVarsToLocalStorage()
 	
 	if(pageName != undefined){
 		//Loading a bookmark
@@ -391,7 +406,8 @@ function generatePage(){
 	if(jNarrationLog.length == 0 ||
 		jNarrationLog.html().length == 0){
 		if(params["debug"] != undefined){
-			alert("narrationLog is empty")
+			//todo- put this as a label
+			//alert("narrationLog is empty")
 		}
 		
 		setDV("narrationLog", "")
@@ -432,19 +448,24 @@ function generatePage(){
 			url: remotePageUrl + "&action=raw",
 			dataType: "text",
 			success: generatePage_part2,
-			error: ajaxErrorFunc
+			error: ajaxPageErrorFunc
 		});
 	}else{
 		//todo not sure if this is the right place for this
-		writeDecisionVarsToLocalStorage()
+		if(!checkDecisionVarI(
+					"writeToLocalStorageOnlyOnSceneLoad","true") &&
+				jCurrentScene.attr(
+					"disableLocalStorageWritesOnPageLoad") == undefined){
+			writeDecisionVarsToLocalStorage()
+		}
 
-		if(jCurrentPage.attr("animation") != undefined){
+		if(jCurrentPage.attr("classimation") != undefined){
 			
-			if(jCurrentPage.attr("animNextPage") != undefined){
-				playAnimation(jCurrentPage.attr("animation")
-					, function(){loadPage(jCurrentPage.attr("animNextPage"))})
+			if(jCurrentPage.attr("classimationNextPage") != undefined){
+				playAnimation(jCurrentPage.attr("classimation")
+					, function(){loadPage(jCurrentPage.attr("classimationNextPage"))})
 			}else{
-				playAnimation(jCurrentPage.attr("animation"))
+				playAnimation(jCurrentPage.attr("classimation"))
 			}
 		}
 	}
@@ -460,7 +481,12 @@ function generatePage_part2(text){
 	    sceneReturnObj.initPageScript()
 	}
 
-	writeDecisionVarsToLocalStorage();
+	if(!checkDecisionVarI(
+				"writeToLocalStorageOnlyOnSceneLoad","true") &&
+			jCurrentScene.attr(
+				"disableLocalStorageWritesOnPageLoad") == undefined){
+		writeDecisionVarsToLocalStorage()
+	}
 
 
 	if(DVS["dontLoadContent"] == undefined 
@@ -481,6 +507,9 @@ function loadPage(pageId){
 	if(pageId == undefined)
 		return
 	
+	//todo wipes out animation if playing
+	///$("#pageContainer").html($("#pageContent_snippet").html())
+	
 	sceneReturnObj = undefined
 	
 	setDV("currentPageName", pageId);
@@ -489,44 +518,53 @@ function loadPage(pageId){
 
 	loadDecisionVars(jCurrentPage);
 
-	//If we have a checkpoint make sure it hasn't already been set in this individual path
-	if(jCurrentPage.attr("checkpoint") != undefined &&
-		getBookmark(jDV("currentBookmark").attr("value")).attr("label") != jCurrentPage.attr("checkpoint") &&
-		getBookmark(jDV("currentBookmark").attr("value")).
-				find("> bookmark[label='" + jCurrentPage.attr("checkpoint") + "']").length == 0){
-		setBookmark(jCurrentPage.attr("checkpoint"))
-	}
+	if(!routeMode){ //No checkpoints or durations set in routeMode
+		//If we have a checkpoint make sure it hasn't already been set in this individual path
+		if(jCurrentPage.attr("checkpoint") != undefined &&
+			getBookmark(jDV("currentBookmark").attr("value")).attr("label") != jCurrentPage.attr("checkpoint") &&
+			getBookmark(jDV("currentBookmark").attr("value")).
+					find("> bookmark[label='" + jCurrentPage.attr("checkpoint") + "']").length == 0){
+			setBookmark(jCurrentPage.attr("checkpoint"))
+		}
 
-	if(jCurrentPage.attr("duration") != undefined){
-		addDurationToCurrentTime(jCurrentPage.attr("duration"))
-	}
+		if(jCurrentPage.attr("duration") != undefined){
+			addDurationToCurrentTime(jCurrentPage.attr("duration"))
+		}
 
-	//A decisionVar might have set this, or a duration might have incrimented this
-	updateTimeDiv()
+		//A decisionVar might have set this, or a duration might have incrimented this
+		updateTimeDiv()
+	}
 	
 	if(handlePageForward()){
-		//A pageCondition of pageForward has been loaded so so nothing
+		//A pageCondition of pageForward has been loaded so do nothing
 	}else{
-		if(remotePageContentURL != undefined &&
-				remotePageContentURL.length > 0 &&
-				jCurrentPage.attr("dontLoadContent") == undefined){
-			var remotePageUrl = remotePageContentURL + "?title=" + 
-			    				jCurrentScene.attr("name") +  ":" + 
-			    				jCurrentPage.attr("id");
-			    				
-			$("#linkToWiki").attr("href", remotePageUrl);
+		if(!routeMode){ 
+					//Do not construct the page in routeMode
+					//This means there is no narrationLog, no 
+					// external load of js, no writeDecisionVarsToLocalStorage
+					// etc.
 			
-			//Load remote content
-			$.ajax({
-			    type: "GET",
-			    async: false,
-			    url: remotePageUrl + "&action=raw",
-			    dataType: "text",
-			    success: remotePageContent,
-			    error: ajaxErrorFunc
-			});
-		}else{
-			generatePage();
+			if(remotePageContentURL != undefined &&
+					remotePageContentURL.length > 0 &&
+					jCurrentPage.attr("dontLoadContent") == undefined){
+				var remotePageUrl = remotePageContentURL + "?title=" + 
+									jCurrentScene.attr("name") +  ":" + 
+									jCurrentPage.attr("id");
+
+				$("#linkToWiki").attr("href", remotePageUrl);
+
+				//Load remote content
+				$.ajax({
+					type: "GET",
+					async: false,
+					url: remotePageUrl + "&action=raw",
+					dataType: "text",
+					success: remotePageContent,
+					error: ajaxPageErrorFunc
+				});
+			}else{
+				generatePage();
+			}
 		}
 	}
 	
@@ -620,13 +658,125 @@ function loadGameState(){
 	
 	setDV("currentBookmark", "")
 	
-	writeDecisionVarsToLocalStorage()
+	//todo - can i remove this
+	//writeDecisionVarsToLocalStorage()
 	loadGame()	
 }
 
 ////////////////////////////////////////////////
 // Route
 ////////////////////////////////////////////////
+var routeMode = false
+function runRoute(endLocationName, endPageId){
+	//Find a route with the startScene and endScene
+	//Todo- need to put in code to determine the location from a sceneName
+	routeMode = true
+
+	var startLocationName = jCurrentScene.attr("name")
+	var startPageId = jCurrentPage.attr("id")
+
+	var route = $(xml).find("config > routes > route[start='" 
+					+ startLocationName + "']"
+					+ "[end='" + endLocationName + "']")
+	
+	var routeBackwards = false
+	if(route.length == 0){
+		//Try backwards
+		route = $(xml).find("config > routes > route[start='" 
+					+ endLocationName + "']"
+					+ "[end='" + startLocationName + "']")
+		
+		if(route.length != 0){
+			routeBackwards = true
+		}
+	}
+
+	if(route.length != 0){
+		//Parse the route to determing the connections
+		var connectionsArr = $(route).attr("connections").split(",")
+		
+		if(routeBackwards){
+			connectionsArr = connectionsArr.reverse()
+		}
+
+		//Loop through connections loading the pages in the background
+		$.each(connectionsArr, function(i,v){
+			var jConnection = $($(xml)
+						.find("config > connections > connection[id='" + v + "']"))
+			
+			if(connectionsArr.length - 1 == i){
+				routeMode = false
+			}
+
+			if(routeBackwards){
+				loadLocation(jConnection.attr("a"))
+			}else{
+				loadLocation(jConnection.attr("b"))
+			}
+			
+			//add duration
+			if(jConnection.attr("duration") != undefined){
+				addDurationToCurrentTime(jConnection.attr("duration"))
+				updateTimeDiv()
+			}
+
+			//If a scene + page isn't expected stop route .
+			var currentSceneName = jCurrentScene.attr("name")
+			var currentPageId = jCurrentPage.attr("id")
+
+			var destination = "b"
+			var source = "a"
+			if(routeBackwards){
+				destination = "a"
+				source = "b"
+			}
+
+			if(jConnection.attr(destination + "_expect_scene") != undefined
+				&& jConnection.attr(destination + "_expect_scene") 
+						!= currentSceneName){
+				//We're not at the needed scene to continue
+				//Todo- Program a qa test config for this
+
+				if(params["debug"]){
+					alert("Route failed:currentSceneName=" + currentSceneName
+							+ ";expectedSceneName=" 
+								+ jConnection.attr(destination + "_expect_scene")) 
+				}
+
+				return false 
+			}
+
+			if(jConnection.attr(destination + "_expect_page") == undefined
+					&& currentPageId != "pageStart"){
+				//We're not at the needed page to continue
+				//Todo- Program a qa test config for this
+
+				if(params["debug"]){
+					alert("Route failed:currentPageId=" + currentPageId
+							+ ";expectedPageName=" 
+								+ jConnection.attr(destination + "_expect_page")) 
+				}
+
+				return false 
+			}
+
+			if(jConnection.attr(destination + "_expect_page") != undefined
+				&& jConnection.attr(destination + "_expect_page") 
+													!= currentPageId){
+				//We're not at the needed page to continue
+				//Todo- Program a qa test config for this
+				
+				if(params["debug"]){
+					alert("Route failed:currentPageId=" + currentPageId
+							+ ";expectedPageId=" 
+								+ jConnection.attr(destination + "_expect_page")) 
+				}
+
+				return false 
+			}
+		})
+	}
+}
 
 function calculateRouteDuration(locString){
 	var locs = locString.trim().split(",")
@@ -697,6 +847,9 @@ function setBookmark(label){
 	})
 	
 	// Is there a parent bookmark?
+	//todo - will this work if DVS doesn't match decisionvars
+	//    like if the writeToLocalStorageOnlyOnSceneLoad flag
+	//    is set
 	var parentBookmark = jBookmarks
 	if(DVS["currentBookmark"] != undefined && 
 			DVS["currentBookmark"].length > 0){
@@ -723,7 +876,10 @@ function setBookmark(label){
 	
 	setState('main')
 	
-	writeDecisionVarsToLocalStorage()
+	if(!checkDecisionVarI(
+			"writeToLocalStorageOnlyOnSceneLoad","true")){
+		writeDecisionVarsToLocalStorage()
+	}
 }
 
 
@@ -873,7 +1029,10 @@ function showDialogOnChange(){
 		setDV('disableDialog', "false")
 	}
 	
-	writeDecisionVarsToLocalStorage()
+	if(!checkDecisionVarI(
+			"writeToLocalStorageOnlyOnSceneLoad","true")){
+		writeDecisionVarsToLocalStorage()
+	}
 }
 
 function musicOnChange(){
@@ -892,7 +1051,12 @@ function musicOnChange(){
 		$("#musicPlayerDiv").empty()
 	}
 	
-	writeDecisionVarsToLocalStorage()
+	//Todo -figure out a way to save these settings withough
+	//     waiting for another save to occur
+	if(!checkDecisionVarI(
+			"writeToLocalStorageOnlyOnSceneLoad","true")){
+		writeDecisionVarsToLocalStorage()
+	}
 }
 
 function narrationAudioOnChange(){
@@ -911,7 +1075,10 @@ function narrationAudioOnChange(){
 		$("#narrationPlayerDiv").empty()
 	}
 	
-	writeDecisionVarsToLocalStorage()
+	if(!checkDecisionVarI(
+			"writeToLocalStorageOnlyOnSceneLoad","true")){
+		writeDecisionVarsToLocalStorage()
+	}
 }
 
 ////////////////////////////////////////////////
@@ -1042,6 +1209,8 @@ function loadDecisionVars(container){
 	});
 }
 
+var config_xml_string = ""
+
 function writeDecisionVarsToLocalStorage(){
 	//alert("writeDecisionVarsToLocalStorage start")
 	if(params["disableLocalStorage"] == undefined){
@@ -1057,7 +1226,7 @@ function writeDecisionVarsToLocalStorage(){
 		}
 		
 		//var config_xml_string = new XMLSerializer().serializeToString(xmlClone)
-		var config_xml_string = new XMLSerializer().serializeToString(xml)
+		config_xml_string = new XMLSerializer().serializeToString(xml)
 		
 		
 		//alert("writeDecisionVarsToLocalStorage string = " + config_xml_string)
@@ -1134,6 +1303,9 @@ function updateDVS(){
 
 //Case insensitive
 function checkDecisionVarI(name, value){
+	//Todo- calls to this function must not occure
+	//   before the DVS is loaded
+	
 	var dv = DVS[name]
 	
 	if(dv != undefined && dv.toLowerCase() == value){
@@ -1171,6 +1343,10 @@ function espeakOutput(){
 
 function ajaxErrorFunc(jqXHR, textStatus, errorThrown){
 	alert("Error- Can't load config xml.");
+}
+
+function ajaxPageErrorFunc(jqXHR, textStatus, errorThrown){
+	alert("Error- Page load failed.");
 }
 
 function hideStatusText(){
@@ -1223,6 +1399,12 @@ function clearLocalStorage(){
 		localStorage.decisionz = "";
 		//loadGame();
 	}
+}
+
+function loadIFrame(source){
+	var jIframe = $($("#iframe_snippet").html())
+	jIframe.attr("src", source)
+	$("#pageContainer").append(jIframe)
 }
 
 ////////////////////////////////////////////////

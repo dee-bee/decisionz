@@ -452,3 +452,9 @@ body[disableDialog="true"] #pageContent > p{
     color: white;
     float: left;
 }
+
+#templateIframe{
+    width: 900px;
+    height: 615px;
+    border: 0px;
+}
