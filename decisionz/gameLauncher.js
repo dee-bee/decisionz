@@ -256,6 +256,9 @@ function loadLocation(name){
 	
     var locationTag = $(xml).find("config > locations > location:[name='" + name + "']");
     
+	setDV("previousLocationName", DVS["currentLocationName"])
+    setDV("currentLocationName", name)
+
     if(locationTag.length == 0){
     	loadScene(name);
     }else{
@@ -292,10 +295,10 @@ function loadLocation(name){
 
 }
 
-function loadScene(name, pageName){	
+function loadScene(name, pageName){
+	setDV("previousSceneName", DVS["currentSceneName"])
 	setDV("currentSceneName", name)
-	setDV("currentPageName", "pageStart");
-	
+		
 	jCurrentScene = $(xml).find("config > scenes > scene:[name='" + name + "']");
 	
 	//Don't load any music, page content, or templates in routeMode
@@ -387,18 +390,35 @@ function generatePage(){
 
 	//Load decisions
 	var tally = 0;
-	jCurrentPage.find("> decisions > decision").each(function(){
+	jCurrentPage.find("> decisions > decision").each(function(i,v){
         //Check if this decision should be displayed
         if(checkConditions(this)){
-        	output = output + "<div class='decisionBtn' onclick='decisionClicked(" + tally + 
+			var divId = ""
+			if($(v).attr("id") != undefined){
+				divId = "id='" + $(v).attr("id") + "'"
+			}
+
+        	output = output + "<div " + divId + " class='decisionBtn' onclick='decisionClicked(" + tally + 
         								")' >" + $(this).attr("label") + "</div>";
 		}
 		tally++;
 	});
 	
 	//If there's some code here then it may be in a CDATA
-	output = output.replace("<![CDATA[", "").replace("]]>", "");
+	var narrationLogText = output = output.replace("<![CDATA[", "").replace("]]>", "");
 	
+	//Load the script tag from the page if present
+	var scriptTag = jCurrentPage.find("> script")
+	if(scriptTag.length > 0){
+		output += "\n<script>\n" + scriptTag.html() + "\n</script>\n"
+	}
+
+	//Load the style tag from the page if present
+	var styleTag = jCurrentPage.find("> style")
+	if(styleTag.length > 0){
+		output += "\n<style>\n" + styleTag.html() + "\n</style>\n"
+	}
+
 	//output page
 	$("body #pageContent").html(output);
 	
@@ -417,7 +437,9 @@ function generatePage(){
 	//Doesn't seem to work on IOS
 	//jDV("narrationLog").append(output)
 	if(jNarrationLog.children().last().hasClass("youChose")){
-		jNarrationLog.html(jNarrationLog.html() + output)
+		//Todo - Remove script tags automatically. And remove the script tag fix
+		//output = output.replaceAll("<script*>*</script>", "");
+		jNarrationLog.html(jNarrationLog.html() + narrationLogText)
 
 	}
 
@@ -425,7 +447,8 @@ function generatePage(){
 
 	$("#narrationLog").empty().append($(jNarrationLog.html()))
 
-	if(jCurrentPage.find("> script")[0] != undefined){
+	if(jCurrentPage.find("> script")[0] != undefined &&
+			typeof(loadJSAttrSuccess) == "function"){
 		loadJSAttrSuccess($(jCurrentPage.find("> script")[0]).text())
 	}else if(jCurrentPage.attr('loadJS') != undefined){
 		var remotePageUrl = ""
@@ -506,13 +529,14 @@ function generatePage_part2(text){
 function loadPage(pageId){
 	if(pageId == undefined)
 		return
-	
+
+	setDV("previousPageName", DVS["currentPageName"])
+    setDV("currentPageName", pageId)
+
 	//todo wipes out animation if playing
 	///$("#pageContainer").html($("#pageContent_snippet").html())
 	
 	sceneReturnObj = undefined
-	
-	setDV("currentPageName", pageId);
 	
 	jCurrentPage = jCurrentScene.find("> page:[id='" + pageId + "']");
 
@@ -669,10 +693,9 @@ function loadGameState(){
 var routeMode = false
 function runRoute(endLocationName, endPageId){
 	//Find a route with the startScene and endScene
-	//Todo- need to put in code to determine the location from a sceneName
 	routeMode = true
 
-	var startLocationName = jCurrentScene.attr("name")
+	var startLocationName = jDV("currentLocationName").attr("value")
 	var startPageId = jCurrentPage.attr("id")
 
 	var route = $(xml).find("config > routes > route[start='" 
@@ -721,8 +744,8 @@ function runRoute(endLocationName, endPageId){
 			}
 
 			//If a scene + page isn't expected stop route .
-			var currentSceneName = jCurrentScene.attr("name")
-			var currentPageId = jCurrentPage.attr("id")
+			var currentSceneName = DVS["currentSceneName"]
+			var currentPageId = DVS["currentPageName"]
 
 			var destination = "b"
 			var source = "a"
@@ -1597,14 +1620,14 @@ function recursiveConstructConditionExpression(expression, conditionsContainer){
 function checkConditions(conditionsContainer){	
 	var expression = recursiveConstructConditionExpression("", conditionsContainer);
 	
-	console.log(expression);
+	//console.log(expression);
 	
 	if(expression == ""){
 		return true;
 	}
 	
 	var output = eval(expression);
-	console.log(output);
+	//console.log(output);
 	
 	return output;
 }

@@ -15,6 +15,7 @@
 		<variable name="currentPageName" value="pageStart" />
 		<variable name="currentLocationName" value="one" />
 		<variable name="previousSceneName" value="" />
+		<variable name="previousPageId" value="" />
 		<variable name="previousLocationName" value="" />
 		<variable name="gameStartTime" value="0000-00-00 00:00:00" />
 		<variable name="showMatteInfo" value="false" />
@@ -26,12 +27,12 @@
 		</variable>
 	</decisionvars>
     <routes>
-		  <route start="one" end="two" connections="oneToTwo"> </route>
-		  <route start="one" end="three" connections="oneToTwo,twoToThree"> </route>
-		  <route start="four" end="one" connections="fourToOne"> </route>
-		  <route start="two" end="three" connections="twoToThree"> </route>
-		  <route start="two" end="four" connections="twoToThree,threeToFour"> </route>
-		  <route start="three" end="four" connections="threeToFour"> </route>    
+		  <route id="oneToTwo" start="one" end="two" connections="oneToTwo"> </route>
+		  <route id="oneToThree" start="one" end="three" connections="oneToTwo,twoToThree"> </route>
+		  <route id="fourToOne" start="four" end="one" connections="fourToOne"> </route>
+		  <route id="twoToThree" start="two" end="three" connections="twoToThree"> </route>
+		  <route id="twoToFour" start="two" end="four" connections="twoToThree,threeToFour"> </route>
+		  <route id="threeToFour" start="three" end="four" connections="threeToFour"> </route>    
     </routes>
     <connections>
         <connection id="oneToTwo" a="one" b="two" 
@@ -47,10 +48,32 @@
 		  <page id="pageStart">
 			<content>
                 <p>One</p>
-                <div id="oneToTwo" onclick="runRoute('two')">Go to Two</div>
-                <div onclick="runRoute('three')">Go to Three</div>
-                <div onclick="runRoute('four')">Go to Four</div>
+            </content>
+			<decisions>
+				<decision label="Go To Two" location="two">
+					<condition name="availableRoute_oneToTwo" value="true">
+					</condition>
+				</decision>
+				<decision id="linkOne" label="Unlock door to two" location="unlockTwo">
+					<condition name="availableRoute_oneToTwo">
+					</condition>
+				</decision>
+				<decision label="Routes" location="routes">
+				</decision>
+			</decisions>
+		  </page>
+		</scene>
+
+		<scene name="unlockTwo">
+		  <page id="pageStart">
+		  	<decisionvar name="availableRoute_oneToTwo" value="true" />
+			<content>
+                <p>Two is unlocked</p>
 			</content>
+			<decisions>
+				<decision label="Back to one" location="one">
+				</decision>
+			</decisions>
 		  </page>
 		</scene>
 
@@ -84,6 +107,34 @@
                 <div onclick="runRoute('three')">Go to Three</div>
                 <div onclick="runRoute('one')">Go to One</div>
 			</content>
+		  </page>
+		</scene>
+
+		<scene name="routes">
+		  <page id="pageStart">
+			<script>
+				alert("hey")
+			</script>
+			<style>
+				#pageContainer #linkOne{
+					background-color:red;
+				}
+			</style>
+			<content>
+				<p>Routes</p>
+			</content>				
+			<decisions>
+				<decision id="linkOne" label="Go Back To One" location="one">
+					<condition name="previousSceneName" value="one">
+					</condition>
+				</decision>
+				<decision id="linkTwo" label="Go To Two" location="two">
+					<condition name="previousSceneName" value="one">
+						<condition name="availableRoute_oneToTwo" value="true">
+						</condition>
+					</condition>
+				</decision>
+			</decisions>
 		  </page>
 		</scene>
 
