@@ -182,7 +182,7 @@ function parseXml(text_xml){
 									    return $(this).attr("name").toLowerCase() == currentCharacterName;
 									});
 	}
-	
+	 
 	if(checkDecisionVarI("music", "true")){
 		$("body").attr("music", "true")
 		$("#checkbox_musicOn").attr("checked", "checked")
