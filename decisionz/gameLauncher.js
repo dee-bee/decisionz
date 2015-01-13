@@ -140,6 +140,8 @@ function loadGame(){
 	}
 }
 
+var xml_lastWrite
+
 function parseXml(text_xml){
 	//If the line starts with [[ then remove it
 	while(text_xml.match(".*\n")[0].match("^[ ]*[\[][\[]") != undefined){
@@ -149,6 +151,8 @@ function parseXml(text_xml){
 	xml = ( new window.DOMParser() ).
 				parseFromString(text_xml, "text/xml")
 	
+	xml_lastWrite = $(xml).clone()[0]
+
 	convertXMLtoNewFormat()
 
 	if(localStorage.decisionz != undefined &&
@@ -158,6 +162,8 @@ function parseXml(text_xml){
 	}
 	
 	decisionVars = $(xml).find("config > decisionvars");
+	
+	updateDVS()
 	
 	if(params["character"] != null){
 		currentCharacterName = params["character"].toLowerCase();
@@ -1045,16 +1051,11 @@ function showDialogOnChange(){
 	if($("#checkbox_disableDialog").attr("checked") == "checked"){
 		//Disable dialog
 		$("body").attr("disableDialog", "true")
-		setDV('disableDialog', "true")
+		setDV('disableDialog', "true", true)
 	}else{
 		//Enabling dialog
 		$("body").attr("disableDialog", "false")
-		setDV('disableDialog', "false")
-	}
-	
-	if(!checkDecisionVarI(
-			"writeToLocalStorageOnlyOnSceneLoad","true")){
-		writeDecisionVarsToLocalStorage()
+		setDV('disableDialog', "false", true)
 	}
 }
 
@@ -1062,23 +1063,16 @@ function musicOnChange(){
 	if($("#checkbox_musicOn").attr("checked") == "checked"){
 		//Enabling music
 		$("body").attr("music", "true")	
-		setDV("music", "true")
+		setDV("music", "true", true)
 		
 		loadMusic(jCurrentScene.attr("music"));
 		unpauseAudio()
 	}else{
 		//Disable sound
 		$("body").attr("music", "false")		
-		setDV("music", "false")
+		setDV("music", "false", true)
 		pauseAudio()
 		$("#musicPlayerDiv").empty()
-	}
-	
-	//Todo -figure out a way to save these settings withough
-	//     waiting for another save to occur
-	if(!checkDecisionVarI(
-			"writeToLocalStorageOnlyOnSceneLoad","true")){
-		writeDecisionVarsToLocalStorage()
 	}
 }
 
@@ -1086,21 +1080,16 @@ function narrationAudioOnChange(){
 	if($("#checkbox_narrationAudioOn").attr("checked") == "checked"){
 		//Enabling narration audio
 		$("body").attr("narration_audio", "true")				
-		setDV("narrationAudio", "true")
+		setDV("narrationAudio", "true", true)
 	
 		loadNarrationAudio(jCurrentScene.attr("name"), jCurrentPage.attr("id"))
 		unpauseAudio()
 	}else{
 		//Disable sound
 		$("body").attr("narration_audio", "false")			
-		setDV("narrationAudio", "false")
+		setDV("narrationAudio", "false", true)
 		pauseAudio()
 		$("#narrationPlayerDiv").empty()
-	}
-	
-	if(!checkDecisionVarI(
-			"writeToLocalStorageOnlyOnSceneLoad","true")){
-		writeDecisionVarsToLocalStorage()
 	}
 }
 
@@ -1201,21 +1190,42 @@ function unpauseAudio(){
 ////////////////////////////////////////////////
 
 //Will create the dv if it is undefined
-function setDV(name, value){
-	var dv = decisionVars.find("> variable[name='" + name + "']")
+function setDV(name, value, writeNow, useXml){
+	if(writeNow && useXml){
+		alert("error: setDV - writeNow & useXml are both set")
+		return 
+	}
+
+	if(writeNow == undefined){
+		writeNow = false
+	}
+
+	var dVars = decisionVars
+
+	if(useXml){
+		dVars = $(useXml).find("config > decisionvars")
+	}
+
+	var dv = dVars.find("> variable[name='" + name + "']")
 	
 	if(dv.length == 0){
-		$(decisionVars).append(
+		$(dVars).append(
 				$("<variable name='" + name + "' " + " value='" + value + "'/>"));
 	}else{
 		dv.attr("value", value)	
 	}
 	
-	updateDVS()
-	
+	if(useXml == undefined){
+		updateDVS()
+	}
+
 	if(name != "currentBookmark"){
-		$(xml).find("decisionvars > variable[name='log']").append(
+		$(dVars).find("> variable[name='log']").append(
 			$("<variable name='" + name + "' " + " value='" + value + "'/>"))
+	}
+
+	if(writeNow){
+		writeDVToLocalStorage(name, value)
 	}
 }
 
@@ -1234,7 +1244,18 @@ function loadDecisionVars(container){
 
 var config_xml_string = ""
 
-function writeDecisionVarsToLocalStorage(){
+function writeDVToLocalStorage(name, value){
+	setDV(name, value, undefined, xml_lastWrite)
+	writeDecisionVarsToLocalStorage(xml_lastWrite)
+}
+
+function writeDecisionVarsToLocalStorage(useXml){
+	var t_xml = $(xml).clone()[0]
+
+	if(useXml != undefined){
+		t_xml = useXml
+	}
+
 	//alert("writeDecisionVarsToLocalStorage start")
 	if(params["disableLocalStorage"] == undefined){
 		//alert("writeDecisionVarsToLocalStorage clone")
@@ -1245,11 +1266,11 @@ function writeDecisionVarsToLocalStorage(){
 		//Don't save the local content if we're loading remotely
 		if(remotePageContentURL.length > 0){
 			//$(xmlClone).find("config > scenes > scene > page > content").empty()
-			$(xml).find("config > scenes > scene > page > content").empty()
+			$(t_xml).find("config > scenes > scene > page > content").empty()
 		}
 		
 		//var config_xml_string = new XMLSerializer().serializeToString(xmlClone)
-		config_xml_string = new XMLSerializer().serializeToString(xml)
+		config_xml_string = new XMLSerializer().serializeToString(t_xml)
 		
 		
 		//alert("writeDecisionVarsToLocalStorage string = " + config_xml_string)
@@ -1264,6 +1285,8 @@ function writeDecisionVarsToLocalStorage(){
 	}
 	
 	validateDecisionVars()
+
+	xml_lastWrite = $(t_xml).clone()[0]
 
 	//alert("writeDecisionVarsToLocalStorage end")
 }
