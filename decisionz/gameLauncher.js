@@ -13,7 +13,7 @@ var DVS = []
 var pass = "new XMLSerializer().serializeToString($(xml).clone())"
 var sceneReturnObj
 var jCurrentScene;
- 
+
  
 var disableMutationObserver = true;
 //Todo- get rid of this function
