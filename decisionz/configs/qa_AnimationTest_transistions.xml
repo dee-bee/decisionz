@@ -1,0 +1,125 @@
+<config devTools="true" perspective="MobilePerspective">
+	<characters>
+		<character name="Travis" defaultCharacter="true" startPage="true" />
+		<character name="Farse" />
+	</characters>
+	<decisionvars>
+		<variable name="currentSceneName" value="introAnimationTest" />
+	</decisionvars>
+	<scenes>
+		<!-- Impl - Impl - Your Cabin (text-only) -->
+		<scene name="introAnimationTest" disableLocalStorageWritesOnPageLoad="true"
+				loadClassimation="animations/falconTerraEdgarDecideToRescueLocke_transistions.xml">
+			<page id="pageStart" classimation="zoomFalcon" classimationNextPage="p2" 
+					music="ff3atmabattle2.mp3">
+				<content ></content>
+			</page>
+			
+			<page id="p2" classimation="edgarTerraIntro_end">
+				<content >
+					<p>Edgar: We need to think this through.</p>
+				</content>
+				<decisions>
+					<decision label="OK" nextpage="p3" />
+				</decisions>
+			</page>
+
+			<page id="p3" music="ff3daryl4.mp3" classimation="edgarTerraIntro_end" >
+				<content >
+					<p>Edgar: Is it wise to fly right into Doom Gaze's lair?</p>
+				</content>
+				<decisions>
+					<decision label="OK" nextpage="a2"/>
+				</decisions>
+			</page>
+
+			<page id="a2" classimation="terraLookDown" classimationNextPage="p4" >
+				<content ></content>
+			</page>
+						
+			<page id="p4" classimation="terraLookDown_end">
+				<content >
+					<p>Terra: ...</p>
+				</content>
+				<decisions>
+					<decision label="OK" nextpage="a3"/>
+				</decisions>
+			</page>
+
+			<page id="a3" classimation="terraWalkDown" classimationNextPage="p5" >
+				<content ></content>
+			</page>
+			
+			<page id="p5" classimation="terraWalkDown_end" >
+				<content >
+					<p>Terra: I just can't think of anything else we can do...</p>
+				</content>
+				<decisions>
+					<decision label="OK" nextpage="a4"/>
+				</decisions>
+			</page>
+
+			<page id="a4" classimation="edgarLockTrapped" classimationNextPage="p6" >
+				<content ></content>
+			</page>
+			
+			<page id="p6" classimation="edgarLockTrapped_end" >
+				<content >
+					<p>Edgar: Locke is trapped, but should we risk everything to try and save him?</p>
+				</content>
+				<decisions>
+					<decision label="OK" nextpage="a5"/>
+				</decisions>
+			</page>
+
+			<page id="a5" classimation="terraThatTime" classimationNextPage="p7" >
+				<content ></content>
+			</page>
+
+			<page id="p7" classimation="terraThatTime_end">
+				<content >
+					<p>Terra: That time that he saved me from Kefka, he risked everything ... for me ...</p>
+				</content>
+				<decisions>
+					<decision label="OK" nextpage="a6"/>
+				</decisions>
+			</page>
+			
+			<page id="a6" classimation="edgarThenItIs" classimationNextPage="p8" >
+				<content ></content>
+			</page>
+			
+			<page id="p8" classimation="edgarThenItIs_end" >
+				<content >
+					<p>Edgar: Then it is...</p>
+				</content>
+				<decisions>
+					<decision label="OK" nextpage="a7"/>
+				</decisions>
+			</page>
+			
+			<page id="a7" classimation="edgarHereWeCome" classimationNextPage="p9" >
+				<content ></content>
+			</page>
+			
+			<page id="p9" classimation="edgarHereWeCome_end">
+				<content >
+					<p>Edgar: Locke, here we come old friend!</p>
+				</content>
+				<decisions>
+					<decision label="OK" nextpage="a8"/>
+				</decisions>
+			</page>
+
+			<page id="a8" classimation="falconFliesAway" >
+				<content ></content>
+			</page>
+		</scene>
+	</scenes>
+	<locations>
+
+	</locations>
+	<diagrams>
+		
+	</diagrams>
+</config>

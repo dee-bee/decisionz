@@ -1,0 +1,347 @@
+<config>
+    <decisionvars>
+        <variable name="NoSound" value="false"/>
+        <variable name="UserName" value="DanB"/>
+        <variable name="currentSceneName" value="intro_map_Cabin"/>
+        <variable name="currentLocationName" value="map_Cabin"/>
+        <variable name="previousSceneName" value=""/>
+        <variable name="previousLocationName" value=""/>
+        <variable name="currentTime" value="0000-00-00 17:30:00" />
+        <variable name="gameStartTime" value="0000-00-00 17:30:00" />
+        <variable name="item_phone" value="Phone:explorePhone"/> 
+    </decisionvars>
+    <linktypes>
+        <linktype name="forwardLinkLocation" color="ff0000" cursor="goCursor"/>
+        <linktype name="backwardLinkLocation" color="cf986b" cursor="linkDown"/>
+        <linktype name="rightLinkLocation" color="ffffff" cursor="linkRight"/>
+        <linktype name="leftLinkLocation" color="000000" cursor="linkLeft"/>
+
+        <linktype name="item1LinkLocation" color="00ff00" cursor="goCursor"/>
+        <linktype name="item2LinkLocation" color="ffff00" cursor="goCursor"/>
+        <linktype name="item3LinkLocation" color="2efffd" cursor="goCursor"/>
+        <linktype name="item4LinkLocation" color="f900fc" cursor="goCursor"/>
+
+        <linktype name="variableLink" color="0000ff" cursor="goCursor"/>
+        <linktype name="topLinkLocation" color="686834" cursor="linkUp"/>
+        <linktype name="bottomLinkLocation" color="147f0d" cursor="linkDown"/>
+
+    </linktypes>
+    <scenes>    
+        <!-- gameStart sets location to cabin-Bed-Door for new games, or to currentLocation for returning games -->
+        <scene name="gameStart" disableClock="true" gameStartScene="true" music="assets/music/Faces_Without_Names.mp3"
+            musicRepeat="true"/>
+
+        <!-- ////////// Warp ////////////  -->
+        <scene name="warp" scenetype="SimpleClickMatte" >
+           <link linktype="rightLinkLocation" location="map_Cabin" duration="0000-00-00 00:00:15" />
+           <link linktype="leftLinkLocation" location="map_Cabin"  duration="0000-00-00 00:00:15" />
+           <link linktype="item1LinkLocation" location="map_Hallway_Marks_Room"  duration="0000-00-00 00:00:15" />
+           <link linktype="item2LinkLocation" location="map_HallwayL1-2"  duration="0000-00-00 00:00:15" />
+        </scene>
+
+        <!-- ////////// Phone ////////////  -->
+        <scene name="explorePhone" scenetype="SimpleClickMatte" >
+           <link linktype="rightLinkLocation" location="map_Cabin" duration="0000-00-00 00:00:15" />
+           <link linktype="leftLinkLocation" location="map_Cabin"  duration="0000-00-00 00:00:15" />
+           <link linktype="item1LinkLocation" >
+                <option description="Introducing Mark" location="vmMarkInfo" duration="0000-00-00 00:00:15" />
+                <option description="More Info On Mark" location="vmMarkMoreInfo" duration="0000-00-00 00:00:15" >
+                    <dependent name="id_vmMarkInfo" />
+                </option>
+                <option description="Page Demo With Link" type="pageLink" duration="0000-00-00 00:00:15" >
+                    <!--<dependent name="id_vmMarkMoreInfo" />-->
+                    <page heading="Cabin" id="pageStart" nextpage="p2_goneThrough">
+                        <content>
+                            <p>Page 1.</p>
+                        </content>
+                    </page>
+                    <page id="p2_goneThrough" nextpage="p3_note">
+                        <content>
+                            <p>Page 2.</p>
+                        </content>
+                    </page>
+                    <page id="p3_note" loadLocation="map_Cabin" nextpage="finished"  duration="0000-00-00 00:10:00" >
+                        <content>
+                            <p>Page 3.</p>
+                        </content>
+                    </page>
+                </option>
+            </link>
+        </scene>
+        
+        <scene name="exploreVoiceMail" scenetype="SimpleClickMatte" >
+           <link linktype="rightLinkLocation" location="explorePhone" duration="0000-00-00 00:00:15" />
+           <link linktype="leftLinkLocation" location="explorePhone"  duration="0000-00-00 00:00:15" />
+        </scene>
+        
+        <scene name="vmMarkInfo" scenetype="SimpleDialogBuilder" musicPlayThrough="true"
+                click_matte="exploreVoiceMail">
+           <decisionvar name="id_vmMarkInfo" value="true"/>
+           <decisionvar name="item_MarkMoreInfo" value="Mark More Info:item_MarkMoreInfo"/>
+           <page heading="Mark Info" id="pageStart" duration="0000-00-00 00:25:00">
+                <content>
+                    <p>You are now aware of Mark.</p>
+                </content>
+           </page>
+        </scene>
+
+        <scene name="item_MarkMoreInfo2" scenetype="SimpleDialogBuilder" musicPlayThrough="true"
+                click_matte="exploreVoiceMail">
+           <decisionvar name="id_vmMarkMoreInfo2" value="true"/>
+           <page heading="Mark More Info" id="pageStart" duration="0000-00-00 00:25:00">
+                <content>
+                    <p>You've already listened to more info about Mark.</p>
+                </content>
+           </page>
+        </scene>
+        
+        <scene name="item_MarkMoreInfo" scenetype="SimpleDialogBuilder" musicPlayThrough="true"
+                click_matte="exploreVoiceMail">
+           <item_condition name="id_vmMarkMoreInfo2" />
+           <page heading="Mark More Info" id="pageStart" duration="0000-00-00 00:25:00">
+                <content>
+                    <p>You have the option of finding more info about Mark.</p>
+                </content>
+           </page>
+        </scene>
+
+        <scene name="vmMarkMoreInfo" scenetype="SimpleDialogBuilder" musicPlayThrough="true"
+                click_matte="exploreVoiceMail">
+           <decisionvar name="id_vmMarkMoreInfo" value="true"/>
+           
+           
+           <page heading="Mark More Info" id="pageStart" duration="0000-00-00 00:25:00">
+                <content>
+                    <p>You now have more info on Mark.</p>
+                </content>
+           </page>
+        </scene>
+
+        <!-- ////////// Cabin ////////////  -->
+        <scene name="intro_map_Cabin" scenetype="SimpleDialogBuilder" musicPlayThrough="true"
+                click_matte="map_Cabin">
+            <decisionvar name="id_intro_map_Cabin" value="true"/>
+            
+            <floatNotification name="floatNotification_meet_farse_security_room" 
+                    solutionLocation="map_SecurityRoom" endTime="0000-00-00 00:30:00" >
+                <expired>
+                    <decisionvar name="reputation_Farse" subtract="1" />
+                </expired>
+            </floatNotification>
+                    
+            <page heading="Cabin" id="pageStart" nextpage="p2_goneThrough">
+                <content>
+                    <p>You return to your cabin to find that the door has been forced open.</p>
+                </content>
+            </page>
+            <page id="p2_goneThrough" nextpage="p3_note">
+                <content>
+                    <p>Your belongings have been gone through. Things are missing.</p>
+                </content>
+            </page>
+            <page id="p3_note"  duration="0000-00-00 00:10:00" location="map_Cabin">
+                <content>
+                    <p>There is a note on the floor. It requests that you come down to the 
+                    security room at once.</p>
+                </content>
+            </page>
+        </scene>
+        
+        <scene name="map_Cabin" scenetype="SimpleClickMatte" musicPlayThrough="true" click_matte="map_Cabin">
+            <link linktype="forwardLinkLocation" location="map_HallwayL2-1" duration="0000-00-00 00:01:00" />
+            <link linktype="item1LinkLocation" description="Cabin Closet" location="exploreCabinCloset" duration="0000-00-00 00:00:15" />
+            <!--
+            <link color="" description="Phone" location="explorePhone" duration="0000-00-00 00:00:15" />
+            <link color="" description="Warp" location="warp" duration="0000-00-00 00:00:15" />
+            <link linktype="item3LinkLocation" location="coinFlip"  duration="0000-00-00 00:01:00" />
+            -->
+            
+            <link linktype="item2LinkLocation" location="exploreCabinWindow"  duration="0000-00-00 00:00:15" />
+            <link linktype="item4LinkLocation" location="exploreCabinPaintingReceipt"  duration="0000-00-00 00:00:15" />
+        </scene>
+
+        <scene name="map_Cabin_Farse_8PM" scenetype="SimpleDialogBuilder" musicPlayThrough="true"
+                click_matte="map_Cabin">
+            <decisionvar name="id_map_Cabin_Farse_8PM" value="true"/>
+            
+           <page heading="Cabin" id="pageStart" nextpage="p2_goneThrough"
+                    duration="0000-00-00 00:25:00">
+                <content>
+                    <p>You meet Farse at 8PM.</p>
+                </content>
+            </page>
+        </scene>
+
+        <scene name="exploreCabinPaintingReceipt" scenetype="SimpleClickMatte"
+            musicPlayThrough="true">
+            <link linktype="rightLinkLocation" location="map_Cabin" duration="0000-00-00 00:00:15" />
+            <link linktype="leftLinkLocation" location="map_Cabin"  duration="0000-00-00 00:00:15" />
+        </scene>
+
+        <scene name="exploreCabinWindow" scenetype="SimpleClickMatte" musicPlayThrough="true">
+            <link linktype="rightLinkLocation" location="map_Cabin" duration="0000-00-00 00:00:15" />
+            <link linktype="leftLinkLocation" location="map_Cabin" duration="0000-00-00 00:00:15" />
+        </scene>
+
+        <scene name="coinFlip">
+            <!--<link linktype="rightLinkLocation" location="map_Cabin"/>
+            <link linktype="leftLinkLocation" location="map_Cabin"/>-->
+        </scene>
+
+        <scene name="exploreCabinCloset" scenetype="SimpleClickMatte" musicPlayThrough="true">
+            <link linktype="rightLinkLocation" location="map_Cabin" duration="0000-00-00 00:00:15" />
+            <link linktype="leftLinkLocation" location="map_Cabin" duration="0000-00-00 00:00:15" />
+        </scene>
+
+        <!-- ////////// Cabin Hallway ////////////  -->
+        <scene name="map_HallwayL2-1" scenetype="SimpleClickMatte" click_matte="map_HallwayL2-1"
+            musicPlayThrough="true">
+            <link linktype="forwardLinkLocation" location="map_HallwayL2-2" duration="0000-00-00 00:01:00" />
+            <link linktype="backwardLinkLocation" location="map_Cabin"  duration="0000-00-00 00:01:00" />
+        </scene>
+
+        <scene name="map_HallwayL2-2" scenetype="SimpleClickMatte"
+            musicPlayThrough="true">
+            <link linktype="forwardLinkLocation" location="map_ElevatorL2"  duration="0000-00-00 00:01:00" />
+            <link linktype="backwardLinkLocation" location="map_HallwayL2-1"  duration="0000-00-00 00:01:00" />
+        </scene>
+
+
+        <!-- ///////// Elevator /////////////  -->
+        <scene name="ElevatorInside" scenetype="SimpleClickMatte" musicPlayThrough="true">
+            <link linktype="item1LinkLocation" location="map_ElevatorL1"  duration="0000-00-00 00:01:00" />
+            <link linktype="item2LinkLocation" location="map_ElevatorL2"  duration="0000-00-00 00:01:00" />
+        </scene>
+
+        <scene name="map_ElevatorL2" scenetype="SimpleClickMatte" musicPlayThrough="true">
+            <link linktype="rightLinkLocation"  location="ElevatorInside"  duration="0000-00-00 00:01:00" />
+            <link linktype="backwardLinkLocation"   location="map_HallwayL2-2" duration="0000-00-00 00:01:00" />
+        </scene>
+
+        <scene name="map_ElevatorL1" scenetype="SimpleClickMatte" musicPlayThrough="true">
+            <link linktype="rightLinkLocation" location="ElevatorInside" duration="0000-00-00 00:01:00" />
+            <link linktype="forwardLinkLocation" location="map_HallwayL1-1"  duration="0000-00-00 00:01:00" />
+        </scene>
+
+        <!-- ///////// Security Hallway /////////////  -->
+        <scene name="map_HallwayL1-1" scenetype="SimpleClickMatte"
+            musicPlayThrough="true">
+            <link linktype="backwardLinkLocation" location="map_ElevatorL1"  duration="0000-00-00 00:01:00" />
+            <link linktype="forwardLinkLocation" location="map_HallwayL1-2"  duration="0000-00-00 00:01:00" />
+        </scene>
+
+        <scene name="map_HallwayL1-2" scenetype="SimpleClickMatte"
+            musicPlayThrough="true">
+            <link linktype="backwardLinkLocation" location="map_HallwayL1-1"  duration="0000-00-00 00:01:00" />
+            <link linktype="leftLinkLocation" location="map_SecurityRoom"  duration="0000-00-00 00:01:00" />
+        </scene>
+
+        <!-- ///////// Security Office /////////////  -->
+        <scene name="map_SecurityRoom" scenetype="SimpleClickMatte" musicPlayThrough="true">
+            <link linktype="rightLinkLocation" location="map_HallwayL1-2"  duration="0000-00-00 00:01:00" />
+        </scene>
+                
+        <scene name="map_SecurityRoom_introducingFarse" scenetype="SimpleDialogBuilder" musicPlayThrough="true"
+                click_matte="map_SecurityRoom">
+            <decisionvar name="id_map_SecurityRoom_introducingFarse" value="true"/>
+            
+            <floatNotification name="floatNotification_meet_farse_8PM" jumpToTime="true"
+                    solutionLocation="map_Cabin" endTime="0000-00-00 08:00:00" >
+            </floatNotification>
+            
+            <page heading="Cabin" id="pageStart">
+                <content>
+                    <p>You have a meeting with Farse.</p>
+                </content>
+            </page>
+        </scene>
+        
+        <!-- ///////// Mark's Room /////////////  -->
+        <scene name="map_Hallway_Marks_Room" scenetype="SimpleClickMatte" musicPlayThrough="true">
+            <link linktype="leftLinkLocation" location="map_MarksRoom"  duration="0000-00-00 00:01:00" />
+            <link linktype="backwardLinkLocation" location="map_Cabin"  duration="0000-00-00 00:01:00" />
+            <link linktype="forwardLinkLocation" location="map_Cabin"  duration="0000-00-00 00:01:00" />
+        </scene>
+        
+        <scene name="map_Hallway_Marks_Room_With_Passage" scenetype="SimpleClickMatte" musicPlayThrough="true">
+            <link linktype="leftLinkLocation" location="map_MarksRoom"  duration="0000-00-00 00:01:00" />
+            <link linktype="item1LinkLocation" location="map_MarksRoom_Secret_Entrance_Dialog"  duration="0000-00-00 00:01:00" />
+            <link linktype="backwardLinkLocation" location="map_Cabin"  duration="0000-00-00 00:01:00" />
+            <link linktype="forwardLinkLocation" location="map_Cabin"  duration="0000-00-00 00:01:00" />
+        </scene>
+        
+        <scene name="map_Hallway_Marks_Room_With_Passage_Completed" scenetype="SimpleDialogBuilder" musicPlayThrough="true"
+                click_matte="map_Hallway_Marks_Room_With_Passage" overrideLinks="true">
+           <link linktype="leftLinkLocation" location="map_MarksRoom"  duration="0000-00-00 00:01:00" />
+           <link linktype="item1LinkLocation" location="map_Hallway_Marks_Room_With_Passage_Completed_Text"  duration="0000-00-00 00:01:00" />
+           <link linktype="backwardLinkLocation" location="map_Cabin"  duration="0000-00-00 00:01:00" />
+           <link linktype="forwardLinkLocation" location="map_Cabin"  duration="0000-00-00 00:01:00" />
+           
+           <page heading="Broke Into Mark's Room" id="pageStart" duration="0000-00-00 00:25:00">
+                <content>
+                    <p>You found the passage to break into Mark's room. There is a video
+                    camera pointing toward the front door. You look around an see an
+                    expense report with Ian's name on it.</p>
+                </content>
+           </page>
+        </scene>
+        
+        
+        <scene name="map_MarksRoom" scenetype="SimpleClickMatte" musicPlayThrough="true">
+            <link linktype="rightLinkLocation" location="map_Hallway_Marks_Room"  duration="0000-00-00 00:01:00" />
+        </scene>
+        
+        <scene name="map_MarksRoom_Secret_Entrance" scenetype="SimpleClickMatte" musicPlayThrough="true">
+            <link linktype="item1LinkLocation" location="map_Hallway_Marks_Room"  duration="0000-00-00 00:01:00" />
+        </scene>
+        
+        <scene name="map_MarksRoom_Secret_Entrance_Dialog" scenetype="SimpleDialogBuilder" musicPlayThrough="true"
+                click_matte="map_MarksRoom_Secret_Entrance">
+           <decisionvar name="id_map_MarksRoom_Secret_Entrance_Dialog" value="true"/>
+           
+           <page heading="Broke Into Mark's Room" id="pageStart" duration="0000-00-00 00:25:00">
+                <content>
+                    <p>You found the passage to break into Mark's room. There is a video
+                    camera pointing toward the front door. You look around an see an
+                    expense report with Ian's name on it.</p>
+                </content>
+           </page>
+        </scene>
+    </scenes>
+    <locations>
+        <location name="map_Cabin">
+            <scenecondition setScene="intro_map_Cabin" >
+                <condition name="id_intro_map_Cabin" />
+            </scenecondition>
+            <scenecondition setScene="map_Cabin_Farse_8PM">
+                <condition name="id_map_Cabin_Farse_8PM" 
+                                        value="true"
+                                        startTime="0000-00-00 08:00:00"/>
+            </scenecondition>                
+        </location>
+        <location name="map_SecurityRoom">
+            <scenecondition setScene="map_SecurityRoom_introducingFarse"  >
+                <condition variableName="id_map_SecurityRoom_introducingFarse"
+                            startTime="0000-00-00 00:00:00" 
+                            endTime="0000-00-00 00:30:00" 
+                            referenceTimeVar="gameStartTime" />
+            </scenecondition>
+        </location>
+        <location name="map_Hallway_Marks_Room">
+            <scenecondition setScene="map_Hallway_Marks_Room_With_Passage" >
+                <condition variableName="id_vmMarkMoreInfo" variableValue="true"/>
+                <condition variableName="id_map_MarksRoom_Secret_Entrance_Dialog" />
+            </scenecondition>
+        </location>
+        <location name="item_MarkMoreInfo">
+            <scenecondition setScene="item_MarkMoreInfo2" >
+                <condition variableName="id_vmMarkMoreInfo" variableValue="true"/>
+            </scenecondition>
+        </location>
+    </locations>
+    <decisionvarSets>
+        <decisionvarSet name="sergentFarseIntroMissed">
+            <decisionvar name="sergentFarseIntroMissed" value="true"/>
+        </decisionVarSet>
+    </decisionVarSets>
+</config>

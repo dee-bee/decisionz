@@ -1,0 +1,179 @@
+body div#pageContent > p{
+    padding: 0px;
+    margin: 11px;
+}
+
+body div#pageContent{
+    position: absolute;
+    z-index: 1000;
+    top: 28px;
+    background-color: white;
+    border-radius: 7px;
+    /* border: 1px solid; */
+    width: 466px;
+}
+
+body div#pageContent > .decisionBtn{
+    width: 36px;
+    margin-left: 398px;
+    font-size: 22px;
+    padding: 10px;
+}
+
+
+
+
+#falcon {
+	left: 0px;
+	top: 0px;
+	-webkit-animation: bobbleFalcon 3s infinite;
+	animation: bobbleFalcon 3s infinite;
+}
+
+@-webkit-keyframes bobbleFalcon{
+	0% {top:0px;}
+	50% {top:-10px;}
+	100% {top:0px;}
+}
+
+@keyframes bobbleFalcon{
+	0% {top:0px;}
+	50% {top:-10px;}
+	100% {top:0px;}
+}
+
+
+
+
+
+#falconZoom{
+	position:absolute;
+	top: 0px;
+	left: 0px;
+	transform-origin: 223px 86px;
+}
+
+#falconZoom.zoom_trans{
+	transition: transform 3s;
+}
+
+#falconZoom.zoomed{
+	transform-origin: 223px 86px;
+	transform: scale(2.5);
+}
+
+
+
+
+#edgarContainer{
+    transform: scale(.4);
+    left: 210px;
+    top: 112px;
+}
+
+#terraContainer {
+	transform: scale(.4);
+	left: 262px;
+	top: 112px;
+}
+
+#animContainer {
+	width: 482px;
+	overflow: hidden;
+	height: 290px;
+	position: relative;
+}
+
+#oceanBackground{
+    background-image: url("../images/Ocean.png");
+    width: 482px;
+    height: 290px;
+    position: relative;
+    background-color: green;
+}
+
+#edgarContainer.edgarMoveRight_trans{ 
+	transition: left 2s linear;
+}
+
+#edgarContainer.edgarMovedRight{ 
+	left: 250px;
+}
+
+#terraContainer{
+	/* display:none; */
+}
+
+#terraContainer.terraMoveDown_trans{ 
+	transition: top 1s linear;
+}
+
+#terraContainer.terraMoveDown{
+	top: 126px;
+}
+
+#terraContainer.terraMoveDown_end{ 
+	left: 262px;
+	top: 126px;
+}
+
+
+
+#edgarContainer.edgarMoveLeft_trans{ 
+	transition: left 2s linear;
+}
+
+#edgarContainer.edgarMoveLeft{
+	left: 230px;
+}
+
+#edgarContainer.edgarMoveLeft_end{ 
+	left: 230px;
+	top: 112px;
+}
+
+
+
+
+#terraContainer.terraMoveUp_trans{ 
+	transition: top 1s linear;
+}
+
+#terraContainer.terraMoveUp{
+	top: 115px;
+}
+
+#terraContainer.terraMoveUp_end{ 
+	left: 262px;
+	top: 115px;
+}
+
+
+
+#edgarContainer.edgarMoveToWheel_trans{ 
+	transition: left 1s linear;
+}
+
+#edgarContainer.edgarMoveToWheel{
+	left: 210px;
+}
+
+#edgarContainer.edgarMoveToWheel_end{
+	left: 210px;
+	top: 112px;
+}
+
+
+
+
+#falcon.falconFliesAway_trans{
+	transition: left 2s;
+}
+
+#falcon.falconFliesAway{
+	left: -900px;
+}
+
+#falcon.falconFliesAway_end{
+	left: -900px;
+}

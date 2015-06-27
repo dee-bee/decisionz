@@ -1,3 +1,28 @@
+#menuBar{
+	/* display:none; */
+}
+
+#toggleMenuBar:hover{
+	color:white;
+}
+
+#toggleMenuBar{
+    background-color: grey;
+	cursor: pointer;
+    width: 30px;
+    color: black;
+    text-align: center;
+    padding-top: 5px;
+    border-radius: 4px;
+}
+
+body[state='bookmarks'] #toggleMenuBar,
+body[state='dev_mode'] #toggleMenuBar,
+body[state='settings'] #toggleMenuBar,
+body[state='set_bookmark'] #toggleMenuBar{
+    display:none;
+}
+
 #currentTime{
     cursor: default;
     font-size: 3em;
@@ -7,10 +32,15 @@
 #main {
     min-width: 700px;
     padding: 40px;
+    position: relative;
 } 
 
 .hidden{
 	opacity: 0;
+}
+
+.displayNone{
+	display:none;
 }
 
 #pageContainer{
@@ -20,7 +50,8 @@
     border-radius: 10px;
     padding: 20px;
     background-color: darkgray;
-    position: relative;
+    position: absolute;
+    top: 0px;
 }
 
 #linkToConfigFile{
@@ -51,7 +82,7 @@
     
     height: 100%;
     position: fixed;
-    background-color: rgb(48, 47, 47);
+    /* background-color: rgb(48, 47, 47); */
 }
 
 .fixedBarBtn:hover{
@@ -69,16 +100,6 @@
     font-weight: bold;
     text-align: center;
     padding-top: 23px;
-}
-
-body[music='true'][state='main'] #playPauseBtn,
-body[narration_audio='true'][state='main'] #playPauseBtn{
-    display:block;
-}
-
-#playPauseBtn{
-    padding-top: 23px;
-    display:none;
 }
 
 #narrationLog .decisionBtn{
@@ -141,6 +162,14 @@ body{
     color: grey;
 }
 
+div#devbar{
+    overflow-x: hidden;
+    /* background-color: black; */
+    /* color: black; */
+    top: 0px;
+    position: absolute;
+}
+
 #title{
     position: absolute;
     width: 100%;
@@ -148,13 +177,6 @@ body{
     font-size: 1.1em;
     margin-bottom: 30px;
     text-align: center;
-}
-
-#devbar{
-    position: relative;
-    margin-top: 25px;
-    
-    margin-bottom: 50px;
 }
   
 #manageBookmarks{
@@ -457,4 +479,48 @@ body[disableDialog="true"] #pageContent > p{
     width: 900px;
     height: 615px;
     border: 0px;
+}
+
+#backgroundImage{
+    position: absolute;
+
+    width: 800px;
+    top: 0px;
+    /* height: 500px; */
+    /* display: none; */
+}
+
+#backgroundClickMatte{
+    position: absolute;
+	
+    top: 0px;
+    width: 800px;
+    opacity: 0;
+    /* opacity: 1; */
+    /* display: none; */
+}
+
+#contentContainer{
+    position: relative;
+	
+}
+
+#backgroundClickMatteCanvas{
+    opacity: 0;
+	
+    position: absolute;
+    top: 0px;
+    /* opacity: 1; */
+    width: 800px;
+    /* z-index: 10; */
+}
+
+#stageTest{
+    background-color: rgb(187, 124, 135);
+	
+    width: 400;
+    color: white;
+    padding: 20px;
+    position: absolute;
+    top: 229px;
 }

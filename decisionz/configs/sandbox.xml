@@ -4,7 +4,7 @@
 		<character name="Travis" defaultCharacter="true" startPage="true"></character>
 		<character name="Farse" active="truez"></character>
 	</characters>
-	<decisionVars>
+	<decisionvars>
 		<variable name="currentTime" value="0000-00-00 15:30:00"/>
 		<variable name="gameMode" value="text"/>
 		<variable name="NoSound" value="true"/>
@@ -23,35 +23,35 @@
 		<variable name="videoTransitionResolution" value="320x240"/>
 		<variable name="narration" value="true"/>
 		<variable name="music" value="true"/>
-	</decisionVars>
-	<itemsTypes></itemsTypes>
-	<linkTypes>
-		<linkType name="dragItem" color="654321" cursor="goCursor"/>
-		<linkType name="dropTarget" color="123456" cursor="goCursor"/>
-		<linkType name="forwardLinkLocation" color="FF0000" cursor="goCursor"/>
-		<linkType name="forward" color="FF0000" cursor="goCursor"/>
-		<linkType name="backwardLinkLocation" color="cf986b" cursor="linkDown"/>
-		<linkType name="backward" color="cf986b" cursor="linkDown"/>
-		<linkType name="back" color="cf986b" cursor="linkDown"/>
-		<linkType name="rightLinkLocation" color="ffffff" cursor="linkRight"/>
-		<linkType name="right" color="ffffff" cursor="linkRight"/>
-		<linkType name="leftLinkLocation" color="000000" cursor="linkLeft"/>
-		<linkType name="left" color="000000" cursor="linkLeft"/>
-		<linkType name="item1LinkLocation" color="00ff00" cursor="goCursor"/>
-		<linkType name="item1" color="00ff00" cursor="goCursor"/>
-		<linkType name="item2LinkLocation" color="ffff00" cursor="goCursor"/>
-		<linkType name="item2" color="ffff00" cursor="goCursor"/>
-		<linkType name="item3LinkLocation" color="2efffd" cursor="goCursor"/>
-		<linkType name="item3" color="2efffd" cursor="goCursor"/>
-		<linkType name="item4LinkLocation" color="F900FC" cursor="goCursor"/>
-		<linkType name="item4" color="F900FC" cursor="goCursor"/>
-		<linkType name="variableLink" color="0000Ff" cursor="goCursor"/>
-		<linkType name="variable" color="0000Ff" cursor="goCursor"/>
-		<linkType name="topLinkLocation" color="686834" cursor="linkUp"/>
-		<linkType name="top" color="696834" cursor="linkUp"/>
-		<linkType name="bottomLinkLocation" color="147f0d" cursor="linkDown"/>
-		<linkType name="bottom" color="14800d" cursor="linkDown"/>
-	</linkTypes>
+	</decisionvars>
+	<itemstypes></itemstypes>
+	<linktypes>
+		<linktype name="dragItem" color="654321" cursor="goCursor"/>
+		<linktype name="dropTarget" color="123456" cursor="goCursor"/>
+		<linktype name="forwardLinkLocation" color="FF0000" cursor="goCursor"/>
+		<linktype name="forward" color="FF0000" cursor="goCursor"/>
+		<linktype name="backwardLinkLocation" color="cf986b" cursor="linkDown"/>
+		<linktype name="backward" color="cf986b" cursor="linkDown"/>
+		<linktype name="back" color="cf986b" cursor="linkDown"/>
+		<linktype name="rightLinkLocation" color="ffffff" cursor="linkRight"/>
+		<linktype name="right" color="ffffff" cursor="linkRight"/>
+		<linktype name="leftLinkLocation" color="000000" cursor="linkLeft"/>
+		<linktype name="left" color="000000" cursor="linkLeft"/>
+		<linktype name="item1LinkLocation" color="00ff00" cursor="goCursor"/>
+		<linktype name="item1" color="00ff00" cursor="goCursor"/>
+		<linktype name="item2LinkLocation" color="ffff00" cursor="goCursor"/>
+		<linktype name="item2" color="ffff00" cursor="goCursor"/>
+		<linktype name="item3LinkLocation" color="2efffd" cursor="goCursor"/>
+		<linktype name="item3" color="2efffd" cursor="goCursor"/>
+		<linktype name="item4LinkLocation" color="F900FC" cursor="goCursor"/>
+		<linktype name="item4" color="F900FC" cursor="goCursor"/>
+		<linktype name="variableLink" color="0000Ff" cursor="goCursor"/>
+		<linktype name="variable" color="0000Ff" cursor="goCursor"/>
+		<linktype name="topLinkLocation" color="686834" cursor="linkUp"/>
+		<linktype name="top" color="696834" cursor="linkUp"/>
+		<linktype name="bottomLinkLocation" color="147f0d" cursor="linkDown"/>
+		<linktype name="bottom" color="14800d" cursor="linkDown"/>
+	</linktypes>
 	<scenes>
 		<scene name="GameIntro">
 			<page id="pageStart" location="introTableCouchDesk" >
@@ -64,16 +64,16 @@
 						]]>
 					</script>
 				</content>
-				<multiplayerCondition character="Farse" scene="introTableCouchDesk" 
+				<multiplayercondition character="Farse" scene="introTableCouchDesk" 
 												page="pg_receipt" type="waitForResponse">
 						<condition name="gameMode" value="text">
 						</condition>
-				</multiplayerCondition>
+				</multiplayercondition>
 			</page>
 		</scene>
 		
 		<!-- Impl - Impl - Your Cabin (text-only) -->
-		<scene groupName="YourCabin" music="assets/music/TwentyOne.mp3"
+		<scene groupName="YourCabin" music="TwentyOne.mp3"
 		musicPlayThrough="true" backgroundSimpleClickMatteScene="TableCouchDesk"
 		musicRepeat="true" name="introTableCouchDesk" sceneType="SimpleDialogBuilder">
 			<page id="pg_receipt" location="Hallway">
@@ -95,22 +95,22 @@
 				</content>
 			</page>
 			<page id="pf_game_mode_test" type="pageForward">
-				<pageCondition nextPage="pg_receipt">
+				<pagecondition nextpage="pg_receipt">
 					<condition name="gameMode" value="text">
 					</condition> 
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="p3" content_id="cid_introTableCouchDesk_pg3" nextPage="pf_game_mode_test">
+			<page id="p3" content_id="cid_introTableCouchDesk_pg3" nextpage="pf_game_mode_test">
 				<content>
 					<p>As you enter you realize that there is a note on the floor. It is from the
 						chief of security Detective Farse and it requests that you come down to the
 						security room at once.</p>
 				</content>
 			</page>
-			<page id="p2" nextPage="p3" content_id="cid_introTableCouchDesk_pg2">
+			<page id="p2" nextpage="p3" content_id="cid_introTableCouchDesk_pg2">
 				<content>
 					<p>Sarah is the second member of your team, and has been in the organization
 						for a couple of years.</p>
@@ -122,7 +122,7 @@
 						cabin.</p>
 				</content>
 			</page>
-			<page id="pageStart" nextPage="p2" content_id="cid_introTableCouchDesk_pg1">
+			<page id="pageStart" nextpage="p2" content_id="cid_introTableCouchDesk_pg1">
 				<content>
 					<p>You are a private investigator looking into reports of strange activity on
 						the RMS Queen Elizabeth II, the ship is heading from Egypt up to Italy,
@@ -336,7 +336,7 @@
 				<decisions>
 					<decision label="Save it for another time" location="exploreButterflyLounge"></decision>
 					<decision label="Look through the song selection"
-					nextPage="pf_know_of_song_check"></decision>
+					nextpage="pf_know_of_song_check"></decision>
 				</decisions>
 				<content>
 					<p>You move up to the Jukebox. There's a catalog of songs listed on pages
@@ -344,16 +344,16 @@
 						forward and back. There must be hundreds of songs.</p>
 				</content>
 			</page>
-			<page id="pf_know_of_song_check" type="pageForward" nextPage="pg_dont_know_song">
-				<pageCondition nextPage="pg_know_the_song">
+			<page id="pf_know_of_song_check" type="pageForward" nextpage="pg_dont_know_song">
+				<pagecondition nextpage="pg_know_the_song">
 					<condition name="s_giveJonasDocumentsToGhosts" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
 			<page id="pg_know_the_song" location="exploreButterflyLounge">
-				<decisionVar name="pg_know_the_song" value="true"/>
+				<decisionvar name="pg_know_the_song" value="true"/>
 				<content>
 					<p>You click on the next page button cycling through the selections. The
 						jukebox has quite a diverse set of music but mostly jazz and modern
@@ -387,18 +387,18 @@
 			</page>
 		</scene>
 		<scene name="introRudolphe" groupName="ButterflyLounge" sceneType="SimpleDialogBuilder">
-			<page id="pf_text_chk" type="pageForward" nextPage="pg7">
-				<pageCondition location="exploreButterflyLounge">
+			<page id="pf_text_chk" type="pageForward" nextpage="pg7">
+				<pagecondition location="exploreButterflyLounge">
 					<condition name="gameMode" value="text"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<link linkName="Right-exploreButterflyLounge" linkType="right"
+			<link linkName="Right-exploreButterflyLounge" linktype="right"
 			location="exploreButterflyLounge" clickedVideoDirection="reverse"
 			enableClickedVideo="true"></link>
-			<link linkName="Left-exploreButterflyLounge" linkType="left"
+			<link linkName="Left-exploreButterflyLounge" linktype="left"
 			location="exploreButterflyLounge" clickedVideoDirection="reverse"
 			enableClickedVideo="true"></link>
 			<page id="pg7" location="exploreButterflyLounge">
@@ -408,7 +408,7 @@
 						statements lead you to believe that somehow things are not as they appear.</p>
 				</content>
 			</page>
-			<page id="pg6" nextPage="pg7" duration="0000-00-00 00:02:00">
+			<page id="pg6" nextpage="pg7" duration="0000-00-00 00:02:00">
 				<content>
 					<p>The conversation with Rudolphe starts to roll around in your head. What
 						exactly did he mean by "my family". His tone was ominous and decisive. You
@@ -417,7 +417,7 @@
 						not finished.</p>
 				</content>
 			</page>
-			<page id="pg5" nextPage="pg6">
+			<page id="pg5" nextpage="pg6">
 				<content>
 					<p>At this point he is completely lost in another place and time. His eyes look
 						far over the horizon of a distant past. He continues, "Tomorrow's painting
@@ -429,7 +429,7 @@
 						leaves.</p>
 				</content>
 			</page>
-			<page id="pg4" nextPage="pg5" duration="0000-00-00 00:02:00">
+			<page id="pg4" nextpage="pg5" duration="0000-00-00 00:02:00">
 				<content>
 					<p>He seems to become aware of the transparency of his emotions and starts to
 						tone down a bit. He starts rambling on about the color composition, and the
@@ -438,7 +438,7 @@
 						off. With this he nods yes and says, "Tomorrow there is another painting".</p>
 				</content>
 			</page>
-			<page id="pg3" nextPage="pg4" duration="0000-00-00 00:02:00">
+			<page id="pg3" nextpage="pg4" duration="0000-00-00 00:02:00">
 				<content>
 					<p>You start talking about colors, and perspective (a topic that is rather dull
 						for you, but you make the best of it). You ask him about the painting that
@@ -446,7 +446,7 @@
 						true intentions. Once again you are taken a bit back by his directness.</p>
 				</content>
 			</page>
-			<page id="pg2" nextPage="pg3" duration="0000-00-00 00:03:00">
+			<page id="pg2" nextpage="pg3" duration="0000-00-00 00:03:00">
 				<content>
 					<p>He looks around to see if you're alone. The look on his face seems rather
 						odd. It makes you think that he's hiding something, but first impressions
@@ -454,21 +454,21 @@
 						can sit and talk for a bit, and he obliges.</p>
 				</content>
 			</page>
-			<page id="pageStart" nextPage="pg2" duration="0000-00-00 00:02:00">
+			<page id="pageStart" nextpage="pg2" duration="0000-00-00 00:02:00">
 				<content>
 					<p>Rudolphe is reading a picture book of some sort. You cordially stroll by his
 						table grabbing his attention. He glances up at you and you tell him that you
 						remembered him from the auction.</p>
 				</content>
 			</page>
-			<decisionVar name="nr_introRudolphe" value="true"/>
+			<decisionvar name="nr_introRudolphe" value="true"/>
 		</scene>
 		<scene name="exploreButterflyLounge" groupName="ButterflyLounge"
 		sceneType="SimpleDialogBuilder">
 			<page id="pageStart" type="pageForward">
-				<pageCondition nextPage="pg_bl_index">
+				<pagecondition nextpage="pg_bl_index">
 					<condition name="gameMode" value="text"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
@@ -487,26 +487,26 @@
 					<p/>
 				</content>
 			</page>
-			<link linkName="Forward-introRudolphe" linkType="forward" location="introRudolphe"
+			<link linkName="Forward-introRudolphe" linktype="forward" location="introRudolphe"
 			enableClickedVideo="true">
 				<condition name="nr_introRudolphe">
 					<condition endTime="0000-00-00 23:59:00"></condition>
 				</condition>
 			</link>
-			<link linkName="Right-Hallway" linkType="right" location="Hallway"
+			<link linkName="Right-Hallway" linktype="right" location="Hallway"
 			enableClickedVideo="true"></link>
 		</scene>
 		<scene name="introButterflyLounge" groupName="ButterflyLounge"
 		sceneType="SimpleDialogBuilder">
 			<page id="pf_RudolphePresent" type="pageForward" location="exploreButterflyLounge">
-				<pageCondition nextPage="pg4">
+				<pagecondition nextpage="pg4">
 					<condition endTime="0000-00-00 23:59:00"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg2" nextPage="pg3">
+			<page id="pg2" nextpage="pg3">
 				<content>
 					<p>The bartender is a young man with a heavy accent. You guess that he's from
 						the Philippines.He asks you what you'd like and you point to a red label on
@@ -514,7 +514,7 @@
 						stocking of the bar.</p>
 				</content>
 			</page>
-			<page id="pageStart" nextPage="pg2" duration="0000-00-00 00:10:00">
+			<page id="pageStart" nextpage="pg2" duration="0000-00-00 00:10:00">
 				<content>
 					<p>While exploring the ship you step into one of the various bars called The
 						Butterfly Lounge. It seems like a nice place to sit down and take the load
@@ -522,7 +522,7 @@
 						to take a quick break and grab a drink.</p>
 				</content>
 			</page>
-			<decisionVar name="noRepeat_introButterflyLounge" value="true"/>
+			<decisionvar name="noRepeat_introButterflyLounge" value="true"/>
 			<page id="pg5_doNothing" location="exploreButterflyLounge">
 				<content>
 					<p>You opt to sit and enjoy your beer quietly.</p>
@@ -530,7 +530,7 @@
 			</page>
 			<page id="pg4">
 				<decisions>
-					<decision label="Sit And Enjoy Your Beer Quietly" nextPage="pg5_doNothing"></decision>
+					<decision label="Sit And Enjoy Your Beer Quietly" nextpage="pg5_doNothing"></decision>
 					<decision label="Introduce Yourself To Rudolphe" location="introRudolphe"
 					></decision>
 				</decisions>
@@ -543,7 +543,7 @@
 						You wonder if you should go and introduce yourself.</p>
 				</content>
 			</page>
-			<page id="pg3" nextPage="pf_RudolphePresent" duration="0000-00-00 00:03:00">
+			<page id="pg3" nextpage="pf_RudolphePresent" duration="0000-00-00 00:03:00">
 				<content>
 					<p>You sit for a couple of minutes looking at the intricate designs around the
 						bar. There are hundreds of small boxes with glass faces (all the same size)
@@ -570,16 +570,16 @@
 				</content>
 			</page>
 			<page id="pg_bedtime_reminder_day_2" location="Hallway">
-				<decisionVar name="nr_pg_bedtime_reminder_day_2" value="true"/>
+				<decisionvar name="nr_pg_bedtime_reminder_day_2" value="true"/>
 				<content>
 					<p>You feel like it's taking quite a bit of energy to do the simple act of
 						walking. Your mind is wandering. You're getting tired and will have to wrap
 						it up for the evening shortly.</p>
 				</content>
 			</page>
-			<page id="pg_bedtime_day_3" nextPage="pg_awake_day_4">
-				<decisionVar name="nr_pg_bedtime_day_3" value="true"/>
-				<decisionVar name="currentTime" value="0000-00-03 05:15:00"/>
+			<page id="pg_bedtime_day_3" nextpage="pg_awake_day_4">
+				<decisionvar name="nr_pg_bedtime_day_3" value="true"/>
+				<decisionvar name="currentTime" value="0000-00-03 05:15:00"/>
 				<content>
 					<p>The day has worn right through you, so you return to your warm cabin longing
 						for the comfort of your bed.</p>
@@ -595,13 +595,13 @@
 				</content>
 			</page>
 			<page id="pg_bedtime_reminder_day_3" location="Hallway">
-				<decisionVar name="nr_pg_bedtime_reminder_day_3" value="true"/>
+				<decisionvar name="nr_pg_bedtime_reminder_day_3" value="true"/>
 				<content>
 					<p>The stresses of the day are starting to wear on you. You're getting tired.</p>
 				</content>
 			</page>
 			<page id="pg_david_follow_ghost" location="Hallway" duration="0000-00-00 00:11:00">
-				<decisionVar name="nr_pg_david_follow_ghost" value="true"/>
+				<decisionvar name="nr_pg_david_follow_ghost" value="true"/>
 				<content>
 					<p>As you're walking down the hallway to your room you notice something out of
 						the corner of your eye. You're surprised by the odd motion and turn to look.
@@ -620,8 +620,8 @@
 				</content>
 			</page>
 			<page id="pg_bedtime_day_1" location="s_containmentAreaDreamDay1">
-				<decisionVar name="nr_pg_bedtime_day_1" value="true"/>
-				<decisionVar name="currentTime" value="0000-00-01 06:00:00"/>
+				<decisionvar name="nr_pg_bedtime_day_1" value="true"/>
+				<decisionvar name="currentTime" value="0000-00-01 06:00:00"/>
 				<content>
 					<p>Your eyes no longer focus correctly. You are exhausted from the day's
 						efforts. Although there are pressing issues before you, it is impossible to
@@ -633,7 +633,7 @@
 				</content>
 			</page>
 			<page id="pg_bedtime_reminder_day_1" location="Hallway">
-				<decisionVar name="nr_pg_bedtime_reminder_day_1" value="true"/>
+				<decisionvar name="nr_pg_bedtime_reminder_day_1" value="true"/>
 				<content>
 					<p>Your eyes start to feel heavy. It's been a long and stressful day and you
 						can feel it in your bones. You realize that it's best if you wrap it up for
@@ -641,7 +641,7 @@
 				</content>
 			</page>
 			<page id="pg_IntroHallway" location="Hallway" duration="0000-00-00 00:02:00">
-				<decisionVar name="nr_pg_IntroHallway" value="true"/>
+				<decisionvar name="nr_pg_IntroHallway" value="true"/>
 				<content>
 					<p>As you're shutting the door to your cabin, a thought crosses your mind.
 						Where was the painting that you and Sarah purchased this afternoon? You open
@@ -742,7 +742,7 @@
 			</page>
 			<page id="pg_where_to_go">
 				<decisions>
-					<decision label="Fast forward 1 hour" nextPage="pg_fast_forward_1_hour"></decision>
+					<decision label="Fast forward 1 hour" nextpage="pg_fast_forward_1_hour"></decision>
 
 					<!-- Impl - Butterfly Lounge (testsuite) (needs cleaning) -->
 					<decision label="Go to room 35C" location="s_findSarahInThugsRoom">
@@ -880,74 +880,74 @@
 				</decisions>
 				<content></content>
 			</page>
-			<page id="pageStart" type="pageForward" nextPage="pg_where_to_go">
-				<pageCondition nextPage="pg_default_ending">
+			<page id="pageStart" type="pageForward" nextpage="pg_where_to_go">
+				<pagecondition nextpage="pg_default_ending">
 					<condition startTime="0000-00-03 18:30:00">
 						<condition name="s_GhostDenIntro"></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition location="s_CostumeBall">
+				</pagecondition>
+				<pagecondition location="s_CostumeBall">
 					<condition name="s_CostumeBall">
 						<condition startTime="0000-00-02 19:00:00" endTime="0000-00-03 00:00:00"
 						></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_bedtime_day_3">
+				</pagecondition>
+				<pagecondition nextpage="pg_bedtime_day_3">
 					<condition name="nr_pg_bedtime_day_3">
 						<condition startTime="0000-00-03 00:00:00" endTime="0000-00-03 06:00:00"
 						></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_bedtime_reminder_day_3">
+				</pagecondition>
+				<pagecondition nextpage="pg_bedtime_reminder_day_3">
 					<condition name="nr_pg_bedtime_reminder_day_3">
 						<condition startTime="0000-00-02 23:00:00" endTime="0000-00-02 24:00:00"
 						></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_bedtime_reminder_day_2">
+				</pagecondition>
+				<pagecondition nextpage="pg_bedtime_reminder_day_2">
 					<condition name="nr_pg_bedtime_reminder_day_2">
 						<condition startTime="0000-00-01 23:00:00" endTime="0000-00-01 24:00:00"
 						></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_david_follow_ghost">
+				</pagecondition>
+				<pagecondition nextpage="pg_david_follow_ghost">
 					<condition name="nr_pg_david_follow_ghost">
 						<condition startTime="0000-00-01 13:00:00" endTime="0000-00-01 20:00:00"
 						></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_bedtime_day_1">
+				</pagecondition>
+				<pagecondition nextpage="pg_bedtime_day_1">
 					<condition name="nr_pg_bedtime_day_1">
 						<condition startTime="0000-00-01 01:30:00" endTime="0000-00-01 06:00:00"
 						></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_bedtime_reminder_day_1">
+				</pagecondition>
+				<pagecondition nextpage="pg_bedtime_reminder_day_1">
 					<condition name="nr_pg_bedtime_reminder_day_1">
 						<condition startTime="0000-00-00 23:00:00" endTime="0000-00-00 24:00:00"
 						></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_IntroHallway">
+				</pagecondition>
+				<pagecondition nextpage="pg_IntroHallway">
 					<condition name="nr_pg_IntroHallway"></condition>
-				</pageCondition>
+				</pagecondition>
 
 				<!-- Impl - Ghost Den (testsuite) -->
-				<pageCondition nextPage="pg_Jonas_catches_you">
+				<pagecondition nextpage="pg_Jonas_catches_you">
 					<condition startTime="0000-00-03 10:00:00">
 						<condition name="s_findJonasDocuments" value="true">
 							<condition name="s_giveJonasDocumentsToGhosts"></condition>
 						</condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_ending_Mark_blows_up_ship">
+				</pagecondition>
+				<pagecondition nextpage="pg_ending_Mark_blows_up_ship">
 					<condition startTime="0000-00-03 18:00:00">
 						<condition name="s_GhostDenIntro" value="true">
 							<condition name="S_chatWithMarkAboutJoiningTeam"></condition>
 						</condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_haunting_3">
+				</pagecondition>
+				<pagecondition nextpage="pg_haunting_3">
 					<condition name="s_findJonasDocuments" value="true">
 						<condition name="s_giveJonasDocumentsToGhosts">
 							<condition name="pg_haunting_3">
@@ -956,8 +956,8 @@
 							</condition>
 						</condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_haunting_2">
+				</pagecondition>
+				<pagecondition nextpage="pg_haunting_2">
 					<condition name="s_findJonasDocuments" value="true">
 						<condition name="s_giveJonasDocumentsToGhosts">
 							<condition name="pg_haunting_2">
@@ -966,8 +966,8 @@
 							</condition>
 						</condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_haunting_1">
+				</pagecondition>
+				<pagecondition nextpage="pg_haunting_1">
 					<condition name="s_findJonasDocuments" value="true">
 						<condition name="s_giveJonasDocumentsToGhosts">
 							<condition name="pg_haunting_1">
@@ -976,57 +976,57 @@
 							</condition>
 						</condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_ghost_mid_deck">
+				</pagecondition>
+				<pagecondition nextpage="pg_ghost_mid_deck">
 					<condition name="pg_ghost_mid_deck">
 						<condition startTime="0000-00-01 20:00:00" endTime="0000-00-02 00:00:00"
 						></condition>
 					</condition>
-				</pageCondition>
+				</pagecondition>
 
 				<!-- Impl - Farse (testsuite)  -->
-				<!--<pageCondition location="s_farseUpdatesYou">
+				<!--<pagecondition location="s_farseUpdatesYou">
 				<condition startTime="0000-00-02 09:00:00" endTime="0000-00-02 23:00:00">
 				<condition name="s_farseUpdatesYou">
 				<condition name="s_IntroduceFarseSecurityRoom" value="true"> </condition>
 				<condition name="pg_farse_finds_you" value="true"> </condition>
 				</condition>
 				</condition>
-				</pageCondition>-->
-				<pageCondition location="s_FarseFindsYou">
+				</pagecondition>-->
+				<pagecondition location="s_FarseFindsYou">
 					<condition name="s_IntroduceFarseSecurityRoom">
 						<condition startTime="0000-00-00 21:00:00" endTime="0000-00-01 00:00:00">
 							<condition name="pg_farse_finds_you"></condition>
 						</condition>
 					</condition>
-				</pageCondition>
+				</pagecondition>
 
 				<!-- Impl - Mark (testsuite) -->
-				<pageCondition nextPage="pg_bernard_discovers_youre_working_with_mark">
+				<pagecondition nextpage="pg_bernard_discovers_youre_working_with_mark">
 					<condition startTime="0000-00-03 19:00:00">
 						<condition name="S_chatWithMarkAboutJoiningTeam" value="true"></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_mark_confronts_you_about_missing_meeting">
+				</pagecondition>
+				<pagecondition nextpage="pg_mark_confronts_you_about_missing_meeting">
 					<condition name="pg_mark_confronts_you_about_missing_meeting">
 						<condition name="var_s_meetingMarkAndCathering">
 							<condition startTime="0000-00-01 11:30:00"></condition>
 						</condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_bedtime_day_2">
+				</pagecondition>
+				<pagecondition nextpage="pg_bedtime_day_2">
 					<condition name="nr_pg_bedtime_day_2">
 						<condition startTime="0000-00-02 00:00:00" endTime="0000-00-02 06:00:00"
 						></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_mark_finds_you">
+				</pagecondition>
+				<pagecondition nextpage="pg_mark_finds_you">
 					<condition name="pg_mark_finds_you">
 						<condition name="nr_introMark">
 							<condition startTime="0000-00-01 08:00:00"></condition>
 						</condition>
 					</condition>
-				</pageCondition>
+				</pagecondition>
 				<content/>
 			</page>
 
@@ -1279,7 +1279,7 @@
 				</content>
 			</page>
 			<page id="pg_haunting_3" location="Hallway" duration="0000-00-00 00:09:00">
-				<decisionVar name="pg_haunting_3" value="true"/>
+				<decisionvar name="pg_haunting_3" value="true"/>
 				<content>
 					<p>Your mind feels weighed down by all of the emotions of the day. You recall
 						seeing a nice quaint little lounge over by your cabin, so you head over
@@ -1427,7 +1427,7 @@
 				</content>
 			</page>
 			<page id="pg_haunting_2" location="Hallway" duration="0000-00-00 00:07:00">
-				<decisionVar name="pg_haunting_2" value="true"/>
+				<decisionvar name="pg_haunting_2" value="true"/>
 				<content>
 					<p>As you walk down the hallway you hear a voice of a young woman calmly saying
 						"Danger... You're in Danger." The sound echoes down the corridor followed by
@@ -1439,7 +1439,7 @@
 				</content>
 			</page>
 			<page id="pg_haunting_1" location="Hallway" duration="0000-00-00 00:05:00">
-				<decisionVar name="pg_haunting_1" value="true"/>
+				<decisionvar name="pg_haunting_1" value="true"/>
 				<content>
 					<p>Moving out to the starboard deck, you see a glare coming from a high vantage
 						point. You move closer, but can't make sense of the structure. What you can
@@ -1529,7 +1529,7 @@
 				</content>
 			</page>
 			<page id="pg_ghost_mid_deck" location="Hallway" duration="0000-00-00 00:05:00">
-				<decisionVar name="pg_ghost_mid_deck" value="true"/>
+				<decisionvar name="pg_ghost_mid_deck" value="true"/>
 				<content>
 					<p>As you enter the hallway leading to your Cabin you hear a voice in the
 						distance which seems to echo around the corridor on it's way down the
@@ -1692,7 +1692,7 @@
 			</page>
 			<page id="pg_mark_confronts_you_about_missing_meeting" location="Hallway"
 			duration="0000-00-00 00:19:00">
-				<decisionVar name="pg_mark_confronts_you_about_missing_meeting" value="true"/>
+				<decisionvar name="pg_mark_confronts_you_about_missing_meeting" value="true"/>
 				<content>
 					<p>Mark walks up to you and asks you why you missed the meeting. You don't have
 						an answer so shrug your shoulders. He then mentions that he's not happy with
@@ -1702,7 +1702,7 @@
 				</content>
 			</page>
 			<page id="pg_mark_finds_you" location="Hallway" duration="0000-00-00 00:07:00">
-				<decisionVar name="pg_mark_finds_you" value="true"/>
+				<decisionvar name="pg_mark_finds_you" value="true"/>
 				<content>
 					<p>A man approaches you speaking your name. You answer back and he introduces
 						himself as Mark. You tell him about the situation with Sarah and he offers
@@ -1710,7 +1710,7 @@
 				</content>
 			</page>
 			<page id="pg_message_from_mark" location="Hallway">
-				<decisionVar name="pg_message_from_mark" value="true"/>
+				<decisionvar name="pg_message_from_mark" value="true"/>
 				<content>
 					<p>You receive a message from Mark on your cabin phone asking to talk with you.
 						His message seems odd, like a sales pitch.</p>
@@ -1718,22 +1718,22 @@
 				</content>
 			</page>
 			<page id="pf_went_to_meeting_with_Catherine_check" type="pageForward"
-			nextPage="pg_where_to_go">
-				<pageCondition nextPage="pg_message_from_mark">
+			nextpage="pg_where_to_go">
+				<pagecondition nextpage="pg_message_from_mark">
 					<condition name="var_s_meetingMarkAndCathering" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_awake_day_3" nextPage="pf_went_to_meeting_with_Catherine_check">
+			<page id="pg_awake_day_3" nextpage="pf_went_to_meeting_with_Catherine_check">
 				<content>
 					<p>Day 3</p>
 				</content>
 			</page>
-			<page id="pg_bedtime_day_2" nextPage="pg_awake_day_3">
-				<decisionVar name="nr_pg_bedtime_day_2" value="true"/>
-				<decisionVar name="currentTime" value="0000-00-02 06:00:00"/>
+			<page id="pg_bedtime_day_2" nextpage="pg_awake_day_3">
+				<decisionvar name="nr_pg_bedtime_day_2" value="true"/>
+				<decisionvar name="currentTime" value="0000-00-02 06:00:00"/>
 				<content>
 					<p>With all of the commotion of the day, it takes you awhile to realize that
 						you've burnt through all of your emotional reserves and need to head to bed.</p>
@@ -1746,7 +1746,7 @@
 
 		<!-- Impl - Containment Area -->
 		<scene name="s_containmentAreaDreamDay1">
-			<decisionVar name="s_containmentAreaDreamDay1" value="true"/>
+			<decisionvar name="s_containmentAreaDreamDay1" value="true"/>
 			<page id="pg_day_2_intro" location="Hallway">
 				<content>
 					<p>Looking into the bathroom mirror you notice the dark rings under your eyes.
@@ -1773,13 +1773,13 @@
 						Auction?</p>
 				</content>
 			</page>
-			<page id="pg_day_2" nextPage="pg_day_2_intro">
+			<page id="pg_day_2" nextpage="pg_day_2_intro">
 				<content>
 					<p>Day 2</p>
 				</content>
 			</page>
-			<page id="pg_head_back" nextPage="pg_day_2">
-				<decisionVar name="pg_head_back" value="true"/>
+			<page id="pg_head_back" nextpage="pg_day_2">
+				<decisionvar name="pg_head_back" value="true"/>
 				<content>
 					<p>Feeling the stress of the evening catching up with you, you decide to head
 						back to your room. Picking the lock might have got you into the room, but
@@ -1788,8 +1788,8 @@
 						to finding Sarah? You doubt so and head back to your cabin.</p>
 				</content>
 			</page>
-			<page id="pg_containment_area" nextPage="pg_day_2">
-				<decisionVar name="pg_containment_area" value="true"/>
+			<page id="pg_containment_area" nextpage="pg_day_2">
+				<decisionvar name="pg_containment_area" value="true"/>
 				<content>
 					<p>Clearly the ghosts are trying to speak to you so you decide to try and pick
 						the lock. You reach into your pocket and pull out a very small wrap of what
@@ -1866,8 +1866,8 @@
 					<p>You return to your cabin.</p>
 				</content>
 			</page>
-			<page id="pg_dont_follow_flames" nextPage="pg_day_2">
-				<decisionVar name="pg_dont_follow_flames" value="true"/>
+			<page id="pg_dont_follow_flames" nextpage="pg_day_2">
+				<decisionvar name="pg_dont_follow_flames" value="true"/>
 				<content>
 					<p>Still in bed and looking at the blue flames you realize that this could be
 						anything. It might lead you to the girl, but who is to say if the girl would
@@ -1885,8 +1885,8 @@
 			</page>
 			<page id="pg_follow_blue_flame">
 				<decisions>
-					<decision label="Pick the lock" nextPage="pg_containment_area"></decision>
-					<decision label="Head back to your cabin" nextPage="pg_head_back"></decision>
+					<decision label="Pick the lock" nextpage="pg_containment_area"></decision>
+					<decision label="Head back to your cabin" nextpage="pg_head_back"></decision>
 				</decisions>
 				<content>
 					<p>Gathering up your courage you get out of bed. The light from the blue flames
@@ -1927,8 +1927,8 @@
 			<page id="pageStart">
 				<decisions>
 					<decision label="Stay in bed and hope it goes away"
-					nextPage="pg_dont_follow_flames"></decision>
-					<decision label="Follow the blue flames" nextPage="pg_follow_blue_flame"
+					nextpage="pg_dont_follow_flames"></decision>
+					<decision label="Follow the blue flames" nextpage="pg_follow_blue_flame"
 					></decision>
 				</decisions>
 				<content>
@@ -1993,33 +1993,33 @@
 			</page>
 		</scene>
 		<scene name="BernardsCabin">
-			<page id="pf_bernard_pc_list" type="pageForward" nextPage="pg_default_intro">
-				<pageCondition nextPage="pg_index">
+			<page id="pf_bernard_pc_list" type="pageForward" nextpage="pg_default_intro">
+				<pagecondition nextpage="pg_index">
 					<condition name="var_bernard_intro_skip" value="true"></condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_containment_area_research">
+				</pagecondition>
+				<pagecondition nextpage="pg_containment_area_research">
 					<condition name="pg_tell_bernard_about_containment_area" value="true">
 						<condition name="pg_containment_area_research"></condition>
 					</condition>
-				</pageCondition>
+				</pagecondition>
 
 				<!-- Impl - Auction House (testsuite) -->
-				<pageCondition nextPage="pg_video_liang_entering_marks_room">
+				<pagecondition nextpage="pg_video_liang_entering_marks_room">
 					<condition name="pg_identify_photo_mr_liang" value="true">
 						<condition name="pg_video_liang_entering_marks_room"></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_identify_photo_mr_liang">
+				</pagecondition>
+				<pagecondition nextpage="pg_identify_photo_mr_liang">
 					<condition name="s_AuctionHouseBreakInResults" value="true">
 						<condition name="pg_identify_photo_mr_liang"></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition location="s_AuctionHouseBreakInResults">
+				</pagecondition>
+				<pagecondition location="s_AuctionHouseBreakInResults">
 					<condition name="pg_auction_house_breakin" value="true">
 						<condition name="s_AuctionHouseBreakInResults"></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_missed_auction_house_breakin">
+				</pagecondition>
+				<pagecondition nextpage="pg_missed_auction_house_breakin">
 					<condition startTime="0000-00-02 00:00:00">
 						<condition name="pg_break_into_auction_house" value="true">
 							<condition name="s_AuctionHouseBreakIn">
@@ -2027,21 +2027,21 @@
 							</condition>
 						</condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_a_little_late_tag">
+				</pagecondition>
+				<pagecondition nextpage="pg_a_little_late_tag">
 					<condition name="s_AuctionHouseBreakIn">
 						<condition startTime="0000-00-01 22:30:00" endTime="0000-00-02 00:00:00">
 							<condition name="pg_break_into_auction_house" value="true"></condition>
 						</condition>
 					</condition>
-				</pageCondition>
-				<pageCondition location="s_AuctionHouseBreakIn">
+				</pagecondition>
+				<pagecondition location="s_AuctionHouseBreakIn">
 					<condition name="s_AuctionHouseBreakIn">
 						<condition startTime="0000-00-01 21:30:00" endTime="0000-00-01 22:30:00">
 							<condition name="pg_break_into_auction_house" value="true"></condition>
 						</condition>
 					</condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
@@ -2050,7 +2050,7 @@
 				<decisions>
 					<decision
 					label="Tell Bernard about the blue flames you saw at night in your room"
-					nextPage="pg_tell_about_blue_flames">
+					nextpage="pg_tell_about_blue_flames">
 						<condition name="pg_tell_about_blue_flames">
 							<condition name="pg_containment_area">
 								<condition name="s_containmentAreaDreamDay1" value="true"
@@ -2059,14 +2059,14 @@
 						</condition>
 					</decision>
 					<decision label="Investigate the cargo hold with Bernard."
-					nextPage="pg_investigate_containment_area_with_bernard">
+					nextpage="pg_investigate_containment_area_with_bernard">
 						<condition name="pg_investigate_containment_area_with_bernard">
 							<condition name="pg_tell_bernard_about_containment_area" value="true"
 							></condition>
 						</condition>
 					</decision>
 					<decision label="Tell about the ghost leading you to the bottom of the ship"
-					nextPage="pg_tell_bernard_about_containment_area">
+					nextpage="pg_tell_bernard_about_containment_area">
 						<condition name="pg_tell_bernard_about_containment_area">
 							<condition name="pg_containment_area" value="true"></condition>
 						</condition>
@@ -2075,7 +2075,7 @@
 					<!-- Impl - Auction House (testsuite) -->
 					<decision
 					label="Tell Bernard about your strange conversation with Rudolphe at the Butterfly Lounge"
-					nextPage="pg_tell_bernard_about_rudolphe">
+					nextpage="pg_tell_bernard_about_rudolphe">
 						<condition name="pg_tell_bernard_about_rudolphe">
 							<condition name="nr_introRudolphe" value="true">
 								<condition name="pg_saved_rudolphe"></condition>
@@ -2083,14 +2083,14 @@
 						</condition>
 					</decision>
 					<decision label="What would Ian and Mark have in common?"
-					nextPage="pg_what_do_ian_and_mark">
+					nextpage="pg_what_do_ian_and_mark">
 						<condition name="pg_what_do_ian_and_mark">
 							<condition name="pg_video_liang_entering_marks_room" value="true"
 							></condition>
 						</condition>
 					</decision>
 					<decision label="What is facial recognition?"
-					nextPage="pg_what_is_facial_recognition">
+					nextpage="pg_what_is_facial_recognition">
 						<condition name="pg_what_is_facial_recognition">
 							<condition name="pg_identify_photo_mr_liang" value="true"></condition>
 						</condition>
@@ -2104,7 +2104,7 @@
 
 					<!-- Impl - Ghost Den (testsuite) -->
 					<decision label="Tell Bernard your not the first PIs here"
-					nextPage="pg_tell_not_first_PIs">
+					nextpage="pg_tell_not_first_PIs">
 						<condition name="s_giveJonasDocumentsToGhosts" value="true">
 							<condition name="pg_tell_Bernard_not_first_PIs"></condition>
 						</condition>
@@ -2113,16 +2113,16 @@
 					<!-- Impl - Manny (testsuite) -->
 					<decision label="Leave for now" location="Hallway"></decision>
 					<decision label="Tell About Painting Missing"
-					nextPage="pg_tell_about_painting_missing">
+					nextpage="pg_tell_about_painting_missing">
 						<condition name="pg_tell_about_painting_missing"></condition>
 					</decision>
 
 					<!-- Impl - Mark (testsuite) -->
 					<decision label="Tell Bernard about Marks plans"
-					nextPage="pg_tellBernardAboutMarksPlans">
+					nextpage="pg_tellBernardAboutMarksPlans">
 						<condition name="S_chatWithMarkAboutJoiningTeam" value="true"></condition>
 					</decision>
-					<decision label="What about this Mark guy?" nextPage="pg_talk_about_Mark">
+					<decision label="What about this Mark guy?" nextpage="pg_talk_about_Mark">
 						<condition name="pg_talk_about_Mark">
 							<condition name="nr_introMark">
 								<condition name="pg_mark_finds_you"></condition>
@@ -2133,7 +2133,7 @@
 
 					<!-- Impl - Transporter -->
 					<decision label="Tell Bernard about the costume ball"
-					nextPage="pg_talk_about_costume_ball">
+					nextpage="pg_talk_about_costume_ball">
 						<condition name="pg_talk_about_costume_ball">
 							<condition name="s_showFarseItemFromGhostWorld">
 								<condition name="pg_costume_ball_intro" value="true"></condition>
@@ -2141,13 +2141,13 @@
 						</condition>
 					</decision>
 				</decisions>
-				<decisionVar name="var_bernard_intro_skip" value="false"/>
+				<decisionvar name="var_bernard_intro_skip" value="false"/>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_tell_bernard_about_rudolphe" nextPage="pg_index">
-				<decisionVar name="pg_tell_bernard_about_rudolphe" value="true"/>
+			<page id="pg_tell_bernard_about_rudolphe" nextpage="pg_index">
+				<decisionvar name="pg_tell_bernard_about_rudolphe" value="true"/>
 				<content>
 					<p>"Bernard, I met this guy down in one of the ship lounges, the Butterfly
 						Lounge to be more exact. He's a painter named Rudolphe Thornsden and several
@@ -2161,8 +2161,8 @@
 						something. Keep your ears open for anymore information about it."</p>
 				</content>
 			</page>
-			<page id="pg_what_is_facial_recognition" nextPage="pg_index">
-				<decisionVar name="pg_what_is_facial_recognition" value="true"/>
+			<page id="pg_what_is_facial_recognition" nextpage="pg_index">
+				<decisionvar name="pg_what_is_facial_recognition" value="true"/>
 				<content>
 					<p>Bernard says "Facial recognition is a technology that can identify
 						individuals from pictures or movies using the characteristics of their face.
@@ -2173,15 +2173,15 @@
 						individual."</p>
 				</content>
 			</page>
-			<page id="pg_what_do_ian_and_mark" nextPage="pg_index">
-				<decisionVar name="pg_what_do_ian_and_mark" value="true"/>
+			<page id="pg_what_do_ian_and_mark" nextpage="pg_index">
+				<decisionvar name="pg_what_do_ian_and_mark" value="true"/>
 				<content>
 					<p>"I was asking myself that same question. I don't know, maybe Mark is on the
 						corporate payroll," Bernard says.</p>
 				</content>
 			</page>
-			<page id="pg_video_liang_entering_marks_room" nextPage="pg_index">
-				<decisionVar name="pg_video_liang_entering_marks_room" value="true"/>
+			<page id="pg_video_liang_entering_marks_room" nextpage="pg_index">
+				<decisionvar name="pg_video_liang_entering_marks_room" value="true"/>
 				<content>
 					<p>You knock on Bernard's door. "Who is it?" you hear him say. "Travis," you
 						say loudly through the door. "Come on in."</p>
@@ -2210,8 +2210,8 @@
 						gritty security camera photo which clearly shows Mark and Mr. Liang.</p>
 				</content>
 			</page>
-			<page id="pg_identify_photo_mr_liang" nextPage="pg_index">
-				<decisionVar name="pg_identify_photo_mr_liang" value="true"/>
+			<page id="pg_identify_photo_mr_liang" nextpage="pg_index">
+				<decisionvar name="pg_identify_photo_mr_liang" value="true"/>
 				<content>
 					<p>Bernard opens the door and you walk in. He pours himself a drink as you take
 						a seat on the bed. Walking back to his computer he sits down. "Travis" he
@@ -2228,8 +2228,8 @@
 						he'll be picked up by the facial recognition system."</p>
 				</content>
 			</page>
-			<page id="pg_missed_auction_house_breakin" nextPage="pg_index">
-				<decisionVar name="pg_missed_auction_house_breakin" value="true"/>
+			<page id="pg_missed_auction_house_breakin" nextpage="pg_index">
+				<decisionvar name="pg_missed_auction_house_breakin" value="true"/>
 				<content>
 					<p>As Bernard opens the door he realizes that it's you and barely acknowledges
 						you. He turns to walk back into the room leaving the door open. You get the
@@ -2251,19 +2251,19 @@
 				</content>
 			</page>
 			<page id="pg_a_little_late_tag" location="s_AuctionHouseBreakIn">
-				<decisionVar name="pg_a_little_late_tag" value="true"/>
+				<decisionvar name="pg_a_little_late_tag" value="true"/>
 				<content>
 					<p>You grab all the things you might need for the Auction House break-in and
 						head to Bernard's cabin.</p>
 				</content>
 			</page>
-			<page id="pageStart" type="pageForward" nextPage="pf_bernard_pc_list">
+			<page id="pageStart" type="pageForward" nextpage="pf_bernard_pc_list">
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_containment_area_research" nextPage="pg_index">
-				<decisionVar name="pg_containment_area_research" value="true"/>
+			<page id="pg_containment_area_research" nextpage="pg_index">
+				<decisionvar name="pg_containment_area_research" value="true"/>
 				<content>
 					<p>Bernard opens the door and motions for you to come in. For lack of many
 						seating options you sit on the bed. Bernard sits in front of his laptop. The
@@ -2343,15 +2343,15 @@
 					<p>On that disturbing note you leave the room.</p>
 				</content>
 			</page>
-			<page id="pf_log_book_check" type="pageForward" nextPage="pg_index">
-				<pageCondition nextPage="pg_tell_about_log_book">
+			<page id="pf_log_book_check" type="pageForward" nextpage="pg_index">
+				<pagecondition nextpage="pg_tell_about_log_book">
 					<condition name="pg_containment_area" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_story_about_esmeralda" nextPage="pf_log_book_check">
+			<page id="pg_story_about_esmeralda" nextpage="pf_log_book_check">
 				<content>
 					<p>You can tell that Bernard doesn't like this situation one bit.</p>
 					<p>He leans back in his chair and starts to speak. Bernard tells you a story
@@ -2399,8 +2399,8 @@
 						You must thinks outside of the dimensions of this world."</p>
 				</content>
 			</page>
-			<page id="pg_tell_about_blue_flames" nextPage="pg_story_about_esmeralda">
-				<decisionVar name="pg_tell_about_blue_flames" value="true"/>
+			<page id="pg_tell_about_blue_flames" nextpage="pg_story_about_esmeralda">
+				<decisionvar name="pg_tell_about_blue_flames" value="true"/>
 				<content>
 					<p>Bernard realizes that you are visibly shaken and pours you a glass of water.
 						He asks you "What's up?".</p>
@@ -2409,8 +2409,8 @@
 						Sarah, and meeting the girl in the hallway.</p>
 				</content>
 			</page>
-			<page id="pg_saved_rudolphe" nextPage="pg_index">
-				<decisionVar name="pg_saved_rudolphe" value="true"/>
+			<page id="pg_saved_rudolphe" nextpage="pg_index">
+				<decisionvar name="pg_saved_rudolphe" value="true"/>
 				<content>
 					<p>As you start to gather your tools to leave, the lights start to tilt and
 						seem to bend to the darkness in waves. You see something around the small
@@ -2520,8 +2520,8 @@
 						that you part ways and head back to Bernard's room.</p>
 				</content>
 			</page>
-			<page id="pg_return_to_bernards_cabin" nextPage="pg_index">
-				<decisionVar name="pg_return_to_bernards_cabin" value="true"/>
+			<page id="pg_return_to_bernards_cabin" nextpage="pg_index">
+				<decisionvar name="pg_return_to_bernards_cabin" value="true"/>
 				<content>
 					<p>Bernard heads toward the elevator. You decide to follow. You can tell that
 						something spooked him, but what? Another ghost? You guess not, instead you
@@ -2539,17 +2539,17 @@
 				</content>
 			</page>
 			<page id="pf_did_you_find_rudolphe" type="pageForward"
-			nextPage="pg_return_to_bernards_cabin">
-				<pageCondition nextPage="pg_saved_rudolphe">
+			nextpage="pg_return_to_bernards_cabin">
+				<pagecondition nextpage="pg_saved_rudolphe">
 					<condition name="var_bid_at_auction" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
 			<page id="pg_investigate_containment_area_with_bernard"
-			nextPage="pf_did_you_find_rudolphe" duration="0000-00-00 02:15:00">
-				<decisionVar name="pg_investigate_containment_area_with_bernard" value="true"/>
+			nextpage="pf_did_you_find_rudolphe" duration="0000-00-00 02:15:00">
+				<decisionvar name="pg_investigate_containment_area_with_bernard" value="true"/>
 				<content>
 					<p>Unlike previously, this time you and Bernard will be prepared. You head back
 						to your cabin to get your things assembled.</p>
@@ -2623,9 +2623,9 @@
 						right now!" Bernard says.</p>
 				</content>
 			</page>
-			<page id="pg_tell_bernard_about_containment_area" nextPage="pg_story_about_esmeralda"
+			<page id="pg_tell_bernard_about_containment_area" nextpage="pg_story_about_esmeralda"
 			duration="0000-00-00 00:13:00">
-				<decisionVar name="pg_tell_bernard_about_containment_area" value="true"/>
+				<decisionvar name="pg_tell_bernard_about_containment_area" value="true"/>
 				<content>
 					<p>Bernard realizes that you are visibly shaken and pours you a glass of water.
 						He asks you "What's up?". It takes quite a bit of effort for the words to
@@ -2637,7 +2637,7 @@
 						surprised.</p>
 				</content>
 			</page>
-			<page id="pg_default_intro" nextPage="pg_index" duration="0000-00-00 00:05:00">
+			<page id="pg_default_intro" nextpage="pg_index" duration="0000-00-00 00:05:00">
 				<content>
 					<p>You knock on Bernard's cabin door. After several seconds Bernard opens the
 						door. He tells you to "Come on in".</p>
@@ -2646,8 +2646,8 @@
 			</page>
 
 			<!-- Impl - Ghost Den (testsuite) -->
-			<page id="pg_tell_not_first_PIs" nextPage="pg_index" duration="0000-00-00 00:07:00">
-				<decisionVar name="pg_tell_Bernard_not_first_PIs" value="true"/>
+			<page id="pg_tell_not_first_PIs" nextpage="pg_index" duration="0000-00-00 00:07:00">
+				<decisionvar name="pg_tell_Bernard_not_first_PIs" value="true"/>
 				<content>
 					<p>Deciding to break the news to Bernard isn't an easy task. There is, of
 						course, the possibility that Bernard is in on the whole devious plan, and
@@ -2766,10 +2766,10 @@
 			<page id="pg_tell_about_painting_missing"
 			duration="0000-00-00 00:7:00">
 				<decisions>
-					<decision label="Stay and talk with Bernard" nextPage="pg_index"></decision>
+					<decision label="Stay and talk with Bernard" nextpage="pg_index"></decision>
 					<decision label="Go meet Manny right now." location="Casino"></decision>
 				</decisions>
-				<decisionVar name="pg_tell_about_painting_missing" value="true"/>
+				<decisionvar name="pg_tell_about_painting_missing" value="true"/>
 				<content>
 					<p>You tell Bernard that the painting is missing. He looks at you
 						questioningly. "What painting," he asks. You tell him about the auction that
@@ -3512,8 +3512,8 @@
 					<p>THE END</p>
 				</content>
 			</page>
-			<page id="pg_talk_about_Mark" nextPage="pg_index" duration="0000-00-00 00:09:00">
-				<decisionVar name="pg_talk_about_Mark" value="true"/>
+			<page id="pg_talk_about_Mark" nextpage="pg_index" duration="0000-00-00 00:09:00">
+				<decisionvar name="pg_talk_about_Mark" value="true"/>
 				<content>
 					<p>You recall the message you received telling about a man named Mark on the
 						ship who might be able to help you out. Bernard sets you straight by letting
@@ -3687,15 +3687,15 @@
 						three move into the elevator and it begins to move up to the next floor.</p>
 				</content>
 			</page>
-			<page id="pf_check_for_plaque" type="pageForward" nextPage="pg_show_bernard_plaque">
-				<pageCondition nextPage="pg_mark_took_plaque">
+			<page id="pf_check_for_plaque" type="pageForward" nextpage="pg_show_bernard_plaque">
+				<pagecondition nextpage="pg_mark_took_plaque">
 					<condition name="s_showMarkItemFromGhostWorld" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_didnt_transport" nextPage="pg_index">
+			<page id="pg_didnt_transport" nextpage="pg_index">
 				<content>
 					<p>"I...," you hesitate, "I decided not to go, Bernard. It was too much,
 						Bernard. I just... It was too much Bernard, I decided not to go through the
@@ -3706,16 +3706,16 @@
 				</content>
 			</page>
 			<page id="pf_check_transport_to_ghost_world" type="pageForward"
-			nextPage="pg_transported_to_ghost_world">
-				<pageCondition nextPage="pg_didnt_transport">
+			nextpage="pg_transported_to_ghost_world">
+				<pagecondition nextpage="pg_didnt_transport">
 					<condition name="pg_go_through_portal"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_talk_about_costume_ball" nextPage="pf_check_transport_to_ghost_world">
-				<decisionVar name="pg_talk_about_costume_ball" value="true"/>
+			<page id="pg_talk_about_costume_ball" nextpage="pf_check_transport_to_ghost_world">
+				<decisionvar name="pg_talk_about_costume_ball" value="true"/>
 				<content>
 					<p>Bernard starts talking to you about some information he uncovered
 						investigating the history of the Queen Elizabeth II. "When the Cunard
@@ -3756,7 +3756,7 @@
 						dream at all.</p>
 				</content>
 			</page>
-			<page id="pg_mark_took_plaque" nextPage="pg_index">
+			<page id="pg_mark_took_plaque" nextpage="pg_index">
 				<content>
 					<p>"Yes it did." you tell Bernard. "I don't have it at the moment though."</p>
 					<p>"Where is it then?" Bernard asks.</p>
@@ -3789,8 +3789,8 @@
 						conversation on 'Torque Release Valve 3' for now.</p>
 				</content>
 			</page>
-			<page id="pg_transported_to_ghost_world" nextPage="pf_check_for_plaque">
-				<decisionVar name="pg_transported_to_ghost_world" value="true"/>
+			<page id="pg_transported_to_ghost_world" nextpage="pf_check_for_plaque">
+				<decisionvar name="pg_transported_to_ghost_world" value="true"/>
 				<content>
 					<p>You look directly at Bernard "Sarah. We need to find her. I went through the
 						portal." you say decisively.</p>
@@ -3818,7 +3818,7 @@
 		<!-- Impl - Auction House (testsuite) -->
 		<scene name="s_TellBernardAboutAsiagoAtAuction">
 			<page id="pg_already_told_bernard_about_rudolphe"
-			nextPage="pf_time_check_for_auction_house_breakin">
+			nextpage="pf_time_check_for_auction_house_breakin">
 				<content>
 					<p>"Plus," you add ,"Don't forget about those strange things that I told you
 						Rudolphe was rambling on about earlier. How his family was somehow involved
@@ -3828,7 +3828,7 @@
 						as we can."</p>
 				</content>
 			</page>
-			<decisionVar name="var_bernard_intro_skip" value="true"/>
+			<decisionvar name="var_bernard_intro_skip" value="true"/>
 			<page id="pg_not_enough_time_for_breakin" location="BernardsCabin">
 				<content>
 					<p>"Travis," Bernard says "We just don't have enough time at the moment to
@@ -3837,15 +3837,15 @@
 				</content>
 			</page>
 			<page id="pf_time_check_for_auction_house_breakin" type="pageForward"
-			nextPage="pg_not_enough_time_for_breakin">
-				<pageCondition nextPage="pg_auction_house_breakin_time_check_pass">
+			nextpage="pg_not_enough_time_for_breakin">
+				<pagecondition nextpage="pg_auction_house_breakin_time_check_pass">
 					<condition endTime="0000-00-01 21:00:00"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_tell_about_your_bidding" nextPage="pf_already_told_bernard_about_rudolphe">
+			<page id="pg_tell_about_your_bidding" nextpage="pf_already_told_bernard_about_rudolphe">
 				<content>
 					<p>You continue "I decided to jump into the bidding to see if my suspicions
 						were correct. Did this guy really care what he was bidding on. The bidding
@@ -3870,25 +3870,25 @@
 				</content>
 			</page>
 			<page id="pf_bid_at_auction_check" type="pageForward"
-			nextPage="pf_already_told_bernard_about_rudolphe">
-				<pageCondition nextPage="pg_tell_about_your_bidding">
+			nextpage="pf_already_told_bernard_about_rudolphe">
+				<pagecondition nextpage="pg_tell_about_your_bidding">
 					<condition name="var_bid_at_auction" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
 			<page id="pf_already_told_bernard_about_rudolphe" type="pageForward"
-			nextPage="pf_time_check_for_auction_house_breakin">
-				<pageCondition nextPage="pg_already_told_bernard_about_rudolphe">
+			nextpage="pf_time_check_for_auction_house_breakin">
+				<pagecondition nextpage="pg_already_told_bernard_about_rudolphe">
 					<condition name="pg_tell_bernard_about_rudolphe" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
 			<page id="pg_decide_to_breakin_to_auction_house" location="BernardsCabin">
-				<decisionVar name="pg_break_into_auction_house" value="true"/>
+				<decisionvar name="pg_break_into_auction_house" value="true"/>
 				<content>
 					<p>"We need to investigate all of our options to find Sarah," Bernard says.
 						"There are risks involved though so I want to do this right. Meet me here at
@@ -3914,9 +3914,9 @@
 			<page id="pg_auction_house_breakin_time_check_pass">
 				<decisions>
 					<decision label="You might be right. Lets not risk it."
-					nextPage="pg_dont_break_into_auction_house"></decision>
+					nextpage="pg_dont_break_into_auction_house"></decision>
 					<decision label="Absolutely, lets break into the Auction House!"
-					nextPage="pg_decide_to_breakin_to_auction_house"></decision>
+					nextpage="pg_decide_to_breakin_to_auction_house"></decision>
 				</decisions>
 				<content>
 					<p>"You know Bernard that Auction House seems to be a topic that has come up
@@ -3943,8 +3943,8 @@
 						... get... arrested... Do you really want to risk that route?"</p>
 				</content>
 			</page>
-			<page id="pageStart" nextPage="pf_bid_at_auction_check">
-				<decisionVar name="pg_tell_about_auction_results" value="true"/>
+			<page id="pageStart" nextpage="pf_bid_at_auction_check">
+				<decisionvar name="pg_tell_about_auction_results" value="true"/>
 				<content>
 					<p>"I went to another auction just to try and open up my memories of the day
 						that Sarah disappeared." you say to Bernard who looks a bit curious as to
@@ -3966,8 +3966,8 @@
 			</page>
 		</scene>
 		<scene name="s_AuctionHouseBreakIn">
-			<decisionVar name="s_AuctionHouseBreakIn" value="true"/>
-			<page id="pg_late_for_breakin" nextPage="pg_auction_house_breakin">
+			<decisionvar name="s_AuctionHouseBreakIn" value="true"/>
+			<page id="pg_late_for_breakin" nextpage="pg_auction_house_breakin">
 				<content>
 					<p>Bernard opens the door to let you in. Without saying a word he goes to his
 						table and grabs his bag. "You're late!" he says. "Although you set this
@@ -3981,18 +3981,18 @@
 						is someday. Just assume that there are others involved." You take the hint.</p>
 				</content>
 			</page>
-			<page id="pageStart" type="pageForward" nextPage="pg_auction_breakin_default_intro">
-				<pageCondition nextPage="pg_late_for_breakin">
+			<page id="pageStart" type="pageForward" nextpage="pg_auction_breakin_default_intro">
+				<pagecondition nextpage="pg_late_for_breakin">
 					<condition name="pg_a_little_late_tag" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
 			<page id="pg_auction_house_breakin" location="Hallway">
-				<decisionVar name="pg_auction_house_breakin" value="true"/>
+				<decisionvar name="pg_auction_house_breakin" value="true"/>
 				<!--Todo Figure out why setting the current time here takes us to 1 30:00:00-->
-				<!--<decisionVar name="currentTime" value="0000-00-02 01:15:00"/>-->
+				<!--<decisionvar name="currentTime" value="0000-00-02 01:15:00"/>-->
 				<content>
 					<p>"What about the security systems, or should we try to work around them?" you
 						say with a bit of sarcasm. Once again Bernard replies "Today is someday.
@@ -4148,7 +4148,7 @@
 					<p>It's very late, and the last couple of days have really exhausted you.</p>
 				</content>
 			</page>
-			<page id="pg_auction_breakin_default_intro" nextPage="pg_auction_house_breakin">
+			<page id="pg_auction_breakin_default_intro" nextpage="pg_auction_house_breakin">
 				<content>
 					<p>You grab all the things you might need for the Auction House break in and
 						head to Bernard's cabin.</p>
@@ -4161,39 +4161,39 @@
 			</page>
 		</scene>
 		<scene name="Testsuite-AuctionHouse">
-			<link linkName="Left-MeetRudolphe" linkType="left">
+			<link linkName="Left-MeetRudolphe" linktype="left">
 
-				<decisionVar name="nr_introRudolphe" value="true"/>
+				<decisionvar name="nr_introRudolphe" value="true"/>
 			</link>
-			<link linkName="bottom-40minafterauctionstarts" linkType="bottom">
+			<link linkName="bottom-40minafterauctionstarts" linktype="bottom">
 
-				<decisionVar name="currentTime" value="0000-00-01 11:40:00"/>
+				<decisionvar name="currentTime" value="0000-00-01 11:40:00"/>
 			</link>
-			<link linkName="Top-Afterauction" linkType="top">
+			<link linkName="Top-Afterauction" linktype="top">
 
-				<decisionVar name="currentTime" value="0000-00-01 16:30:00"/>
+				<decisionvar name="currentTime" value="0000-00-01 16:30:00"/>
 			</link>
-			<link linkName="Item4-Afterpaintingisauctioned" linkType="item4">
+			<link linkName="Item4-Afterpaintingisauctioned" linktype="item4">
 
-				<decisionVar name="currentTime" value="0000-00-01 12:30:00"/>
+				<decisionvar name="currentTime" value="0000-00-01 12:30:00"/>
 			</link>
-			<link linkName="Item2-10minutesafterauctionstarts" linkType="item2">
+			<link linkName="Item2-10minutesafterauctionstarts" linktype="item2">
 
-				<decisionVar name="currentTime" value="0000-00-01 11:10:00"/>
+				<decisionvar name="currentTime" value="0000-00-01 11:10:00"/>
 			</link>
-			<link linkName="Item3-Waybeforeauction" linkType="item3">
+			<link linkName="Item3-Waybeforeauction" linktype="item3">
 
-				<decisionVar name="currentTime" value="0000-00-01 09:00:00"/>
+				<decisionvar name="currentTime" value="0000-00-01 09:00:00"/>
 			</link>
-			<link linkName="Item1-30minutesbeforeauction" linkType="item1">
+			<link linkName="Item1-30minutesbeforeauction" linktype="item1">
 
-				<decisionVar name="currentTime" value="0000-00-01 10:30:00"/>
+				<decisionvar name="currentTime" value="0000-00-01 10:30:00"/>
 			</link>
 		</scene>
 		<scene name="AuctionHouse">
-			<decisionVar name="S_AuctionHouse" value="true"/>
+			<decisionvar name="S_AuctionHouse" value="true"/>
 			<page id="pg_auctionIntro_before_painting_auctioned"
-			nextPage="pf_can_you_bid_on_painting" duration="0000-00-00 00:05:00">
+			nextpage="pf_can_you_bid_on_painting" duration="0000-00-00 00:05:00">
 				<content>
 					<p>You arrive at the auction. The auction has already begun. You quietly take a
 						seat.</p>
@@ -4205,21 +4205,21 @@
 				</content>
 			</page>
 			<page id="pg_after_auction" location="Hallway" duration="0000-00-00 00:09:00">
-				<decisionVar name="pg_after_auction" value="true"/>
+				<decisionvar name="pg_after_auction" value="true"/>
 				<content>
 					<p>Unfortunately the last auction while on this journey was on Day 2 at 11 AM.
 						You've missed it.</p>
 				</content>
 			</page>
-			<page id="pg_after_painting_auctioned" nextPage="pg_leave_auction">
+			<page id="pg_after_painting_auctioned" nextpage="pg_leave_auction">
 				<content>
 					<p>You arrive late and sit through the auction but nothing strikes your
 						interest or gives you any clues to help you find Sarah. You can't help but
 						regret the fact that you wasted your time.</p>
 				</content>
 			</page>
-			<page id="pg_bid_on_painting" nextPage="pg_leave_auction" duration="0000-00-00 00:03:00">
-				<decisionVar name="var_bid_at_auction" value="true"/>
+			<page id="pg_bid_on_painting" nextpage="pg_leave_auction" duration="0000-00-00 00:03:00">
+				<decisionvar name="var_bid_at_auction" value="true"/>
 				<content>
 					<p>The coincidences are too great, you need to test this Asiago character and
 						see how much he wants the painting. Rudolphe said that this work was somehow
@@ -4253,7 +4253,7 @@
 						came with friends, Mr. Asiago," you mutter to yourself.</p>
 				</content>
 			</page>
-			<page id="pg_dont_bid" nextPage="pg_leave_auction">
+			<page id="pg_dont_bid" nextpage="pg_leave_auction">
 				<content>
 					<p>You decide to hold your tongue, as you feel like you got enough information
 						from this session. "Going three times," the auctioneer says, "Sold to Mr.
@@ -4268,10 +4268,10 @@
 			</page>
 			<page id="pg_bid_option_available" duration="0000-00-00 00:30:00">
 				<decisions>
-					<decision label="No" nextPage="pg_dont_bid"></decision>
-					<decision label="Yes" nextPage="pg_bid_on_painting"></decision>
+					<decision label="No" nextpage="pg_dont_bid"></decision>
+					<decision label="Yes" nextpage="pg_bid_on_painting"></decision>
 				</decisions>
-				<decisionVar name="pg_bid_option_available" value="true"/>
+				<decisionvar name="pg_bid_option_available" value="true"/>
 				<content>
 					<p>You see the painting that Rudolphe was mentioning. It has a very modernistic
 						tone to it, with large streaks of gold running toward its center. The grey
@@ -4302,29 +4302,29 @@
 					<p>Would you like to bid on the painting?</p>
 				</content>
 			</page>
-			<page id="pg_no_bid_option" nextPage="pg_leave_auction">
+			<page id="pg_no_bid_option" nextpage="pg_leave_auction">
 				<content>
 					<p>You sit through the auction but nothing strikes your interest, or gives you
 						any clues to help you find Sarah.</p>
 				</content>
 			</page>
-			<page id="pf_can_you_bid_on_painting" type="pageForward" nextPage="pg_no_bid_option">
-				<pageCondition nextPage="pg_bid_option_available">
+			<page id="pf_can_you_bid_on_painting" type="pageForward" nextpage="pg_no_bid_option">
+				<pagecondition nextpage="pg_bid_option_available">
 					<condition name="nr_introRudolphe" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_auction_intro" nextPage="pf_can_you_bid_on_painting"
+			<page id="pg_auction_intro" nextpage="pf_can_you_bid_on_painting"
 			duration="0000-00-00 00:13:00">
 				<content>
 					<p>You register for the auction and take a seat. The bidding starts soon there
 						after.</p>
 				</content>
 			</page>
-			<page id="pg_wait_until_auction" nextPage="pg_auction_intro">
-				<decisionVar name="currentTime" value="0000-00-01 11:00:00"/>
+			<page id="pg_wait_until_auction" nextpage="pg_auction_intro">
+				<decisionvar name="currentTime" value="0000-00-01 11:00:00"/>
 				<content>
 					<p>Promptly at 11 a.m. the doors open and you enter.</p>
 				</content>
@@ -4336,8 +4336,8 @@
 				</content>
 			</page>
 			<page id="pg_leave_auction" location="Hallway">
-				<decisionVar name="var_went_to_auction" value="true"/>
-				<decisionVar name="currentTime" value="0000-00-01 13:00:00"/>
+				<decisionvar name="var_went_to_auction" value="true"/>
+				<decisionvar name="currentTime" value="0000-00-01 13:00:00"/>
 				<content>
 					<p>Leaving the Auction House you take one final look around. Following the
 						circle of paintings lining the rim of the rounded Auction House floor you
@@ -4348,41 +4348,41 @@
 			</page>
 			<page id="pg_wait_until_auction_decision">
 				<decisions>
-					<decision label="No" nextPage="pg_decide_to_come_back_later"></decision>
-					<decision label="Yes" nextPage="pg_wait_until_auction"></decision>
+					<decision label="No" nextpage="pg_decide_to_come_back_later"></decision>
+					<decision label="Yes" nextpage="pg_wait_until_auction"></decision>
 				</decisions>
 				<content>
 					<p>The auction will start shortly. Would you like to wait in the hallway area
 						until the doors open?</p>
 				</content>
 			</page>
-			<page id="pageStart" type="pageForward" nextPage="pg_after_auction">
-				<pageCondition nextPage="pg_auction_intro">
+			<page id="pageStart" type="pageForward" nextpage="pg_after_auction">
+				<pagecondition nextpage="pg_auction_intro">
 					<condition startTime="0000-00-01 11:00:00" endTime="0000-00-01 11:15:00"
 					></condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_way_early">
+				</pagecondition>
+				<pagecondition nextpage="pg_way_early">
 					<condition endTime="0000-00-01 10:00:00"></condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_after_painting_auctioned">
+				</pagecondition>
+				<pagecondition nextpage="pg_after_painting_auctioned">
 					<condition startTime="0000-00-01 12:00:00" endTime="0000-00-01 13:00:00"
 					></condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_auctionIntro_before_painting_auctioned">
+				</pagecondition>
+				<pagecondition nextpage="pg_auctionIntro_before_painting_auctioned">
 					<condition startTime="0000-00-01 11:15:00" endTime="0000-00-01 12:00:00"
 					></condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_wait_until_auction_decision">
+				</pagecondition>
+				<pagecondition nextpage="pg_wait_until_auction_decision">
 					<condition startTime="0000-00-01 10:00:00" endTime="0000-00-01 11:00:00"
 					></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
 		</scene>
 		<scene name="s_AuctionHouseBreakInResults">
-			<decisionVar name="var_bernard_intro_skip" value="true"/>
+			<decisionvar name="var_bernard_intro_skip" value="true"/>
 			<page id="pageStart" location="BernardsCabin">
 				<content>
 					<p>Bernard opens the door and quickly motions for you to come in. "I have some
@@ -4433,7 +4433,7 @@
 						should have more, but for the present you are correct."</p>
 				</content>
 			</page>
-			<decisionVar name="s_AuctionHouseBreakInResults" value="true"/>
+			<decisionvar name="s_AuctionHouseBreakInResults" value="true"/>
 		</scene>
 
 		<!-- Impl - Ghost Den (testsuite) -->
@@ -4616,7 +4616,7 @@
 			</page>
 		</scene>
 		<scene name="s_giveJonasDocumentsToGhosts">
-			<decisionVar name="s_giveJonasDocumentsToGhosts" value="true"/>
+			<decisionvar name="s_giveJonasDocumentsToGhosts" value="true"/>
 			<page id="pageStart" location="Hallway" duration="0000-00-00 00:32:00">
 				<content>
 					<p>Madeline made it very clear that they expected the documents that
@@ -4823,7 +4823,7 @@
 			</page>
 		</scene>
 		<scene name="s_findJonasDocuments">
-			<decisionVar name="s_findJonasDocuments" value="true"/>
+			<decisionvar name="s_findJonasDocuments" value="true"/>
 			<page id="pageStart" location="Hallway" duration="0000-00-00 00:42:00">
 				<content>
 					<p>Returning to your cabin you enter. You take the precaution of closing the
@@ -5101,7 +5101,7 @@
 			</page>
 		</scene>
 		<scene name="s_GhostDenIntro">
-			<decisionVar name="s_GhostDenIntro" value="true"/>
+			<decisionvar name="s_GhostDenIntro" value="true"/>
 			<page id="pageStart" location="Hallway" duration="0000-00-00 00:34:00">
 				<content>
 					<p>You remind yourself that Sarah is still missing. This apparition called you
@@ -5223,14 +5223,14 @@
 		<!-- Impl - Farse (testsuite) -->
 		<scene name="s_farseUpdatesYou">
 			<page id="pg_dont_tell_about_mark" location="Hallway" duration="0000-00-00 00:13:00">
-				<decisionVar name="var_dont_tell_farse_about_mark" value="true"/>
+				<decisionvar name="var_dont_tell_farse_about_mark" value="true"/>
 				<content>
 					<p>You ask Farse if he can make any sense of the painting missing, he says no
 						and you part ways.</p>
 				</content>
 			</page>
 			<page id="pg_tell_farse_about_mark" location="Hallway" duration="0000-00-00 00:16:00">
-				<decisionVar name="var_tell_farse_about_mark" value="true"/>
+				<decisionvar name="var_tell_farse_about_mark" value="true"/>
 				<content>
 					<p>You tell Farse about Mark</p>
 				</content>
@@ -5244,24 +5244,24 @@
 			<page id="pg_met_mark">
 				<decisions>
 					<decision label="Dont say anything about Mark"
-					nextPage="pg_dont_tell_about_mark"></decision>
-					<decision label="Tell Farse about Mark?" nextPage="pg_tell_farse_about_mark"
+					nextpage="pg_dont_tell_about_mark"></decision>
+					<decision label="Tell Farse about Mark?" nextpage="pg_tell_farse_about_mark"
 					></decision>
 				</decisions>
 				<content>
 					<p>Tell Farse about Mark?</p>
 				</content>
 			</page>
-			<page id="pf_met_mark" type="pageForward" nextPage="pg_didnt_meet_mark">
-				<pageCondition nextPage="pg_met_mark">
+			<page id="pf_met_mark" type="pageForward" nextpage="pg_didnt_meet_mark">
+				<pagecondition nextpage="pg_met_mark">
 					<condition name="nr_introMark" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<decisionVar name="s_farseUpdatesYou" value="true"/>
-			<page id="pageStart" nextPage="pf_met_mark">
+			<decisionvar name="s_farseUpdatesYou" value="true"/>
+			<page id="pageStart" nextpage="pf_met_mark">
 				<content>
 					<p>Todo- elaborate</p>
 					<p>Farse finds you in the hallway</p>
@@ -5271,17 +5271,17 @@
 		<scene name="s_IntroduceFarseSecurityRoom">
 			<page id="pg_do_you_tell_farse_about_painting">
 				<decisions>
-					<decision label="No" nextPage="pg_dont_tell_farse_about_painting"></decision>
-					<decision label="Yes" nextPage="pg_tell_farse_about_painting"></decision>
+					<decision label="No" nextpage="pg_dont_tell_farse_about_painting"></decision>
+					<decision label="Yes" nextpage="pg_tell_farse_about_painting"></decision>
 				</decisions>
 				<content>
 					<p>Do you tell Detective Farse that the painting is missing, and that you may
 						have picked up the wrong painting to begin with?</p>
 				</content>
 			</page>
-			<page id="pg_trishas_job_incorrect" nextPage="pg_auction_memory"
+			<page id="pg_trishas_job_incorrect" nextpage="pg_auction_memory"
 			duration="0000-00-00 00:02:00">
-				<decisionVar name="pg_trishas_job_incorrect" value="true"/>
+				<decisionvar name="pg_trishas_job_incorrect" value="true"/>
 				<content>
 					<p>You answer that she works for a well known book publishing company as a
 						staff editor. You recall the job description from somewhere, but are not
@@ -5384,11 +5384,11 @@
 			</page>
 			<page id="pg_talk_back_to_farse" duration="0000-00-00 00:02:03">
 				<decisions>
-					<decision label="Bite your tougue and say nothing" nextPage="pg_farse_ends_bad"></decision>
+					<decision label="Bite your tougue and say nothing" nextpage="pg_farse_ends_bad"></decision>
 					<decision label="Let him know who you are!"
-					nextPage="pg_farse_throws_you_in_brig"></decision>
+					nextpage="pg_farse_throws_you_in_brig"></decision>
 				</decisions>
-				<decisionVar name="pg_talk_back_to_farse" value="true"/>
+				<decisionvar name="pg_talk_back_to_farse" value="true"/>
 				<content>
 					<p>You look Farse in the eye and tell him point blank "Your time might be worth
 						gold here Detective Farse, but once we get back to dry land I'll make sure
@@ -5412,11 +5412,11 @@
 			</page>
 			<page id="pg_tell_farse_you_were_in_casino" duration="0000-00-00 00:02:51">
 				<decisions>
-					<decision label="Say nothing" nextPage="pg_farse_ends_bad"></decision>
+					<decision label="Say nothing" nextpage="pg_farse_ends_bad"></decision>
 					<decision label="Tell him what you think of him"
-					nextPage="pg_talk_back_to_farse"></decision>
+					nextpage="pg_talk_back_to_farse"></decision>
 				</decisions>
-				<decisionVar name="pg_tell_farse_you_were_in_casino" value="true"/>
+				<decisionvar name="pg_tell_farse_you_were_in_casino" value="true"/>
 				<content>
 					<p>You decide to tell Detective Farse that you went up to the casino for
 						awhile.</p>
@@ -5446,8 +5446,8 @@
 			</page>
 			<page id="pg_farse_asks_where_you_were" duration="0000-00-00 00:02:38">
 				<decisions>
-					<decision label="Lie to Farse" nextPage="pg_tell_farse_you_were_in_casino"></decision>
-					<decision label="Tell the truth" nextPage="pg_farse_ends_good"></decision>
+					<decision label="Lie to Farse" nextpage="pg_tell_farse_you_were_in_casino"></decision>
+					<decision label="Tell the truth" nextpage="pg_farse_ends_good"></decision>
 				</decisions>
 				<content>
 					<p>Sensing that the meeting is over you start to rise from your chair. Farse
@@ -5467,7 +5467,7 @@
 						you lie again and say you went to the casino?</p>
 				</content>
 			</page>
-			<page id="pg_dont_tell_farse_about_painting" nextPage="pg_farse_asks_where_you_were"
+			<page id="pg_dont_tell_farse_about_painting" nextpage="pg_farse_asks_where_you_were"
 			duration="0000-00-00 00:03:13">
 				<content>
 					<p>You don't feel comfortable around Detective Farse. It seems like he's
@@ -5485,9 +5485,9 @@
 					<p>Does this guys know something else? You wonder.</p>
 				</content>
 			</page>
-			<page id="pg_tell_farse_about_painting" nextPage="pg_farse_asks_where_you_were"
+			<page id="pg_tell_farse_about_painting" nextpage="pg_farse_asks_where_you_were"
 			duration="0000-00-00 00:07:42">
-				<decisionVar name="pg_tell_farse_about_painting" value="true"/>
+				<decisionvar name="pg_tell_farse_about_painting" value="true"/>
 				<content>
 					<p>You decide to pass on the information to Farse and tell him every detail
 						about the incident in hopes that he might be able to help you find Sarah.
@@ -5518,7 +5518,7 @@
 						something. But what?</p>
 				</content>
 			</page>
-			<page id="pg_auction_memory" nextPage="pg_do_you_tell_farse_about_painting"
+			<page id="pg_auction_memory" nextpage="pg_do_you_tell_farse_about_painting"
 			duration="0000-00-00 00:02:32">
 				<content>
 					<p>You momentarily close your eyes and concentrate on remembering the events of
@@ -5567,9 +5567,9 @@
 						given me the wrong painting by mistake?" you wonder to yourself.</p>
 				</content>
 			</page>
-			<page id="pg_refuse_to_answer_question" nextPage="pg_auction_memory"
+			<page id="pg_refuse_to_answer_question" nextpage="pg_auction_memory"
 			duration="0000-00-00 00:05:00">
-				<decisionVar name="pg_refuse_to_answer_question" value="true"/>
+				<decisionvar name="pg_refuse_to_answer_question" value="true"/>
 				<content>
 					<p>Once again you struggle to find an exit to this question. You counter with a
 						question of your own "Detective Farse, exactly what might that have to do
@@ -5588,9 +5588,9 @@
 						anything unusual prior to the disappearance?"</p>
 				</content>
 			</page>
-			<page id="pg_trishas_job_correct" nextPage="pg_auction_memory"
+			<page id="pg_trishas_job_correct" nextpage="pg_auction_memory"
 			duration="0000-00-00 00:02:00">
-				<decisionVar name="pg_trishas_job_correct" value="true"/>
+				<decisionvar name="pg_trishas_job_correct" value="true"/>
 				<content>
 					<p>You answer quickly and exactly that she works as a regional sales manager
 						for a small tech company named FounderyTech. You recall the briefing and
@@ -5607,10 +5607,10 @@
 			<page id="pg_meet_farse" duration="0000-00-00 00:05:00">
 				<decisions>
 					<decision label="Refuse to answer the question"
-					nextPage="pg_refuse_to_answer_question"></decision>
+					nextpage="pg_refuse_to_answer_question"></decision>
 					<decision label="Editor for a book publishing company"
-					nextPage="pg_trishas_job_incorrect"></decision>
-					<decision label="Regional sales manager" nextPage="pg_trishas_job_correct"
+					nextpage="pg_trishas_job_incorrect"></decision>
+					<decision label="Regional sales manager" nextpage="pg_trishas_job_correct"
 					></decision>
 				</decisions>
 				<content>
@@ -5669,15 +5669,15 @@
 						"Where does your wife work?"</p>
 				</content>
 			</page>
-			<page id="pg_knock_on_door" nextPage="pg_meet_farse" duration="0000-00-00 00:00:30">
+			<page id="pg_knock_on_door" nextpage="pg_meet_farse" duration="0000-00-00 00:00:30">
 				<content>
 					<p>You decide to just knock on the door and enter. David and Farse seem a
 						little startled as you walk in.</p>
 				</content>
 			</page>
-			<page id="pg_evesdrop_on_conversation" nextPage="pg_meet_farse"
+			<page id="pg_evesdrop_on_conversation" nextpage="pg_meet_farse"
 			duration="0000-00-00 00:05:00">
-				<decisionVar name="pg_evesdrop_on_conversation" value="true"/>
+				<decisionvar name="pg_evesdrop_on_conversation" value="true"/>
 				<content>
 					<p>You hear them talking about things that don't really make sense. Names fly
 						in and out of the conversation. You catch a couple of words here and there.
@@ -5693,8 +5693,8 @@
 			<page id="pageStart" duration="0000-00-00 00:09:00">
 				<decisions>
 					<decision label="Evesdrop on the conversation"
-					nextPage="pg_evesdrop_on_conversation"></decision>
-					<decision label="Knock on the door" nextPage="pg_knock_on_door"></decision>
+					nextpage="pg_evesdrop_on_conversation"></decision>
+					<decision label="Knock on the door" nextpage="pg_knock_on_door"></decision>
 				</decisions>
 				<content>
 					<p>You decide to go and talk with Detective Farse. The Security Room is quite a
@@ -5738,17 +5738,17 @@
 					<p>What do you wish to do?</p>
 				</content>
 			</page>
-			<decisionVar name="s_IntroduceFarseSecurityRoom" value="true"/>
+			<decisionvar name="s_IntroduceFarseSecurityRoom" value="true"/>
 		</scene>
 		<scene name="s_FarseFindsYou">
 			<page id="pageStart" duration="0000-00-00 00:07:00">
 				<decisions>
 					<decision label="Tell him you never received the message"
-					nextPage="pg_lie_about_note"></decision>
+					nextpage="pg_lie_about_note"></decision>
 					<decision label="Tell him the truth that you did."
-					nextPage="pg_say_received_note"></decision>
+					nextpage="pg_say_received_note"></decision>
 				</decisions>
-				<decisionVar name="pg_farse_finds_you" value="true"/>
+				<decisionvar name="pg_farse_finds_you" value="true"/>
 				<content>
 					<p>You take this opportunity to head over to the small supply shop over in the
 						merchant area of the ship, by the main lobby. Picking up some common
@@ -5804,17 +5804,17 @@
 			</page>
 			<page id="pg_do_you_tell_farse_about_painting">
 				<decisions>
-					<decision label="No" nextPage="pg_dont_tell_farse_about_painting"></decision>
-					<decision label="Yes" nextPage="pg_tell_farse_about_painting"></decision>
+					<decision label="No" nextpage="pg_dont_tell_farse_about_painting"></decision>
+					<decision label="Yes" nextpage="pg_tell_farse_about_painting"></decision>
 				</decisions>
 				<content>
 					<p>Do you tell Detective Farse that the painting is missing, and that you may
 						have picked up the wrong painting?</p>
 				</content>
 			</page>
-			<page id="pg_trishas_job_incorrect" nextPage="pg_auction_memory"
+			<page id="pg_trishas_job_incorrect" nextpage="pg_auction_memory"
 			duration="0000-00-00 00:02:00">
-				<decisionVar name="pg_trishas_job_incorrect" value="true"/>
+				<decisionvar name="pg_trishas_job_incorrect" value="true"/>
 				<content>
 					<p>You answer that she works for a well known book publishing company as a
 						staff editor. You recall the job description from somewhere, but you're not
@@ -5917,11 +5917,11 @@
 			</page>
 			<page id="pg_talk_back_to_farse" duration="0000-00-00 00:02:03">
 				<decisions>
-					<decision label="Bite your tougue and say nothing" nextPage="pg_farse_ends_bad"></decision>
+					<decision label="Bite your tougue and say nothing" nextpage="pg_farse_ends_bad"></decision>
 					<decision label="Let him know who you are!"
-					nextPage="pg_farse_throws_you_in_brig"></decision>
+					nextpage="pg_farse_throws_you_in_brig"></decision>
 				</decisions>
-				<decisionVar name="pg_talk_back_to_farse" value="true"/>
+				<decisionvar name="pg_talk_back_to_farse" value="true"/>
 				<content>
 					<p>You look Farse in the eye and tell him point blank "Your time might be worth
 						gold here Detective Farse, but once we get back to dry land I'll make sure
@@ -5944,11 +5944,11 @@
 			</page>
 			<page id="pg_tell_farse_you_were_in_casino" duration="0000-00-00 00:02:51">
 				<decisions>
-					<decision label="Say nothing" nextPage="pg_farse_ends_bad"></decision>
+					<decision label="Say nothing" nextpage="pg_farse_ends_bad"></decision>
 					<decision label="Tell him what you think of him"
-					nextPage="pg_talk_back_to_farse"></decision>
+					nextpage="pg_talk_back_to_farse"></decision>
 				</decisions>
-				<decisionVar name="pg_tell_farse_you_were_in_casino" value="true"/>
+				<decisionvar name="pg_tell_farse_you_were_in_casino" value="true"/>
 				<content>
 					<p>You decide to tell Detective Farse that you went up to the casino for
 						awhile.</p>
@@ -5979,8 +5979,8 @@
 			</page>
 			<page id="pg_farse_asks_where_you_were" duration="0000-00-00 00:02:38">
 				<decisions>
-					<decision label="Lie to Farse" nextPage="pg_tell_farse_you_were_in_casino"></decision>
-					<decision label="Tell the truth" nextPage="pg_farse_ends_good"></decision>
+					<decision label="Lie to Farse" nextpage="pg_tell_farse_you_were_in_casino"></decision>
+					<decision label="Tell the truth" nextpage="pg_farse_ends_good"></decision>
 				</decisions>
 				<content>
 					<p>Sensing that the meeting is over you start to rise from your chair. Farse
@@ -6000,7 +6000,7 @@
 						you lie again and say you went to the casino?</p>
 				</content>
 			</page>
-			<page id="pg_dont_tell_farse_about_painting" nextPage="pg_farse_asks_where_you_were"
+			<page id="pg_dont_tell_farse_about_painting" nextpage="pg_farse_asks_where_you_were"
 			duration="0000-00-00 00:03:13">
 				<content>
 					<p>You don't feel comfortable with Detective Farse. It seems like he's working
@@ -6019,9 +6019,9 @@
 					<p>Does this guys know something else? You wonder.</p>
 				</content>
 			</page>
-			<page id="pg_tell_farse_about_painting" nextPage="pg_farse_asks_where_you_were"
+			<page id="pg_tell_farse_about_painting" nextpage="pg_farse_asks_where_you_were"
 			duration="0000-00-00 00:07:42">
-				<decisionVar name="pg_tell_farse_about_painting" value="true"/>
+				<decisionvar name="pg_tell_farse_about_painting" value="true"/>
 				<content>
 					<p>You decide to pass on the information to Farse and tell him every detail
 						about the incident in hopes that he might be able to help you find Sarah.
@@ -6052,7 +6052,7 @@
 						something. But what?</p>
 				</content>
 			</page>
-			<page id="pg_auction_memory" nextPage="pg_do_you_tell_farse_about_painting"
+			<page id="pg_auction_memory" nextpage="pg_do_you_tell_farse_about_painting"
 			duration="0000-00-00 00:02:32">
 				<content>
 					<p>You momentarily close your eyes and concentrate on remembering the events of
@@ -6101,9 +6101,9 @@
 						given me the wrong painting by mistake?" you wonder to yourself.</p>
 				</content>
 			</page>
-			<page id="pg_refuse_to_answer_question" nextPage="pg_auction_memory"
+			<page id="pg_refuse_to_answer_question" nextpage="pg_auction_memory"
 			duration="0000-00-00 00:05:00">
-				<decisionVar name="pg_refuse_to_answer_question" value="true"/>
+				<decisionvar name="pg_refuse_to_answer_question" value="true"/>
 				<content>
 					<p>Once again you struggle to find an exit to this question. You counter with a
 						question of your own "Detective Farse, exactly what might that have to do
@@ -6121,9 +6121,9 @@
 						anything unusual prior to the disappearance?"</p>
 				</content>
 			</page>
-			<page id="pg_trishas_job_correct" nextPage="pg_auction_memory"
+			<page id="pg_trishas_job_correct" nextpage="pg_auction_memory"
 			duration="0000-00-00 00:02:00">
-				<decisionVar name="pg_trishas_job_correct" value="true"/>
+				<decisionvar name="pg_trishas_job_correct" value="true"/>
 				<content>
 					<p>You answer quickly and exactly that she works as a regional sales manager
 						for a small tech company named FounderyTech. You recall the briefing you
@@ -6140,10 +6140,10 @@
 			<page id="pg_meet_farse" duration="0000-00-00 00:05:00">
 				<decisions>
 					<decision label="Refuse to answer the question"
-					nextPage="pg_refuse_to_answer_question"></decision>
+					nextpage="pg_refuse_to_answer_question"></decision>
 					<decision label="Editor for a book publishing company"
-					nextPage="pg_trishas_job_incorrect"></decision>
-					<decision label="Regional sales manager" nextPage="pg_trishas_job_correct"
+					nextpage="pg_trishas_job_incorrect"></decision>
+					<decision label="Regional sales manager" nextpage="pg_trishas_job_correct"
 					></decision>
 				</decisions>
 				<content>
@@ -6197,7 +6197,7 @@
 						"Where does your wife work?"</p>
 				</content>
 			</page>
-			<page id="pg_say_received_note" nextPage="pg_meet_farse" duration="0000-00-00 00:00:30">
+			<page id="pg_say_received_note" nextpage="pg_meet_farse" duration="0000-00-00 00:00:30">
 				<content>
 					<p>Swallowing a gulp in your throat you tell him that you did receive the note.
 						Farse looks at you a little disturbed and asks "Were the directions not
@@ -6209,8 +6209,8 @@
 						very much out in the open.</p>
 				</content>
 			</page>
-			<page id="pg_lie_about_note" nextPage="pg_meet_farse" duration="0000-00-00 00:05:00">
-				<decisionVar name="pg_lie_about_note" value="true"/>
+			<page id="pg_lie_about_note" nextpage="pg_meet_farse" duration="0000-00-00 00:05:00">
+				<decisionvar name="pg_lie_about_note" value="true"/>
 				<content>
 					<p>With the amount of paperwork on Farse's desk you can't help but get the
 						feeling that he's been swamped as of late. Not a good sign.</p>
@@ -6220,26 +6220,26 @@
 						the truth for himself so your lie will only smooth things over for awhile.</p>
 				</content>
 			</page>
-			<decisionVar name="s_IntroduceFarseSecurityRoom" value="true"/>
+			<decisionvar name="s_IntroduceFarseSecurityRoom" value="true"/>
 		</scene>
 
 		<!-- Impl - Manny (testsuite)  -->
 		<scene name="Testsuite-Manny">
 			<link linkName="Item4-11PMDay1" linkTyype="item4">
 
-				<decisionVar name="currentTime" value="0000-00-00 11:10:00"/>
+				<decisionvar name="currentTime" value="0000-00-00 11:10:00"/>
 			</link>
-			<link linkName="Item2-Day2" linkType="item2">
+			<link linkName="Item2-Day2" linktype="item2">
 
-				<decisionVar name="currentTime" value="0000-00-01 00:30:00"/>
+				<decisionvar name="currentTime" value="0000-00-01 00:30:00"/>
 			</link>
-			<link linkName="Item3-Day1" linkType="item3">
+			<link linkName="Item3-Day1" linktype="item3">
 
-				<decisionVar name="currentTime" value="0000-00-00 22:00:00"/>
+				<decisionvar name="currentTime" value="0000-00-00 22:00:00"/>
 			</link>
-			<link linkName="Item1-KnowofMannyVar" linkType="item1">
+			<link linkName="Item1-KnowofMannyVar" linktype="item1">
 
-				<decisionVar name="pg_tell_about_painting_missing" value="true"/>
+				<decisionvar name="pg_tell_about_painting_missing" value="true"/>
 			</link>
 		</scene>
 		<scene name="Casino">
@@ -6258,7 +6258,7 @@
 				</content>
 			</page>
 			<page id="pg_miss_meeting_with_manny" location="Hallway" duration="0000-00-00 00:10:00">
-				<decisionVar name="pg_miss_meeting_with_manny" value="true"/>
+				<decisionvar name="pg_miss_meeting_with_manny" value="true"/>
 				<content>
 					<p>You stroll into the casino and head straight back to the Cashier's cage. A
 						beautiful girl around your age is working the counter today. You trade
@@ -6281,11 +6281,11 @@
 						from this situation.</p>
 				</content>
 			</page>
-			<page id="pageStart" type="pageForward" nextPage="pg_havent_heard_of_manny">
-				<pageCondition nextPage="pg_havent_heard_of_manny">
+			<page id="pageStart" type="pageForward" nextpage="pg_havent_heard_of_manny">
+				<pagecondition nextpage="pg_havent_heard_of_manny">
 					<condition name="pg_tell_about_painting_missing"></condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_miss_meeting_with_manny">
+				</pagecondition>
+				<pagecondition nextpage="pg_miss_meeting_with_manny">
 					<condition name="pg_miss_meeting_with_manny">
 						<condition name="s_topDeckMeetingWithManny">
 							<condition startTime="0000-00-01 00:00:00">
@@ -6293,8 +6293,8 @@
 							</condition>
 						</condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_meet_after_day_1">
+				</pagecondition>
+				<pagecondition nextpage="pg_meet_after_day_1">
 					<condition name="pg_meet_after_day_1">
 						<condition name="meeting_Manny_top_deck">
 							<condition startTime="0000-00-01 00:00:00">
@@ -6303,22 +6303,22 @@
 							</condition>
 						</condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_meet_manny_day_1">
+				</pagecondition>
+				<pagecondition nextpage="pg_meet_manny_day_1">
 					<condition name="met_manny">
 						<condition endTime="0000-00-00 23:00:00">
 							<condition name="pg_tell_about_painting_missing" value="true"
 							></condition>
 						</condition>
 					</condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
 			<page id="pg_meet_after_day_1" location="Hallway" duration="0000-00-00 00:10:00">
-				<decisionVar name="met_manny" value="true"/>
-				<decisionVar name="pg_meet_after_day_1" value="true"/>
+				<decisionvar name="met_manny" value="true"/>
+				<decisionvar name="pg_meet_after_day_1" value="true"/>
 				<content>
 					<p>Strolling into the casino the flashing lights and metallic clinging from the
 						slot machines instantly catch your attention. A light cloud of cigarette
@@ -6348,8 +6348,8 @@
 				</content>
 			</page>
 			<page id="pg_meet_manny_day_1" location="Hallway" duration="0000-00-00 00:15:00">
-				<decisionVar name="met_manny" value="true"/>
-				<decisionVar name="meeting_Manny_top_deck" value="true"/>
+				<decisionvar name="met_manny" value="true"/>
+				<decisionvar name="meeting_Manny_top_deck" value="true"/>
 				<content>
 					<p>Strolling into the casino the flashing lights and metallic clinging from the
 						slot machines instantly catch your attention. A light cloud of cigarette
@@ -6384,8 +6384,8 @@
 			</page>
 		</scene>
 		<scene name="topDeck">
-			<decisionVar name="l_topDeck" value="true"/>
-			<decisionVar name="s_topDeck_NoOneThere" value="true"/>
+			<decisionvar name="l_topDeck" value="true"/>
+			<decisionvar name="s_topDeck_NoOneThere" value="true"/>
 			<page id="pageStart" location="Hallway" duration="0000-00-00 00:20:00">
 				<content>
 					<p>As the elevator approaches the Litto deck you can see out across the hallway
@@ -6418,7 +6418,7 @@
 			</page>
 		</scene>
 		<scene name="topDeckMeetingWithManny">
-			<page id="pg_dont_confront" nextPage="pg_manny_tells_about_cameras">
+			<page id="pg_dont_confront" nextpage="pg_manny_tells_about_cameras">
 				<content>
 					<p>You bite your tongue for the moment and go along with his game. You realize
 						how important a connection like this is, and the thought of finding Sarah
@@ -6444,8 +6444,8 @@
 						interview of sorts.</p>
 				</content>
 			</page>
-			<page id="pg_info_on_Bernard" nextPage="pg_top_deck_index">
-				<decisionVar name="pg_info_on_Bernard" value="true"/>
+			<page id="pg_info_on_Bernard" nextpage="pg_top_deck_index">
+				<decisionvar name="pg_info_on_Bernard" value="true"/>
 				<content>
 					<p>You decide to pry into Bernard's personal life a bit and ask Manny how they
 						know each other. Manny give you a quick grin, but you're not quite sure how
@@ -6456,8 +6456,8 @@
 						another topic especially with the biting wind gnawing at your inner heat.</p>
 				</content>
 			</page>
-			<page id="pg_learn_of_library" nextPage="pg_top_deck_index">
-				<decisionVar name="pg_learn_of_library" value="true"/>
+			<page id="pg_learn_of_library" nextpage="pg_top_deck_index">
+				<decisionvar name="pg_learn_of_library" value="true"/>
 				<content>
 					<p>You ask Manny what you should know about the history of this ship. "The
 						world we live in is less brutal than life used to be. This ship was about
@@ -6479,8 +6479,8 @@
 						those books. Find time to do this.</p>
 				</content>
 			</page>
-			<page id="pg_more_info_cameras" nextPage="pg_top_deck_index">
-				<decisionVar name="pg_more_info_cameras" value="true"/>
+			<page id="pg_more_info_cameras" nextpage="pg_top_deck_index">
+				<decisionvar name="pg_more_info_cameras" value="true"/>
 				<content>
 					<p>You pressure Manny for more information on the security cameras. He doesn't
 						budge much other than to tell you that half the passenger areas are covered
@@ -6494,30 +6494,30 @@
 			<page id="pg_top_deck_index">
 				<decisions>
 					<decision label="I'd like to look at the security tapes"
-					nextPage="pg_more_info_cameras">
+					nextpage="pg_more_info_cameras">
 						<condition name="pg_more_info_cameras"></condition>
 					</decision>
-					<decision label="How do you know Bernard?" nextPage="pg_info_on_Bernard">
+					<decision label="How do you know Bernard?" nextpage="pg_info_on_Bernard">
 						<condition name="pg_info_on_Bernard"></condition>
 					</decision>
-					<decision label="Find out more about the ship" nextPage="pg_learn_of_library">
+					<decision label="Find out more about the ship" nextpage="pg_learn_of_library">
 						<condition name="pg_learn_of_library"></condition>
 					</decision>
-					<decision label="Offer to help Manny" nextPage="pg_offer_to_help">
+					<decision label="Offer to help Manny" nextpage="pg_offer_to_help">
 						<condition name="pg_offer_to_help"></condition>
 					</decision>
 					<decision label="What did he mean by &quot;Sticking your nose out&quot;"
-					nextPage="pg_what_meant_sticking_nose_out">
+					nextpage="pg_what_meant_sticking_nose_out">
 						<condition name="pg_what_meant_sticking_nose_out"></condition>
 					</decision>
-					<decision label="Leave" nextPage="pg_leave_top_deck"></decision>
+					<decision label="Leave" nextpage="pg_leave_top_deck"></decision>
 				</decisions>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_what_meant_sticking_nose_out" nextPage="pg_top_deck_index">
-				<decisionVar name="pg_what_meant_sticking_nose_out" value="true"/>
+			<page id="pg_what_meant_sticking_nose_out" nextpage="pg_top_deck_index">
+				<decisionvar name="pg_what_meant_sticking_nose_out" value="true"/>
 				<content>
 					<p>Manny chuckles "Travis you will definitely know them when you see them. Keep
 						your mind open and take the time to learn the history of this ship, because
@@ -6528,8 +6528,8 @@
 						recognize them. Some are living, and others may not be."</p>
 				</content>
 			</page>
-			<page id="pg_offer_to_help" nextPage="pg_top_deck_index">
-				<decisionVar name="pg_offer_to_help" value="true"/>
+			<page id="pg_offer_to_help" nextpage="pg_top_deck_index">
+				<decisionvar name="pg_offer_to_help" value="true"/>
 				<content>
 					<p>Manny seems sincerely interested in helping you do something, so you decide
 						to try and repay the favor. "How can we help each other," you ask.</p>
@@ -6537,7 +6537,7 @@
 						get in touch with you."</p>
 				</content>
 			</page>
-			<page id="pg_manny_tells_about_cameras" nextPage="pg_top_deck_index">
+			<page id="pg_manny_tells_about_cameras" nextpage="pg_top_deck_index">
 				<content>
 					<p>Manny says "I've looked over the tapes of the hallways around your cabin
 						during the time that Sarah disappeared. I'm almost certain that somebody
@@ -6594,8 +6594,8 @@
 			</page>
 			<page id="pg_confront_about_name">
 				<decisions>
-					<decision label="Let it slide for now" nextPage="pg_manny_tells_about_cameras"></decision>
-					<decision label="End the conversation" nextPage="pg_end_top_deck_conversation"
+					<decision label="Let it slide for now" nextpage="pg_manny_tells_about_cameras"></decision>
+					<decision label="End the conversation" nextpage="pg_end_top_deck_conversation"
 					></decision>
 				</decisions>
 				<content>
@@ -6615,13 +6615,13 @@
 					<p>What do you wish to do?</p>
 				</content>
 			</page>
-			<decisionVar name="l_topDeck" value="true"/>
-			<decisionVar name="s_topDeckMeetingWithManny" value="true"/>
+			<decisionvar name="l_topDeck" value="true"/>
+			<decisionvar name="s_topDeckMeetingWithManny" value="true"/>
 			<page id="pageStart">
 				<decisions>
-					<decision label="Say nothing for the moment" nextPage="pg_dont_confront"></decision>
+					<decision label="Say nothing for the moment" nextpage="pg_dont_confront"></decision>
 					<decision label="Confront Manny about using your real name"
-					nextPage="pg_confront_about_name"></decision>
+					nextpage="pg_confront_about_name"></decision>
 				</decisions>
 				<content>
 					<p>As the elevator approaches the Litto deck you can see out across the hallway
@@ -6658,7 +6658,7 @@
 
 		<!-- Impl - Mark (testsuite) -->
 		<scene name="S_chatWithMarkAboutJoiningTeam">
-			<decisionVar name="S_chatWithMarkAboutJoiningTeam" value="true"/>
+			<decisionvar name="S_chatWithMarkAboutJoiningTeam" value="true"/>
 			<page id="pageStart" location="Hallway" duration="0000-00-00 00:38:00">
 				<content>
 					<p>The message that Mark left for you keeps rolling through your head. You
@@ -6724,7 +6724,7 @@
 			</page>
 		</scene>
 		<scene name="S_meetingMarkAndCatherine">
-			<decisionVar name="var_s_meetingMarkAndCathering" value="true"/>
+			<decisionvar name="var_s_meetingMarkAndCathering" value="true"/>
 			<page id="pageStart" location="Hallway" duration="0000-00-00 02:10:00">
 				<content>
 					<p>You show up at the designated location. Shortly after you arrive Mark walks
@@ -6747,7 +6747,7 @@
 			</page>
 		</scene>
 		<scene name="S_introMark">
-			<decisionVar name="nr_introMark" value="true"/>
+			<decisionvar name="nr_introMark" value="true"/>
 			<page id="pageStart" location="Hallway" duration="0000-00-00 00:15:00">
 				<content>
 					<p>You walk upstairs to introduce yourself to Mark. You tell him the situation
@@ -6760,7 +6760,7 @@
 
 		<!-- Impl - Transporter -->
 		<scene name="s_talkWithAnton">
-			<decisionVar name="s_talkWithAnton" value="true"/>
+			<decisionvar name="s_talkWithAnton" value="true"/>
 			<page id="pageStart" location="s_youIanAndJonasTalk">
 				<content>
 					<p>Approaching the double doors of the bridge deck Farse knocks on the glass.
@@ -6963,8 +6963,8 @@
 			</page>
 			<page id="pg_madeline_finds_you">
 				<decisions>
-					<decision label="Go on your own" nextPage="pg_jonas_kills_you"></decision>
-					<decision label="Go with Madeline" nextPage="pg_you_and_bernard_escape"
+					<decision label="Go on your own" nextpage="pg_jonas_kills_you"></decision>
+					<decision label="Go with Madeline" nextpage="pg_you_and_bernard_escape"
 					></decision>
 				</decisions>
 				<content>
@@ -7126,7 +7126,7 @@
 					<p>The End.</p>
 				</content>
 			</page>
-			<page id="pg_lie_to_jonus" nextPage="pf_check_saved_rudolphe">
+			<page id="pg_lie_to_jonus" nextpage="pf_check_saved_rudolphe">
 				<content>
 					<p>Gaging the stare in his eyes you realize that there is no choice to this
 						question, and that you'll have to accept. Hesitantly you accept his offer.</p>
@@ -7229,10 +7229,10 @@
 						impossible really".</p>
 				</content>
 			</page>
-			<page id="pf_check_saved_rudolphe" type="pageForward" nextPage="pg_madeline_finds_you">
-				<pageCondition nextPage="pg_rudolphe_finds_you">
+			<page id="pf_check_saved_rudolphe" type="pageForward" nextpage="pg_madeline_finds_you">
+				<pagecondition nextpage="pg_rudolphe_finds_you">
 					<condition name="pg_saved_rudolphe" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
@@ -7495,10 +7495,10 @@
 			</page>
 			<page id="pg_rudolphe_finds_you">
 				<decisions>
-					<decision label="Dont go with Rudolphe" nextPage="pg_dont_go_with_rudolphe"></decision>
-					<decision label="Go with Rudolphe" nextPage="pg_go_with_rudolphe"></decision>
+					<decision label="Dont go with Rudolphe" nextpage="pg_dont_go_with_rudolphe"></decision>
+					<decision label="Go with Rudolphe" nextpage="pg_go_with_rudolphe"></decision>
 				</decisions>
-				<decisionVar name="pg_destroy_helicopter" value="true"/>
+				<decisionvar name="pg_destroy_helicopter" value="true"/>
 				<content>
 					<p>Suddenly you see a grate covering a vent leap from the wall. A head pushes
 						out of the vent, vaguely recognizable in this light, but difficult to make
@@ -7595,8 +7595,8 @@
 			<page id="pg_talk_with_jonus">
 				<decisions>
 					<decision label="Lie to Jonus and tell him youll join his team"
-					nextPage="pg_lie_to_jonus"></decision>
-					<decision label="Join Jonus" nextPage="pg_go_with_jonus"></decision>
+					nextpage="pg_lie_to_jonus"></decision>
+					<decision label="Join Jonus" nextpage="pg_go_with_jonus"></decision>
 				</decisions>
 				<content>
 					<p>The hallway is floored with dark woods with a sinuous patters weaving like
@@ -7725,15 +7725,15 @@
 						that it wouldn't be a good idea to tell him no.</p>
 				</content>
 			</page>
-			<page id="pageStart" type="pageForward" nextPage="pg_with_bernard">
-				<pageCondition nextPage="pg_with_farse">
+			<page id="pageStart" type="pageForward" nextpage="pg_with_bernard">
+				<pagecondition nextpage="pg_with_farse">
 					<condition name="s_talkWithAnton" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_with_bernard" nextPage="pg_talk_with_jonus">
+			<page id="pg_with_bernard" nextpage="pg_talk_with_jonus">
 				<content>
 					<p>As the elevator moves to the next floor you see that you're in a large area
 						with large picture windows overlooking the horizon in the distance. A man is
@@ -7821,7 +7821,7 @@
 						rather short hallway.</p>
 				</content>
 			</page>
-			<page id="pg_with_farse" nextPage="pg_talk_with_jonus">
+			<page id="pg_with_farse" nextpage="pg_talk_with_jonus">
 				<content>
 					<p>As the elevator moves to the next floor you see that you're in a large area
 						with large picture windows overlooking the horizon over the distance. A man
@@ -7909,7 +7909,7 @@
 			</page>
 		</scene>
 		<scene name="s_TellFarseAboutPlaqueAfterMark">
-			<decisionVar name="s_TellFarseAboutPlaqueAfterMark" value="true"/>
+			<decisionvar name="s_TellFarseAboutPlaqueAfterMark" value="true"/>
 			<page id="pageStart" location="Hallway">
 				<content>
 					<p>You walk down to the security room to talk with Detective Farse about the
@@ -7967,7 +7967,7 @@
 			</page>
 		</scene>
 		<scene name="s_showMarkItemFromGhostWorld">
-			<decisionVar name="s_showMarkItemFromGhostWorld" value="true"/>
+			<decisionvar name="s_showMarkItemFromGhostWorld" value="true"/>
 			<page id="pageStart" location="Hallway">
 				<content>
 					<p>Moving your way up to Mark's cabin you thumb the small plaque in your pocket
@@ -8090,10 +8090,10 @@
 						with Captain Anton.</p>
 				</content>
 			</page>
-			<decisionVar name="s_showFarseItemFromGhostWorld" value="true"/>
+			<decisionvar name="s_showFarseItemFromGhostWorld" value="true"/>
 		</scene>
 		<scene name="s_CostumeBall">
-			<decisionVar name="s_CostumeBall" value="true"/>
+			<decisionvar name="s_CostumeBall" value="true"/>
 			<page id="pg_dont_pick_lock" location="Hallway">
 				<content>
 					<p>You decide not to pick the lock to the door and instead head back to your
@@ -8129,7 +8129,7 @@
 				</content>
 			</page>
 			<page id="pg_go_through_portal" location="Hallway">
-				<decisionVar name="pg_go_through_portal" value="true"/>
+				<decisionvar name="pg_go_through_portal" value="true"/>
 				<content>
 					<p>You opt to enter the door and pass into the world of the spirit, but before
 						you step into the portal Max warns you "The chambers of the past are formed
@@ -8231,8 +8231,8 @@
 			</page>
 			<page id="pg_intro_max">
 				<decisions>
-					<decision label="No way, you cant make me." nextPage="pg_dont_go_through_portal"></decision>
-					<decision label="Venture through the portal" nextPage="pg_go_through_portal"
+					<decision label="No way, you cant make me." nextpage="pg_dont_go_through_portal"></decision>
+					<decision label="Venture through the portal" nextpage="pg_go_through_portal"
 					></decision>
 				</decisions>
 				<content>
@@ -8352,7 +8352,7 @@
 					<p>Do you pass into the portal?</p>
 				</content>
 			</page>
-			<page id="pg_gave_docs_to_david" nextPage="pg_intro_max">
+			<page id="pg_gave_docs_to_david" nextpage="pg_intro_max">
 				<content>
 					<p>"I'll introduce you to Max here in a moment, but first let me take this
 						opportunity to show our sincere appreciation for all that you've done for
@@ -8383,7 +8383,7 @@
 						in your mind at all.</p>
 				</content>
 			</page>
-			<page id="pg_know_of_docs_but_didnt_find_them" nextPage="pg_intro_max">
+			<page id="pg_know_of_docs_but_didnt_find_them" nextpage="pg_intro_max">
 				<content>
 					<p>"I'll introduce you to Max here in a moment, but first there is the matter
 						of the documents still at hand. The weight of the task we've set before you
@@ -8396,7 +8396,7 @@
 						discouraged but makes the effort to hide it.</p>
 				</content>
 			</page>
-			<page id="pg_have_docs_but_didnt_give" nextPage="pg_intro_max">
+			<page id="pg_have_docs_but_didnt_give" nextpage="pg_intro_max">
 				<content>
 					<p>"I'll introduce you to Max here in a moment, but first I believe we have a
 						bit of business to discuss. You haven't given the documents to David yet"
@@ -8423,33 +8423,33 @@
 						somewhat suggestively. Her lip gently touches your ear as she pulls away.</p>
 				</content>
 			</page>
-			<page id="pf_jonus_docs_check" type="pageForward" nextPage="pg_intro_max">
-				<pageCondition nextPage="pg_know_of_docs_but_didnt_find_them">
+			<page id="pf_jonus_docs_check" type="pageForward" nextpage="pg_intro_max">
+				<pagecondition nextpage="pg_know_of_docs_but_didnt_find_them">
 					<condition name="s_GhostDenIntro" value="true">
 						<condition name="s_findJonasDocuments"></condition>
 					</condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_gave_docs_to_david">
+				</pagecondition>
+				<pagecondition nextpage="pg_gave_docs_to_david">
 					<condition name="s_giveJonasDocumentsToGhosts" value="true"></condition>
-				</pageCondition>
-				<pageCondition nextPage="pg_have_docs_but_didnt_give">
+				</pagecondition>
+				<pagecondition nextpage="pg_have_docs_but_didnt_give">
 					<condition name="s_findJonasDocuments" value="true">
 						<condition name="s_giveJonasDocumentsToGhosts"></condition>
 					</condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pf_know_of_madeline" type="pageForward" nextPage="pg_meet_madeline">
-				<pageCondition nextPage="pg_see_madeline">
+			<page id="pf_know_of_madeline" type="pageForward" nextpage="pg_meet_madeline">
+				<pagecondition nextpage="pg_see_madeline">
 					<condition name="s_GhostDenIntro" value="true"></condition>
-				</pageCondition>
+				</pagecondition>
 				<content>
 					<p/>
 				</content>
 			</page>
-			<page id="pg_meet_madeline" nextPage="pg_intro_max">
+			<page id="pg_meet_madeline" nextpage="pg_intro_max">
 				<content>
 					<p>A face in the crowd catches your attention. A figure dressed up like a
 						queen. The style of garment looks like Queen Victoria. You realize that
@@ -8477,7 +8477,7 @@
 						chuckle in response to his show.</p>
 				</content>
 			</page>
-			<page id="pg_see_madeline" nextPage="pf_jonus_docs_check">
+			<page id="pg_see_madeline" nextpage="pf_jonus_docs_check">
 				<content>
 					<p>Finally a face that you recognize catches your attention. A figure dressed
 						up like a queen. The style of garment looks like Queen Victoria. You realize
@@ -8504,8 +8504,8 @@
 						his show.</p>
 				</content>
 			</page>
-			<page id="pg_costume_ball_intro" nextPage="pf_know_of_madeline">
-				<decisionVar name="pg_costume_ball_intro" value="true"/>
+			<page id="pg_costume_ball_intro" nextpage="pf_know_of_madeline">
+				<decisionvar name="pg_costume_ball_intro" value="true"/>
 				<content>
 					<p>You can tell by the card reader on the door that picking this lock is going
 						to be rather complicated. You pull out your wallet. Opening it up you slide
@@ -8559,8 +8559,8 @@
 			</page>
 			<page id="pageStart">
 				<decisions>
-					<decision label="Nope" nextPage="pg_dont_pick_lock"></decision>
-					<decision label="Yes, pick the lock" nextPage="pg_costume_ball_intro"
+					<decision label="Nope" nextpage="pg_dont_pick_lock"></decision>
+					<decision label="Yes, pick the lock" nextpage="pg_costume_ball_intro"
 					></decision>
 				</decisions>
 				<content>
@@ -8587,21 +8587,21 @@
 	<locations>
 		<!-- Impl - Butterfly Lounge (testsuite) (needs cleaning) -->
 		<location name="exploreButterflyLounge">
-			<sceneCondition setScene="introButterflyLounge">
+			<scenecondition setScene="introButterflyLounge">
 				<condition name="noRepeat_introButterflyLounge"></condition>
-			</sceneCondition>
-			<sceneCondition setScene="exploreButterflyLounge">
+			</scenecondition>
+			<scenecondition setScene="exploreButterflyLounge">
 				<condition name="noRepeat_introButterflyLounge" value="true"></condition>
-			</sceneCondition>
+			</scenecondition>
 		</location>
 
 		<!-- Impl - Manny (testsuite) -->
 		<location name="topDeck">
-			<sceneCondition setScene="topDeckMeetingWithManny">
+			<scenecondition setScene="topDeckMeetingWithManny">
 				<condition startTime="0000-00-00 23:00:00" endTime="0000-00-01 00:00:00">
 					<condition name="meeting_Manny_top_deck" value="true"></condition>
 				</condition>
-			</sceneCondition>
+			</scenecondition>
 		</location>
 	</locations>
 	<diagrams>

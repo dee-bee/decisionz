@@ -34,12 +34,14 @@
 		<div id="embeddedAudioPlayerDiv"></div>-->
 	</div>
 	<div id="fixedBar">
-		<div id="playPauseBtn" class="fixedBarBtn" onclick="playPauseBtnClicked()"></div>
-		<div id="bookmarksModeBtn" class="fixedBarBtn" onclick="setState('bookmarks')">bookmarks</div>
-		<div id="mainModeBtn" class="fixedBarBtn" onclick="setState('main')">Back</div>
-		<div id="setBookmarkBtn" class="fixedBarBtn" onclick="setState('set_bookmark')">set bookmark</div>
-		<div id="settingsBtn" class="fixedBarBtn" onclick="setState('settings')">settings</div>
-		<div id="devBtn" class="fixedBarBtn" onclick="setState('dev_mode')">dev</div>
+		<div id="toggleMenuBar" onclick="toggleMenuBar()">*</div>
+		<div id="menuBar" class="displayNone">
+			<div id="bookmarksModeBtn" class="fixedBarBtn" onclick="setState('bookmarks')">bookmarks</div>
+			<div id="mainModeBtn" class="fixedBarBtn" onclick="setState('main')">Back</div>
+			<div id="setBookmarkBtn" class="fixedBarBtn" onclick="setState('set_bookmark')">set bookmark</div>
+			<div id="settingsBtn" class="fixedBarBtn" onclick="setState('settings')">settings</div>
+			<div id="devBtn" class="fixedBarBtn" onclick="setState('dev_mode')">dev</div>
+		</div>
 	</div>
 	<div id="bookmarkPanel"></div>
 	<div id="devPanel">
@@ -90,6 +92,13 @@
 		</div>
 	</div>
 	<div id="main">
+		<div id="devbar">
+			<div id="clearLocalStorage"onclick="clearLocalStorage();location.reload()">Reset Game</div>
+			<a id="linkToWiki" target="blank">Edit Content</a>
+			<a id="linkToJSEditor" href="../../../JSEditor/JSEditor/jsEditor.html" target="blank">JSEdit Config (refresh to reload)</a>
+			<a id="linkToConfigFile" href="" target="blank">Edit Config</a>
+		</div>
+
 		<div id="titleBar">
 			<div id="title">Decisionz</div>
 			<div id="statusTxt"></div>
@@ -97,22 +106,60 @@
 		
 		<div id="currentTime">Time:</div>
 		
-		<div id="pageContainer">
+		<div id="contentContainer">
+			<canvas id="backgroundClickMatteCanvas"></canvas>
+			<img id="backgroundImage"></img>
+			<img id="backgroundClickMatte" onload="matteLoaded()" onclick="matteClicked(this)"></img>
+			<div id="pageContainer" class="stage"></div>
 		</div>
 
-		<div id="devbar">
-			<div id="clearLocalStorage"onclick="clearLocalStorage();location.reload()">Reset Game</div>
-			<a id="linkToWiki" target="blank">Edit Content</a>
-			<a id="linkToJSEditor" href="../../../JSEditor/JSEditor/jsEditor.html" target="blank">JSEdit Config (refresh to reload)</a>
-			<a id="linkToConfigFile" href="" target="blank">Edit Config</a>
-		</div>
+		<!--Todo- figure out where this should go-->
+		<div id="stageTest" class="stage"></div>
 	</div>
+
 	<div id="snippets">
 		<div id="iframe_snippet">
 			<iframe id="templateIframe"></iframe>
 		</div>
 		<div id="pageContent_snippet">
 			<div id="pageContent"></div>
+		</div>
+		<div id="decisionVars_defaults_snippet">
+			<variable name="bookmarks"></variable>
+			<variable name="log"></variable>
+			<variable name="remotePageContentURL" value="" ></variable>
+			<variable name="narrationAudio" value="false" ></variable>
+			<variable name="music" value="false" ></variable>
+
+			<variable name="currentTime" value="0000-00-00 00:00:00" ></variable>
+			<variable name="currentBookmark" value="" ></variable>
+			<variable name="currentCharacter" value="" ></variable>
+			<variable name="currentLocationName" value="" ></variable>
+			<variable name="currentSceneName" value="start" zero_length_error ></variable>
+			<variable name="currentPageName" value="pageStart" ></variable>
+			
+			<variable name="previousLocationName" value="" ></variable>
+			<variable name="previousSceneName" value="" ></variable>
+			<variable name="previousPageName" value="" ></variable>
+
+			<variable name="routes"></variable>
+			
+			<variable name="activeStages" value="defaultStage" ></variable>
+			<variable name="defaultStage"  value='
+							{
+								"pageContent":"#main #pageContent",
+								"currentCharacter":"currentCharacter",
+								"currentSceneName":"currentSceneName",
+								"previousSceneName":"previousSceneName",
+								"currentPageName":"currentPageName",
+								"previousPageName":"previousPageName",
+								"currentLocationName":"currentLocationName",
+								"previousLocationName":"previousLocationName",
+								"currentTime":"currentTime"
+							}
+			' ></variable>
+
+
 		</div>
 	</div>
 	<div id="xml"></div>

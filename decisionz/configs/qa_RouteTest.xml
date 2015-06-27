@@ -1,3 +1,4 @@
+<!-- Todo- Add test to make sure the _expected_scene and _expected_page work correctly -->
 <config devTools="true" perspective="MobilePerspective">
 	<characters>
 		<character name="Travis" defaultCharacter="true" startPage="true" />

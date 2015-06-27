@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scene selector="#pageContainer"
+		loadhtml="animations/falconTerraEdgarDecideToRescueLocke_transistions.html"
+		default="default">
+	
+	<animation id="default">	
+		<group selector="#falcon"></group>
+		<group selector="#falconZoom">
+			<keyframe starttime="0" class="zoomed"></keyframe>
+		</group>
+		<group selector="#edgar">
+			<keyframe starttime="0" class="standingLeft"></keyframe>
+		</group>
+		<group selector="#edgarContainer"></group>
+		<group selector="#terra">
+			<keyframe starttime="0" class="lookingLeft"></keyframe>
+		</group>	
+		<group selector="#terraContainer"></group>
+	</animation>
+
+	<animation id="terraMoveUp_end_default">	
+		<group selector="#terra">
+			<keyframe starttime="0" class="lookingDownLeft"></keyframe>
+		</group>
+		<group selector="#terraContainer">
+			<keyframe starttime="0" class="terraMoveUp_end"></keyframe>
+		</group>
+	</animation>
+
+	<animation id="terraMoveDown_end_default">	
+		<group selector="#terra">
+			<keyframe starttime="0" class="lookingDownLeft"></keyframe>
+		</group>	
+		<group selector="#terraContainer">
+			<keyframe starttime="0" class="terraMoveDown_end"></keyframe>
+		</group>
+	</animation>
+
+	<animation id="edgarTerraIntro_end_default" >
+		<group selector="#edgar">
+			<keyframe starttime="0" class="standingRight"></keyframe>
+		</group>
+		<group selector="#edgarContainer">
+			<keyframe starttime="0" class="edgarMovedRight"></keyframe>
+		</group>
+	</animation>
+
+	<animation id="zoomFalcon" next_anim="edgarTerraIntro" endtime="4000" >
+		<group selector="#falconZoom">
+			<keyframe starttime="0" class=""></keyframe>
+			<keyframe starttime="1000" transition_class="zoom_trans" class="zoomed"></keyframe>
+		</group>
+	</animation>
+	
+	<animation id="edgarTerraIntro" endtime="4000" >
+		<group selector="#edgar">
+			<keyframe starttime="0" class="standingLeft"></keyframe>
+			<keyframe starttime="2000" class="walkingRight"></keyframe>
+			<keyframe starttime="4000" class="standingRight"></keyframe>
+		</group>
+		<group selector="#edgarContainer">
+			<keyframe starttime="0" class=""></keyframe>
+			<keyframe starttime="2000" transition_class="edgarMoveRight_trans" class="edgarMovedRight"></keyframe>
+		</group>		
+	</animation>
+		
+	<animation id="edgarTerraIntro_end" endtime="0" default="default edgarTerraIntro_end_default">
+	</animation>
+	
+	<animation id="terraLookDown" endtime="1500" default="default edgarTerraIntro_end_default">
+		<group selector="#terra">
+			<keyframe starttime="0" class="lookingDownLeft"></keyframe>
+		</group>
+	</animation>
+
+	<animation id="terraLookDown_end" endtime="0" default="default edgarTerraIntro_end_default">
+		<group selector="#terra">
+			<keyframe starttime="0" class="lookingDownLeft"></keyframe>
+		</group>
+	</animation>
+
+	<animation id="terraWalkDown" endtime="3500" default="default edgarTerraIntro_end_default">
+		<group selector="#terra">
+			<keyframe starttime="0" class="lookingDown"></keyframe>
+			<keyframe starttime="1000" class="walkingDown"></keyframe>
+			<keyframe starttime="2000" class="lookingDown"></keyframe>
+			<keyframe starttime="2500" class="lookingDownLeft"></keyframe>
+		</group>	
+		<group selector="#terraContainer">
+			<keyframe starttime="0" class=""></keyframe>
+			<keyframe starttime="1000" transition_class="terraMoveDown_trans" class="terraMoveDown"></keyframe>
+			<keyframe starttime="2000" class="terraMoveDown_end"></keyframe>
+		</group>	
+	</animation>
+
+	<animation id="terraWalkDown_end" endtime="0" default="default terraMoveDown_end_default edgarTerraIntro_end_default">
+	</animation>
+
+	<animation id="edgarLockTrapped" endtime="5000" default="default terraMoveDown_end_default">
+		<group selector="#edgar">
+			<keyframe starttime="0" class="standingRight"></keyframe>
+			<keyframe starttime="1000" class="standingDown"></keyframe>
+			<keyframe starttime="2000" class="walkingLeft"></keyframe>
+			<keyframe starttime="4000" class="standingLeft"></keyframe>
+		</group>
+		<group selector="#edgarContainer">
+			<keyframe starttime="0" class="edgarMovedRight"></keyframe>
+			<keyframe starttime="2000" transition_class="edgarMoveLeft_trans" class="edgarMoveLeft"></keyframe>
+			<keyframe starttime="4000" class="edgarMoveLeft_end"></keyframe>
+		</group>	
+	</animation>
+
+	<animation id="edgarLockTrapped_end" endtime="0" default="default terraMoveDown_end_default">
+		<group selector="#edgar">
+			<keyframe starttime="0" class="standingDown"></keyframe>
+		</group>
+		<group selector="#edgarContainer">
+			<keyframe starttime="0" class="edgarMoveLeft_end"></keyframe>
+		</group>	
+	</animation>
+	
+	<animation id="terraThatTime" endtime="5000" default="default edgarLockTrapped_end">
+		<group selector="#terra">
+			<keyframe starttime="0" class="lookingDownLeft"></keyframe>
+			<keyframe starttime="500" class="lookingDown"></keyframe>
+			<keyframe starttime="2000" class="walkingUp"></keyframe>
+			<keyframe starttime="3000" class="standingUp"></keyframe>
+			<keyframe starttime="4000" class="lookingDownLeft"></keyframe>
+		</group>	
+		<group selector="#terraContainer">
+			<keyframe starttime="0" class="terraMoveDown_end"></keyframe>
+			<keyframe starttime="2000" transition_class="terraMoveUp_trans" class="terraMoveUp"></keyframe>
+			<keyframe starttime="3000" class="terraMoveUp_end"></keyframe>
+		</group>	
+	</animation>
+	
+	<animation id="terraThatTime_end" endtime="0" default="default terraMoveUp_end_default edgarLockTrapped_end">
+	</animation>
+
+	<animation id="edgarThenItIs" endtime="2000" default="default terraMoveUp_end_default edgarLockTrapped_end">
+		<group selector="#edgar">
+			<keyframe starttime="0" class="standingDown"></keyframe>
+			<keyframe starttime="1000" class="standingRight"></keyframe>
+		</group>
+	</animation>
+
+	<animation id="edgarThenItIs_end" endtime="0" default="default terraMoveUp_end_default edgarLockTrapped_end">
+		<group selector="#edgar">
+			<keyframe starttime="0" class="standingRight"></keyframe>
+		</group>
+	</animation>
+	
+	<animation id="edgarHereWeCome" endtime="2000" default="default terraMoveUp_end_default">
+		<group selector="#edgar">
+			<keyframe starttime="0" class="standingLeft"></keyframe>
+			<keyframe starttime="500" class="walkingLeft"></keyframe>
+			<keyframe starttime="1500" class="standingLeft"></keyframe>
+		</group>	
+		<group selector="#edgarContainer">
+			<keyframe starttime="0" class="edgarMoveLeft_end"></keyframe>
+			<keyframe starttime="500" transition_class="edgarMoveToWheel_trans" class="edgarMoveToWheel"></keyframe>
+			<keyframe starttime="1500" class="edgarMoveToWheel_end"></keyframe>
+		</group>
+	</animation>
+
+	<animation id="edgarHereWeCome_end" endtime="0" default="default terraMoveUp_end_default">
+		<group selector="#edgar">
+			<keyframe starttime="0" class="standingLeft"></keyframe>
+		</group>	
+		<group selector="#edgarContainer">
+			<keyframe starttime="0" class="edgarMoveToWheel_end"></keyframe>
+		</group>
+	</animation>
+	
+	<animation id="falconFliesAway" endtime="3000" default="default terraMoveUp_end_default edgarHereWeCome_end">
+		<group selector="#falcon">
+			<keyframe starttime="0" class=""></keyframe>
+			<keyframe starttime="1200" transition_class="falconFliesAway_trans" class="falconFliesAway"></keyframe>
+			<keyframe starttime="3200" class="falconFliesAway_end"></keyframe>
+		</group>
+	</animation>
+</scene>

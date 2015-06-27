@@ -1,0 +1,58 @@
+<!-- Todo- Add test to make sure the _expected_scene and _expected_page work correctly -->
+<config devTools="true" perspective="MobilePerspective">
+	<characters>
+		<character name="Travis" defaultCharacter="true" startPage="true" />
+		<character name="Farse" />
+	</characters>
+	
+	<decisionvars>
+		<variable name="currentTimeStageTest" value="0000-00-00 01:11:11" ></variable>
+		<variable name="currentCharacterStageTest" value="testy" ></variable>
+		<variable name="currentLocationNameStageTest" value="" ></variable>
+		<variable name="currentSceneNameStageTest" value="startStageTest" ></variable>
+		<variable name="currentPageNameStageTest" value="pageStart" ></variable>
+
+		<variable name="previousLocationNameStageTest" value="" ></variable>
+		<variable name="previousSceneNameStageTest" value="" ></variable>
+		<variable name="previousPageNameStageTest" value="" ></variable>
+				
+		<variable name="activeStages" value="defaultStage,stageTestStage" ></variable>
+		<variable name="stageTestStage" value='
+					{
+						"pageContent":"#main #stageTest",
+						"currentCharacter":"currentCharacterStageTest",
+						"currentSceneName":"currentSceneNameStageTest",
+						"previousSceneName":"previousSceneNameStageTest",
+						"currentPageName":"currentPageNameStageTest",
+						"previousPageName":"previousPageNameStageTest",
+						"currentLocationName":"currentLocationNameStageTest",
+						"previousLocationName":"previousLocationNameStageTest",
+						"currentTime":"currentTimeStageTest"
+					}
+		' />
+	</decisionvars>
+
+	<scenes>
+		<scene name="start">
+		  <page id="pageStart">
+			<content>
+                <p>Start scene pageContent</p>
+            </content>
+		  </page>
+		</scene>
+		
+		<scene name="startStageTest">
+		  <page id="pageStart">
+			<content>
+                <p>Start scene stageTest</p>
+            </content>
+		  </page>
+		</scene>
+	</scenes>
+
+	<locations>
+	</locations>
+
+	<diagrams>
+	</diagrams>
+</config>
