@@ -200,9 +200,9 @@ function parseXml(text_xml){
 	if(params["SoundMediaPath"] != null){
 		setDV("SoundMediaPath",params["SoundMediaPath"])
 	}
-	
-	if(DVS["SoundMediaPath"] == undefined){
-		setDV("SoundMediaPath","")
+
+	if(params["multiplayerUserId"] != null){
+		setDV("multiplayerUserId",params["multiplayerUserId"])
 	}
 	
 	if(checkDecisionVarI("disableDialog", "true")){
@@ -230,10 +230,10 @@ function parseXml(text_xml){
 	
 	start();
 	
-	/*todo
-	 else{
-		multiplayerWaiting()
-	}*/
+	if(DVS['multiplayerMode'] == "true"){
+		//We're in multiplayer mode
+		setInterval(function(){multiplayerQueueGet()},5000)
+	}
 }
 
 function handleDVDefaults(){
@@ -381,13 +381,16 @@ function loadScene(name, pageName){
 }
 
 var clickLock = false
-function decisionClicked(index){
+function decisionClicked(theThis, index){
 	if(clickLock){
 		return
 	}else{
 		clickLock = true
 	}
 	
+	//Todo - Find Stage Name
+	loadStage($(theThis).closest(".stage").attr("stage_name"))
+
 	var decision = jCurrentPage.find("> decisions > decision")[index];
 	
 	if($(decision).attr("calculate_duration") != undefined){
@@ -448,7 +451,7 @@ function generatePage(){
 				divId = "id='" + $(v).attr("id") + "'"
 			}
 
-        	output = output + "<div " + divId + " class='decisionBtn' onclick='decisionClicked(" + tally + 
+        	output = output + "<div " + divId + " class='decisionBtn' onclick='decisionClicked(this," + tally + 
         								")' >" + $(this).attr("label") + "</div>";
 		}
 		tally++;
@@ -1070,34 +1073,45 @@ function sendErrorReport(){
 ////////////////////////////////////////////////
 // Multiplayer
 ////////////////////////////////////////////////
+var multiplayerPostQueue = ""
+var ajaxRequestPending = false
+//todo - check for "failure:" on url requests
 
-function multiplayerDispatch(){
-	window.parent()
+function multiplayerQueuePost(theValue){
+	$.ajax({
+		type: "POST",
+		async: false,
+		url: DVS['multiplayerQueuePostURL'] 
+				+ "?user_id=" + DVS['multiplayerUserId'],
+		dataType: "text",
+		success: function(){},
+		error: function(){console.log("multiplayerQueuePost ajax failure.")},
+		data:{value:theValue}
+	});
 }
 
-function multiplayerEvent(scene, page){
-	//Todo fix currentTime for multiple stages
-	/*currentTimeVar = $(decisionVars).find('> variable:[name="currentTime"]');	
-	
-	updateTimeDiv();
-	
-	//Todo need to fix for currentStage
-	currentSceneVar = $(xml).find("config > decisionvars > variable:[name='currentSceneName']");
-
-	currentPageVar = $(xml).find("config  > decisionvars > variable:[name='currentPageName']");
-	
-	currentSceneVar.attr("value", scene);
-	currentPageVar.attr("value", page);
-	
-	loadScene(currentSceneVar.attr("value"), currentPageVar.attr("value"))	
-	*/
+function multiplayerQueueGet(){
+	$.ajax({
+		type: "GET",
+		async: false,
+		url: DVS['multiplayerQueueGetURL'] + "?user_id=" + DVS['multiplayerUserId'],
+		dataType: "text",
+		success: function(text){
+			console.log(text)
+		},
+		error: function(){console.log("multiplayerQueueGet ajax failure.")}
+	});
 }
 
-function multiplayerWaiting(){
-	$(currentStage.pageContent).html("<h1>Waiting</h1>")
-	//todo $("#nextPageBtn").css("display", "none");
-	//todo $("body").attr("sound", "false")
-	$("#linkToWiki").css("display", "none");
+function multiplayerQueueClear(){
+	$.ajax({
+		type: "GET",
+		async: false,
+		url: DVS['multiplayerQueueClearURL'] + "?user_id=" + DVS['multiplayerUserId'],
+		dataType: "text",
+		success: function(){},
+		error: function(){console.log("multiplayerQueueClear ajax failure.")}
+	});
 }
 
 ////////////////////////////////////////////////
@@ -1284,9 +1298,9 @@ function setDV(name, value){
 		valString = " value='" + value + "'"
 	}
 	
+	var dvXml = "<variable name='" + name + "' " + valString + "/>"
 	if(dv.length == 0){
-		$(dVars).append(
-				$("<variable name='" + name + "' " + valString + "/>"));
+		$(dVars).append($(dvXml));
 	}else if(value != undefined){
 		dv.attr("value", value)	
 	}
@@ -1299,6 +1313,11 @@ function setDV(name, value){
 	}
 
 	WriteDecisionVarsToLocalStorage()
+
+
+	if(DVS['multiplayerMode'] == "true" && !isDefaultValue(name)){
+		multiplayerQueuePost(dvXml)
+	}
 }
 
 function loadDecisionVars(container){	
@@ -1417,6 +1436,15 @@ function checkDecisionVarI(name, value){
 ////////////////////////////////////////////////
 // Util
 ////////////////////////////////////////////////
+function isDefaultValue(name){
+	if($("#decisionVars_defaults_snippet > variable[name='" 
+										+ name + "']").length > 0){
+		return true										
+	}else{
+		return false
+	}
+}
+
 function rgbToHex(r, g, b) {
 	if (r > 255 || g > 255 || b > 255)
 		throw "Invalid color component";

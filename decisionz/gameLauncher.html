@@ -110,11 +110,13 @@
 			<canvas id="backgroundClickMatteCanvas"></canvas>
 			<img id="backgroundImage"></img>
 			<img id="backgroundClickMatte" onload="matteLoaded()" onclick="matteClicked(this)"></img>
-			<div id="pageContainer" class="stage"></div>
+			<div id="pageContainer" >
+				<div id="pageContent" stage_name="defaultStage" class="stage"></div>
+			</div>
 		</div>
 
 		<!--Todo- figure out where this should go-->
-		<div id="stageTest" class="stage"></div>
+		<!--<div id="stageTest"  stage_name="stageTestStage" class="stage"></div>-->
 	</div>
 
 	<div id="snippets">
@@ -129,6 +131,9 @@
 			<variable name="log"></variable>
 			<variable name="remotePageContentURL" value="" ></variable>
 			<variable name="narrationAudio" value="false" ></variable>
+			<variable name="narrationLog" value="" ></variable>
+			
+			<variable name="SoundMediaPath" value="" ></variable>
 			<variable name="music" value="false" ></variable>
 
 			<variable name="currentTime" value="0000-00-00 00:00:00" ></variable>
@@ -159,7 +164,12 @@
 							}
 			' ></variable>
 
-
+			<variable name="multiplayerMode" value="false" ></variable>
+			<variable name="multiplayerWaitOn" value="" ></variable>
+			<variable name="multiplayerQueueGetURL" value="http://decisionz.org/multiplayerQueueGet.php" ></variable>
+			<variable name="multiplayerQueuePostURL" value="http://decisionz.org/multiplayerQueuePost.php" ></variable>
+			<variable name="multiplayerQueueClearURL" value="http://decisionz.org/multiplayerQueueClear.php" ></variable>
+			<variable name="multiplayerUserId" value="test1" ></variable>
 		</div>
 	</div>
 	<div id="xml"></div>
