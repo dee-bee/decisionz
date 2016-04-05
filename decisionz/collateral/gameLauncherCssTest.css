@@ -170,7 +170,7 @@ button{
 
 body{
     overflow-x: hidden;
-    background-color: black;
+    background-color: blue;
     color: grey;
     font-family: Times New Roman;
 }
@@ -552,6 +552,16 @@ body[debug='true'] #backgroundClickMatte{
     /* opacity: 1; */
     width: 800px;
     /* z-index: 10; */
+}
+
+#stageTest{
+    background-color: rgb(187, 124, 135);
+	
+    width: 400;
+    color: white;
+    padding: 20px;
+    position: absolute;
+    top: 229px;
 }
 
 #clickGuard{

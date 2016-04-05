@@ -35,10 +35,10 @@
 		<variable name="previousSceneNameStageTest" value="" ></variable>
 		<variable name="previousPageNameStageTest" value="" ></variable>
 				
-		<variable name="activeStages" value="defaultStage,stageTestStage" ></variable>
-		<variable name="stageTestStage" value='
+		<variable name="activeStages" value="defaultStage,stage2Stage" ></variable>
+		<variable name="stage2Stage" value='
 					{
-						"pageContent":"#main #stageTest",
+						"pageContent":"#main #stage2",
 						"currentCharacter":"currentCharacterStageTest",
 						"currentSceneName":"currentSceneNameStageTest",
 						"previousSceneName":"previousSceneNameStageTest",

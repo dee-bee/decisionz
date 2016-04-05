@@ -119,7 +119,7 @@
 
         <!-- ////////// Cabin ////////////  -->
         <scene name="intro_map_Cabin" scenetype="SimpleDialogBuilder" musicPlayThrough="true"
-                click_matte="map_Cabin">
+                background="map_Cabin">
             <decisionvar name="id_intro_map_Cabin" value="true"/>
             
             <floatNotification name="floatNotification_meet_farse_security_room" 
@@ -339,9 +339,9 @@
             </scenecondition>
         </location>
     </locations>
-    <decisionvarSets>
-        <decisionvarSet name="sergentFarseIntroMissed">
+    <decisionvarsets>
+        <decisionvarset name="sergentFarseIntroMissed">
             <decisionvar name="sergentFarseIntroMissed" value="true"/>
-        </decisionVarSet>
-    </decisionVarSets>
+        </decisionvarset>
+    </decisionvarsets>
 </config>

@@ -1,0 +1,134 @@
+<config>
+	<decisionvars>
+	</decisionvars>
+	<shared>
+		<page id="pageTestGlobal" nextpage="pageTestCompleted">
+			<content>
+				<p>Global page loaded. Next should take you to page loading
+					test completion page.</p>
+			</content>
+		</page>
+
+        <content id="sharedTest">
+		
+        </content>
+    </shared>
+
+	<scenes>
+		<scene name="start">
+			<page id="pageStart" nextpage="pageTestLocation">
+				<content>
+					<p>Scene page loaded. Next should take you to a Location Page.</p>
+				</content>
+			</page>
+			
+			<page id="pageTestCompleted" nextpage="pageStartDynamic">
+				<content>
+					<p>Page loading test completed. Onto dynamic page testing.
+						On the first trip to pageStartDynamic you should see
+						"Page top loaded". </p>
+				</content>
+			</page>
+			
+			<page id="pageStartDynamic" nextpage="setIntroLoadedDV">
+				<content>
+					<p> Page top loaded.</p>
+					<dynamic>
+						<condition name="nr_setIntroLoadedDV">
+						</condition>
+						<content>
+							Now go to the next page. It will set a decisionvar
+							, then it will route you back here. You should see the middle content
+							and this content should not show.
+						</content>
+					</dynamic>
+					<dynamic>
+						<condition name="nr_setIntroLoadedDV" value="true">
+							<condition name="nr_upStairs"/>
+						</condition>
+						<content>
+							Intro var detected. A decision should now be available to "Head up the stairs" 
+						</content>
+						<decisions>
+							<decision label="Head up the stairs" nextpage="upStairs">
+							</decision>
+						</decisions>
+					</dynamic>
+					<dynamic>
+						<condition name="nr_upStairs" value=""/>
+						<content>
+							You headed up the stairs and back down. Now you should see the decision
+							to "Set time to 1". If you haven't already clicked it, then do so now.
+							Below, the time should output if it is set
+							<dynamic>
+								<condition name="nr_setTime1" value=""/>
+								<content>
+									<p>The time is <print dvname='currentTime'></print></p>
+
+									<p>The day is 
+
+									<print js='currentTime'>
+										<script>
+											<![CDATA[
+												//todo - print out day
+											]]>
+										</script>
+									</print></p>
+
+									<decision label="Set time to noon" nextpage="setTimeNoon">
+									</decision>
+								</content>
+								
+							</dynamic>
+						</content>
+					</dynamic>
+				</content>
+				<decisions>
+					<decision label="Set time to 1" nextpage="setTime1">
+						<condition name="nr_setTime1">
+							<condition name="nr_upStairs" value=""/>
+						</condition>
+					</decision>
+				</decisions>
+			</page>
+
+			<page id="setIntroLoadedDV" nextpage="pageStartDynamic">
+				<decisionvar name="nr_setIntroLoadedDV" value="true" />
+				<content>
+					<p>Intro DV loaded, click next to go back to the prior page.</p>
+				</content>
+			</page>
+
+			<page id="setTime1" nextpage="pageStartDynamic">
+				<decisionvar name="currentTime" value="0000-00-00 13:00:00" />
+				<decisionvar name="nr_setTime1" value=""/>
+				<content>
+					<p>Time set to 1</p>
+				</content>
+			</page>
+
+			<page id="setTimeNoon" nextpage="pageStartDynamic">
+				<decisionvar name="currentTime" value="0000-00-00 12:00:00" />
+				<content>
+					<p>Time set to Noon</p>
+				</content>
+			</page>
+			
+			<page id="upStairs" nextpage="pageStartDynamic">
+				<decisionvar name="nr_upStairs" value=""/>
+				<content>
+					<p>You headed up the stairs. Time to head back down.</p>
+				</content>
+			</page>
+		</scene>
+	</scenes>
+	<locations>
+		<location name="start">
+			<page id="pageTestLocation" nextpage="pageTestGlobal">
+				<content>
+					<p>Location page loaded. Next should take you to a Global Page.</p>
+				</content>
+			</page>
+		</location>
+	</locations>
+</config>

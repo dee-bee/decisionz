@@ -83,6 +83,30 @@ function generateESpeakScript(){
 	});
 }
 
+function rgbToHex(r, g, b) {
+	if (r > 255 || g > 255 || b > 255)
+		throw "Invalid color component";
+	return ((r << 16) | (g << 8) | b).toString(16);
+}
+
+//Check for undefined or blank
+//Todo add object keys support
+function uob(value){
+    if(value == undefined){
+        return true
+    }
+
+    if(value.length == 0){
+        return true
+    }
+
+    return false
+}
+
+////////////////////////////////////////////////
+// Time
+////////////////////////////////////////////////
+
 function Timer(callback, delay) {
     var timerId, start, remaining = delay;
 
@@ -98,4 +122,69 @@ function Timer(callback, delay) {
     };
 
     this.resume();
+}
+
+var TICKS_PER_SEC = 1000;
+var TICKS_PER_MIN = 60 * TICKS_PER_SEC;
+var TICKS_PER_HOUR = 60 * TICKS_PER_MIN;
+var TICKS_PER_DAY = 24 * TICKS_PER_HOUR;
+
+var iso = /^(\d{4})-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/;
+
+function calculateTicksFromTimeString(timeString){
+	var timeParts = timeString.match(iso);
+	var timeTicks = (timeParts[DAY_INDEX] * TICKS_PER_DAY) + 
+							(timeParts[HOUR_INDEX] * TICKS_PER_HOUR)+ 
+							(timeParts[MIN_INDEX] * TICKS_PER_MIN)+ 
+							(timeParts[SEC_INDEX] * TICKS_PER_SEC);
+	return timeTicks;
+}
+
+function calculateTimeStringFromTicks(timeTicks){
+	//Days
+	var days =  Math.floor(timeTicks/TICKS_PER_DAY);
+	timeTicks -= (days * TICKS_PER_DAY);
+
+	//Hours
+	var hours =  Math.floor(timeTicks/TICKS_PER_HOUR);
+	timeTicks -= (hours * TICKS_PER_HOUR);	
+	
+	//Mins
+	var mins =  Math.floor(timeTicks/TICKS_PER_MIN);
+	timeTicks -= (mins * TICKS_PER_MIN);	
+	
+	//Seconds
+	var sec =  Math.floor(timeTicks/TICKS_PER_SEC);
+	timeTicks -= (sec * TICKS_PER_SEC);	
+
+	var timeString = "0000-00-";	
+
+	if(days < 10){
+		timeString += "0" + days;
+	}else{
+		timeString += days;
+	}
+	timeString += " ";
+
+	if(hours < 10){
+		timeString += "0" + hours;
+	}else{
+		timeString += hours;
+	}
+	timeString += ":";
+
+	if(mins < 10){
+		timeString += "0" + mins;
+	}else{
+		timeString += mins;
+	}
+	timeString += ":";
+	
+	if(sec < 10){
+		timeString += "0" + sec;
+	}else{
+		timeString += sec;
+	}	
+	
+	return timeString;
 }

@@ -3,7 +3,7 @@
 	<link href="spriteSheets/Terra.css" rel="stylesheet" type="text/css"></link>
 	<link href="spriteSheets/Falcon.css" rel="stylesheet" type="text/css"></link>
 
-	<link href="animations/falconTerraEdgarDecideToRescueLocke.css" rel="stylesheet" type="text/css"></link>
+	<link href="animations/falconTerraEdgarDecideToRescueLocke_transistions.css" rel="stylesheet" type="text/css"></link>
 
 	<div id="animContainer">
 		<div id="dialogBox">
@@ -25,5 +25,5 @@
 			</div>
 		</div>
 	</div>
-	<div id="pageContent" stage_name="defaultStage" class="stage"></div>
+	<div id="pageContent"></div>
 </div>

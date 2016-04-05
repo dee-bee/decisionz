@@ -1,0 +1,75 @@
+<!-- Todo- Add test to make sure the _expected_scene and _expected_page work correctly -->
+<config devTools="true" perspective="MobilePerspective">
+	<decisionvars>
+		<variable name="currentTime" value="0000-00-00 15:30:00"/>
+		<variable name="multiplayerMode" value="true" ></variable>
+		<variable name="currentCharacter" value="Player1" ></variable>
+	</decisionvars>
+
+	<scenes>
+		<scene name="start">
+			<page id="pageStart" type="pageForward">
+				<pagecondition nextpage="pageStart_Player1">
+					<condition name="currentCharacter" value="Player1">
+					</condition> 
+				</pagecondition>
+				<pagecondition nextpage="pageStart_Player2">
+					<condition name="currentCharacter" value="Player2">
+					</condition> 
+				</pagecondition>
+			</page>
+			
+			<page id="pageStart_Player1" nextpage="page2_Player1">
+				<content>
+					start:pageStart Player1 knocks on the door
+				</content>
+			</page>
+
+			<page id="page2_Player1">
+				<decisionvar name="multiplayerWaitingOn" value="doorUnlocked,true,start:player1CanOpensDoor:"/>
+				<content>
+					page2:pageStart Player1. Waiting for player2 to unlock the door.
+				</content>
+			</page>
+
+			<page id="player1CanOpensDoor" >
+				<content>
+					Player1 hears a click and can now open the door
+				</content>
+				<decisions>
+					<decision label="Player1 Opens Door" nextpage="player1OpensDoor"></decision>
+				</decisions>
+			</page>
+
+			<page id="player1OpensDoor" >
+				<decisionvar name="player1OpensDoor" value="true"/>
+				<content>
+					Player1 meets Player2. Travis exclaims "Bernard, I need to talk with you".
+				</content>
+			</page>
+
+			<page id="pageStart_Player2">
+				<content>
+					start:pageStart Player2 hears a knock on the door.
+				</content>
+				<decisions>
+					<decision label="Unlock the door for Player1" nextpage="player2UnlocksTheDoor"></decision>
+				</decisions>
+			</page>
+
+			<page id="player2UnlocksTheDoor">
+				<decisionvar name="doorUnlocked" value="true"/>
+				<decisionvar name="multiplayerWaitingOn" value="player1OpensDoor,true,start:player1OpensDoor:"/>
+				<content>
+					Player2 unlocked the door. Waiting for Player1 to come in. 
+				</content>
+			</page>
+			
+		</scene>
+	</scenes>
+	<locations>
+	</locations>
+
+	<diagrams>
+	</diagrams>
+</config>

@@ -1,18 +1,3 @@
-//todo 
-//- change function first letter to indicate self contained functions
-//- Figure out the intricacies of currentSceneName, currentLocationName, etc
-//- Figure out what to do with currentLocationName
-//- Add item support
-//- Add image support
-//- Add video support
-//- Add multi-character support
-//- What to do with gameStartScene
-//- Add multi-player support
-//- Add currentFrame support - Which will allow for multiple pages to run at the same time.
-//done - Add code to give default values to undefined but neccessary dvs
-//- Classify the DV functions (not neccessarly, just figure out the best way)
-//done - localStorage should support multiple configs simultaniously
-
 //var params;
 var configXmlFilename = "configs/sandbox.xml";
 var xml;
@@ -21,7 +6,6 @@ var DVS = []
 
 var jCurrentScene
 var jCurrentPage
-var jCurrentCharacter
 
 var sceneReturnObj
 var matchFound = false
@@ -40,7 +24,7 @@ var classimation1 = new Classimation()
 
 var currentStage = {
 	pageContent:"#main #pageContent",
-	currentCharacter:"currentCharacter",
+	currentCharacter:"currentCharacter", //todo - need to expand on this for multiplayer support
 	currentSceneName:"currentSceneName",
 	previousSceneName:"previousSceneName",
 	currentPageName:"currentPageName",
@@ -56,7 +40,9 @@ alert = function(mesg) {
 	origAlert(mesg)
 }
 
+var x2js = new X2JS()
 
+var configAlreadyLoaded = false
 
 $(document).ready(function () {	
 	//Todo need to fix this
@@ -74,41 +60,25 @@ $(document).ready(function () {
 	matteCanvas = document.getElementById("backgroundClickMatteCanvas")
 	canvasContext = matteCanvas.getContext('2d');
 	jBody = $("body")
-	$(document).mousemove(
-				function(e) {
-					var now = Date.now()
-					if(lastDate + 100 > now){
-						//console.log("date filtered")
-						return
-					}else{
-						lastDate = now
-						//console.log("date passed")
-					}
+	$(document).mousemove(clickMatte_mouseMove)
 
-					mouseX = e.pageX - jContentContainer.offset()['left'];
-					mouseY = e.pageY - jContentContainer.offset()['top'];
-
-					var p = canvasContext.getImageData(mouseX, mouseY, 1, 1).data;
-					
-					if(p[3] != 0){
-						jBody.css("cursor", "pointer")
-						//console.log(mouseX + ":" + mouseY)
-					}else{
-						jBody.css("cursor", "")
-
-					}
-				})
-
+	//Todo make this a hiearchy of loading css's based on json
 	if(params["css"] != undefined){
-		loadjscssfile(params["css"], "css")
+		var cssArr = unescape(params["css"]).split(",")
+
+		for(var i=0; i< cssArr.length; i++){
+			loadjscssfile(cssArr[i], "css")
+		}
 	}else{
 		loadjscssfile("css/gameLauncher.css", "css")
 	}
+
 
 	if(params["debug"] != undefined){
 		$("body").attr("debug", "true")
 	}
 
+	//todo - make sure this works with overridden localStorageName param
 	if(params["configXmlFilename"] != null){
 		if(params["databaseConfig"] != null){
 			configXmlFilename = "config.php?config=" + params["configXmlFilename"];	
@@ -123,18 +93,43 @@ $(document).ready(function () {
 	loadGame();
 });
 
+var disableCompression = true
+
 function loadGame(){
-	if(localStorage.decisionz == undefined){
-		localStorage.decisionz = "{}";
+	if(localStorage.decisionz == undefined || localStorage.decisionz.length == 0){
+		if(disableCompression){
+			localStorage.decisionz = "{}"
+		}else{
+			localStorage.decisionz = LZString.compress("{}")			
+		}
 	}
 	
-	var jsonDecisionz = JSON.parse(localStorage.decisionz);
+	var jsonDecisionz
+	if(disableCompression){
+		try{
+			jsonDecisionz = JSON.parse(localStorage.decisionz)
+		} catch(e){
+			alert("JSON decode on localStorage failed with disableCompression set." +
+					"Maybe localStorage is compressed?")
+		}
+	}else{
+		jsonDecisionz = JSON.parse(LZString.decompress(localStorage.decisionz))		
+	}
+
 
 	//If decisionz localStorage isn't empty then load from it
 	//Othewise attempt to load from config file
-	if(jsonDecisionz[configXmlFilename] != undefined){
+	if(params['localStorageName'] != undefined){
+		if(jsonDecisionz[params['localStorageName']] != undefined){
+			configAlreadyLoaded = true
+			parseXml(jsonDecisionz[params['localStorageName']])
+		}
+	}else if(jsonDecisionz[configXmlFilename] != undefined){
+		configAlreadyLoaded = true
 		parseXml(jsonDecisionz[configXmlFilename])
-	}else{
+	}
+
+	if(!configAlreadyLoaded){
 		//Load config
 		$.ajax({
 		    type: "GET",
@@ -155,31 +150,37 @@ function parseXml(text_xml){
 	xml = ( new window.DOMParser() ).
 				parseFromString(text_xml, "text/xml")
 
+	decisionVars = $(xml).find("config > decisionvars")
+
+	if(decisionVars.length == 0){
+		//This config file has no decisionVars tag, so create it
+		$(xml).find("config").append($("<decisionvars></decisionvars>"))
+		decisionVars = $(xml).find("config > decisionvars")
+	}
+
 	convertXMLtoNewFormat()
 	
 	//todo move this to a function so that we can specify levels of decisionvars
-	decisionVars = $(xml).find("config > decisionvars");
+	
 	
 	updateDVS()	
 
 	handleDVDefaults()
 
-	updateDVS()	
+	//Load dv_ url params
+	//Todo - Add JSON support
+	var paramsKeys = Object.keys(params)
 	
-
-	/*if(params["character"] != null){
-		var currentCharacterName = params["character"].toLowerCase();
-		jCurrentCharacter = $(xml).find("> characters > character").filter(function() {
-									    return $(this).attr("name").toLowerCase() == currentCharacterName;
-									});
-	}else{
-		var currentCharacterName = DVS[currentStage.currentCharacter]
-		jCurrentCharacter = $($(xml).find("> characters > character[name='" + currentCharacterName + "']")[0])
-		
-		jCurrentCharacter = $(xml).find("> characters > character").filter(function() {
-									    return $(this).attr("name").toLowerCase() == currentCharacterName;
-									});
-	}*/
+	if(!configAlreadyLoaded){ //Config was not loaded from localStorage
+		for(var i=0; i < paramsKeys.length; i++){
+			var key = paramsKeys[i]
+			if(key.substr(0,"dv_".length) == "dv_"){
+				//This param is used to set a decision var
+				console.log("DV url parm found:" + key)
+				setDV(key.substr("dv_".length, key.length), params[key])
+			}
+		}
+	}
 	
 	if(checkDecisionVarI("music", "true")){
 		$("body").attr("music", "true")
@@ -204,19 +205,21 @@ function parseXml(text_xml){
 	if(params["multiplayerUserId"] != null){
 		setDV("multiplayerUserId",params["multiplayerUserId"])
 	}
+
+	if(params["multiplayerSessionId"] != null){
+		setDV("multiplayerSessionId",params["multiplayerSessionId"])
+	}
 	
+	if(params['currentCharacter'] != undefined){
+		setDV("currentCharacter",params["currentCharacter"])
+	}	
+
 	if(checkDecisionVarI("disableDialog", "true")){
 		$("body").attr("disableDialog", "true")
 		$("#checkbox_disableDialog").attr("checked", "checked")
 	}else{
 		$("#checkbox_disableDialog").removeAttr("checked")
 	}
-	
-	/*if(jCurrentCharacter.attr("start")!= null &&
-			DVS[currentStage.currentSceneName] == undefined){
-		setDV(currentStage.currentSceneName,jCurrentCharacter.attr("start"))
-		setDV(currentStage.currentPageName,"pageStart")
-	}*/
 
 	
 	loadBookmarksList()
@@ -232,34 +235,9 @@ function parseXml(text_xml){
 	
 	if(DVS['multiplayerMode'] == "true"){
 		//We're in multiplayer mode
-		setInterval(function(){multiplayerQueueGet()},5000)
+		multiplayerQueueClear()
+		setInterval(function(){multiplayerLoop()},5000)
 	}
-}
-
-function handleDVDefaults(){
-	//loop through decisionVars_defaults_snippet
-	$("#decisionVars_defaults_snippet").find("> variable").each(function(i,v){
-		if(DVS[$(v).attr("name")] == undefined && $(v).attr("value") != undefined){
-			//If dv is not present and there is a default 
-			//  value then create the dv and set the value
-			setDV($(v).attr("name"), $(v).attr("value"))
-		}
-
-		if($(v).attr("undefined_error") != undefined){
-			//If a dv has undefined_error attr then show dialog if not found or length 0
-			if(DVS[$(v).attr("name")] == undefined){
-				alert("DV undefined_error: " + $(v).attr("name"))
-				return
-			}		
-		}
-
-		if($(v).attr("zero_length_error") != undefined){
-			if(undefinedOrNoLength(DVS[$(v).attr("name")])){
-				alert("DV zero_length_error: " + $(v).attr("name"))
-				return
-			}
-		}
-	})
 }
 
 function start(){ 
@@ -283,10 +261,14 @@ function start(){
 	})
 }
 
+////////////////////////////////////////////////
+// Page Loading
+////////////////////////////////////////////////
 function loadLocation(name){
 	//loop through all scene condtions until you find a match or use the default
 	matchFound = false;
 	
+	//Todo do we need the ":" after "location:"?
     var locationTag = $(xml).find("config > locations > location:[name='" + name + "']");
     
 	setDV(currentStage.previousLocationName, DVS[currentStage.currentLocationName])
@@ -354,15 +336,20 @@ function loadScene(name, pageName){
 			loadIFrame(jCurrentScene.attr("loadIFrameTemplate"))
 		}
 
-		if(!undefinedOrNoLength(jCurrentScene.attr("click_matte"))){
+		if(!uob(jCurrentScene.attr("click_matte"))){
 			$("#backgroundImage").removeClass("hidden")
 			$("#backgroundClickMatte").removeClass("hidden")
 			loadClickMatte(jCurrentScene.attr("click_matte"))
-		}else if(!undefinedOrNoLength(jCurrentScene.attr("scenetype"))
+		}else if(!uob(jCurrentScene.attr("scenetype"))
 					&& jCurrentScene.attr("scenetype") == "SimpleClickMatte"){
 			$("#backgroundImage").removeClass("hidden")
 			$("#backgroundClickMatte").removeClass("hidden")
 			loadClickMatte(jCurrentScene.attr("name"))
+		}else if(!uob(jCurrentScene.attr("background"))){
+			$("#backgroundImage").attr("src","scenes/" 
+											+ jCurrentScene.attr("background") 
+											+ "/background.png")
+			$("#backgroundImage").removeClass("hidden")
 		}else{
 			$("#backgroundImage").addClass("hidden")
 			$("#backgroundClickMatte").addClass("hidden")
@@ -380,70 +367,95 @@ function loadScene(name, pageName){
 	}
 }
 
-var clickLock = false
-function decisionClicked(theThis, index){
-	if(clickLock){
-		return
-	}else{
-		clickLock = true
-	}
-	
-	//Todo - Find Stage Name
-	loadStage($(theThis).closest(".stage").attr("stage_name"))
-
-	var decision = jCurrentPage.find("> decisions > decision")[index];
-	
-	if($(decision).attr("calculate_duration") != undefined){
-		//Find route duration
-		addDurationToCurrentTime(
-			calculateRouteDuration($(decision).attr("calculate_duration"))
-		)
-	}else if($(decision).attr("duration") != undefined){
-		addDurationToCurrentTime($(decision).attr("duration"))
-	}
-	
-	//todo - append doesn't seem to work on IOS with xml
-	//jDV("narrationLog").append("<p> You chose: " + $(decision).attr("label") +  "</p>\n")
-	
-	jDV("narrationLog").html(jDV("narrationLog").html() + "\n<p class='youChose' decision_index='" + index + "'> You chose: " + $(decision).attr("label") +  "</p>\n")
-	
-	$("#narrationLog").empty().append($(jDV("narrationLog").html()))
-	
-	if($(decision).attr("onclick") != undefined){
-		$(currentStage.pageContent).html("");
-		eval($(decision).attr("onclick"))
-	}
-	
-	if($(decision).attr("nextpage") != undefined){
-		loadPage($(decision).attr("nextpage"));
-	}else if($(decision).attr("location")){
- 		loadLocation($(decision).attr("location"));	
-	}	
-	
-	clickLock = false
-}
-
 function remotePageContent(text){
 	//alert(html);
 	jCurrentPage.find("> content").empty().append($(text.replace(/[\[][\[].*[\]][\]]/g,"")));
 	generatePage();
 }
 
+function recursiveGenerateDynamicContent(jContentTag, jDecisionsTag){
+	//loop through dynamics
+	jContentTag.find("> dynamic").each(function(i,v){
+		if(checkConditions($(v))){
+			//conditions match
+			
+			var jDecisions = $(v).find("> decisions")
+
+			if(jDecisions.length > 1){
+				alert("Multiple decisions nodes found")				
+			}else if(jDecisions.length == 1){
+				//move the decisions to the jDecisionsTag
+				jDecisionsTag.append(jDecisions.html())
+				jDecisions.remove()
+			}
+
+			//replace the dynamic node with the content 
+			//Todo - Can't replaceWith the node. some sort of issue'
+			var jContent = $(v).find("> content").clone()
+			var jParent = $(v).parent()
+			//$(v).replaceWith(jContent)
+			$(v).remove()
+			jParent.append(jContent)
+
+			//recurse into dyanamic > content
+			recursiveGenerateDynamicContent(jContent, jDecisionsTag)
+		}else{
+			//no match so remove the node
+			$(v).remove()
+		}
+	})
+}
+
+function handleDynamicContent(jPage){
+	var jContentTag = jPage.find("> content")
+	var jDecisionsTag = jPage.find("> decisions")
+
+	recursiveGenerateDynamicContent(jContentTag, jDecisionsTag)
+}
+
+function handlePrintTags(jCurrentTag){
+	//Loop through print tags
+	jCurrentTag.find("print").each(function(i,v){
+		var jV = $(v)
+
+		if(jV.attr("dvname") != undefined){
+			jV.replaceWith(DVS[jV.attr("dvname")])
+		}
+	})
+
+	return jCurrentTag
+}
+
 function generatePage(){
 	//Load local content
 	var output = "";
 	
-	if(jCurrentPage.attr("dontLoadContent") == undefined){
-		jCurrentPage.find("> content *").each(function(){
-		    if(!$(this).hasClass("todo")){
-		    	output += new XMLSerializer().serializeToString(this);
-		    }
-		});
+	//Assign id's to all decisions in page
+	jCurrentPage.find("decisions > decision").each(function(i,v){
+		if($(v).attr("id") == undefined){
+			var rand = Math.random().toString()
+			rand = rand.substr(2,rand.length)
+			$(v).attr("id", rand)
+		}		
+	})
+
+	//Todo - rethink how you're doing the "undefined" tests.
+	//   Instead move to a smarter function to check
+	var jResultPage = jCurrentPage.clone()
+	if(jResultPage.attr("dontLoadContent") == undefined){
+		//Remove the todo sections
+		jResultPage.find(".todo").remove()
+
+		handleDynamicContent(jResultPage)
+		handlePrintTags(jResultPage)
+		output = new XMLSerializer().serializeToString(jResultPage.find("> content")[0])
 	}
 
+	//Todo1 - Think through "dontLoadContent" for conditional content
+
 	//Load decisions
-	var tally = 0;
-	jCurrentPage.find("> decisions > decision").each(function(i,v){
+	//Todo - Handle for decisions in output
+	jResultPage.find("> decisions > decision").each(function(i,v){
         //Check if this decision should be displayed
         if(checkConditions(this)){
 			var divId = ""
@@ -451,25 +463,27 @@ function generatePage(){
 				divId = "id='" + $(v).attr("id") + "'"
 			}
 
-        	output = output + "<div " + divId + " class='decisionBtn' onclick='decisionClicked(this," + tally + 
-        								")' >" + $(this).attr("label") + "</div>";
+        	output = output + "<div " + divId + " class='decisionBtn' onclick='decisionClicked(this,\"" 
+        								+ $(v).attr("id") + 
+        								"\")' >" + $(this).attr("label") + "</div>";
 		}
-		tally++;
 	});
 	
 	//If there's some code here then it may be in a CDATA
 	var narrationLogText = output = output.replace("<![CDATA[", "").replace("]]>", "");
 	
 	//Load the script tag from the page if present
-	var scriptTag = jCurrentPage.find("> script")
+	//Todo - Note: We really need a better strategy for loading javascript blocks.
+	//  Also need to figure out how loadJS/et all work into the big picture.
+	var scriptTag = jResultPage.find("> content > script")
 	if(scriptTag.length > 0){
-		output += "\n<script>\n" + scriptTag.html() + "\n</script>\n"
+		output += "\n<script>\n" + scriptTag.text() + "\n</script>\n"
 	}
 
 	//Load the style tag from the page if present
-	var styleTag = jCurrentPage.find("> style")
+	var styleTag = jResultPage.find("> content > style")
 	if(styleTag.length > 0){
-		output += "\n<style>\n" + styleTag.html() + "\n</style>\n"
+		output += "\n<style>\n" + styleTag.text() + "\n</style>\n"
 	}
 
 	//output page
@@ -483,6 +497,7 @@ function generatePage(){
 	
 	$(currentStage.pageContent).html(output);
 	
+	//Todo - remove this
 	var jNarrationLog = jDV("narrationLog")
 	if(jNarrationLog.length == 0 ||
 		jNarrationLog.html().length == 0){
@@ -508,22 +523,23 @@ function generatePage(){
 
 	$("#narrationLog").empty().append($(jNarrationLog.html()))
 
-	if(jCurrentPage.find("> script")[0] != undefined &&
+	if(jResultPage.find("> content > script")[0] != undefined &&
 			typeof(loadJSAttrSuccess) == "function"){
-		loadJSAttrSuccess($(jCurrentPage.find("> script")[0]).text())
-	}else if(jCurrentPage.attr('loadJS') != undefined){
+		loadJSAttrSuccess($(jResultPage.find("> script")[0]).text())
+	}else if(jResultPage.attr('loadJS') != undefined){
 		var remotePageUrl = ""
 		
-		if(jCurrentPage.attr('loadJS') == ""){
+		//Todo - Handle for loading locally. 
+		if(jResultPage.attr('loadJS') == ""){
 			//Generate the page name automatically
 			remotePageUrl = DVS["remotePageContentURL"] + "?title=JS_" + 
 			    				jCurrentScene.attr("name") +  ":" + 
-			    				jCurrentPage.attr("id");
+			    				jResultPage.attr("id");
 
 		}else{
 			//Generate the page name automatically
 			remotePageUrl = DVS["remotePageContentURL"] + "?title=" + 
-								jCurrentPage.attr('loadJS')
+								jResultPage.attr('loadJS')
 		}
 		
 		$.ajax({
@@ -543,23 +559,24 @@ function generatePage(){
 			WriteDecisionVarsToLocalStorage()
 		}
 
-		if(jCurrentPage.attr("classimation") != undefined){
-			if(jCurrentPage.attr("classimationNextPage") != undefined){
-				classimation1.playAnimation(jCurrentPage.attr("classimation")
-					, function(){loadPage(jCurrentPage.attr("classimationNextPage"))})
+		if(jResultPage.attr("classimation") != undefined){
+			if(jResultPage.attr("classimationNextPage") != undefined){
+				classimation1.playAnimation(jResultPage.attr("classimation")
+					, function(){loadPage(jResultPage.attr("classimationNextPage"))})
 			}else{
-				classimation1.playAnimation(jCurrentPage.attr("classimation"))
+				classimation1.playAnimation(jResultPage.attr("classimation"))
 			}
 		}
 
-		loadMusic(jCurrentPage.attr("music"));
-		loadNarrationAudio(jCurrentScene.attr("name"), jCurrentPage.attr("id"))
+		loadMusic(jResultPage.attr("music"));
+		loadNarrationAudio(jCurrentScene.attr("name"), jResultPage.attr("id"))
 		unpauseAudio()
 	}
 
 }
 
 function generatePage_part2(text){
+	//Todo- do we need this
 	eval(text)
 	
 	//Launch a load function if present
@@ -595,7 +612,9 @@ function loadPage(pageId){
 		return
 
 	setDV(currentStage.previousPageName, DVS[currentStage.currentPageName])
-    setDV(currentStage.currentPageName, pageId)
+    
+    //Clear it out in case the page doesn't exist (click_matte/etc)
+    setDV(currentStage.currentPageName, "")
 
 	//todo wipes out animation if playing
 	//Todo - also update for multiple stages
@@ -603,7 +622,34 @@ function loadPage(pageId){
 	
 	sceneReturnObj = undefined
 	
-	jCurrentPage = jCurrentScene.find("> page:[id='" + pageId + "']");
+	var pageQuery = "> page:[id='" + pageId + "']"
+	console.log(pageQuery)
+	jCurrentPage = jCurrentScene.find(pageQuery);
+	
+	if(jCurrentPage.length == 0){
+		//Try to find the page in the location
+		var locationPageQuery = "config > locations "  
+						+ "> location[name='" + jCurrentScene.attr("name") + "']"
+						+ "> page[id='" + pageId + "']"
+		console.log(locationPageQuery)
+		jCurrentPage = $(xml).find(locationPageQuery)
+		
+		if(jCurrentPage.length == 0){
+			//Try to find as a shared resource
+			var sharedPageQuery = "config > shared "  
+							+ "> page[id='" + pageId + "']"
+			console.log(sharedPageQuery)
+			jCurrentPage = $(xml).find(sharedPageQuery)
+
+			if(jCurrentPage.length == 0){
+				//alert("CurrentPage: " +  pageId + " could not be found.")
+				return;
+			}
+		}
+	}
+
+	//We have a real page so set the dv
+	setDV(currentStage.currentPageName, pageId)
 
 	loadDecisionVars(jCurrentPage);
 
@@ -697,29 +743,6 @@ function handlePageForward(){
     }
     
     return false
-}
-
-function setState(state){
-	switch(state){
-		case "bookmarks":
-			$("body").attr("state", "bookmarks")
-			break;
-		case "main":
-			$("body").attr("state", "main")
-			break;
-		case "dev_mode":
-			$("body").attr("state", "dev_mode")
-			break;
-		case "settings":
-			$("body").attr("state", "settings")
-			break
-		case "set_bookmark":
-			$("#bookmarkName").attr("value", "")
-			$("body").attr("state", "set_bookmark")
-			break;
-	}
-	
-	window.scrollTo(0, 0)
 }
 
 ////////////////////////////////////////////////
@@ -868,7 +891,6 @@ function calculateRouteDuration(locString){
 ////////////////////////////////////////////////
 // Bookmarks
 ////////////////////////////////////////////////
-
 function getBookmark(bk_name){
 	return $(xml).find("config > decisionvars > variable[name='bookmarks'] " +
 											" bookmark[name='" + bk_name + "'] ")
@@ -1031,10 +1053,13 @@ function bookmarkClicked(bk_id){
 function loadGameState(){
 	//Reset game
 	clearLocalStorage()
-	
-	var rootXml = "<root>"
+	$(xml).find("config > decisionvars").empty()
+
+	//var rootXml = "<root>"
 	
 	var gameStateText = $("#errorTextArea").attr("value")
+	var xmlDocStr = x2js.json2xml_str(JSON.parse(gameStateText))
+	/*gameStateText = gameStateText.replace(/["]/g,"'")
 	
 	while(gameStateText.match("^[ ]*[\[][\[].*\n") != undefined){
 		gameStateText = gameStateText.substr(gameStateText.match(".*\n")[0].length, gameStateText.length)
@@ -1046,8 +1071,9 @@ function loadGameState(){
 	})
 	
 	rootXml += "</root>"
-	jRootXml = $(rootXml)
-	loadDecisionVars(jRootXml)
+	jRootXml = $(rootXml)*/
+	
+	loadDecisionVars($(xmlDocStr))
 	
 	setDV("currentBookmark", "")
 	
@@ -1057,15 +1083,20 @@ function loadGameState(){
 }
 
 function sendErrorReport(){
-	var bodyJson = ""
+	var jsonTxt = ""
 	
-	decisionVars.find("> variable[name='log'] > variable").each(function(i,v){
+	/*decisionVars.find("> variable[name='log'] > variable").each(function(i,v){
 		bodyJson += $(v).attr("name") + "=" + $(v).attr("value") + ","
-	})
-	
+	})*/
+
+	var out = new XMLSerializer().serializeToString(decisionVars[0])
+	var jsonObj = x2js.xml_str2json(out)
+	jsonTxt = JSON.stringify(jsonObj)
+	jsonTxt = jsonTxt.replace(/\\n/g, "")
+
     var link = "mailto:danielberm@yahoo.com"
              + "?subject=" + escape("Decisionz Error Report")
-             + "&body=" + bodyJson
+             + "&body=" + jsonTxt
 
     window.location.href = link;
 }
@@ -1077,17 +1108,39 @@ var multiplayerPostQueue = ""
 var ajaxRequestPending = false
 //todo - check for "failure:" on url requests
 
-function multiplayerQueuePost(theValue){
-	$.ajax({
-		type: "POST",
-		async: false,
-		url: DVS['multiplayerQueuePostURL'] 
-				+ "?user_id=" + DVS['multiplayerUserId'],
-		dataType: "text",
-		success: function(){},
-		error: function(){console.log("multiplayerQueuePost ajax failure.")},
-		data:{value:theValue}
-	});
+function multiplayerLoop(){
+	if(!ajaxRequestPending){
+		ajaxRequestPending = true
+		multiplayerQueueGet()
+		multiplayerQueuePost()
+		ajaxRequestPending = false
+	}
+}
+
+function multiplayerAddToPostQueue(value){
+	multiplayerPostQueue += value 
+}
+
+function multiplayerQueuePost(){
+	if(multiplayerPostQueue.length > 0){
+		$.ajax({
+			type: "POST",
+			async: false,
+			url: DVS['multiplayerQueuePostURL'] 
+					+ "?user_id=" + DVS['multiplayerSessionId'],
+			dataType: "text",
+			success: function(text){
+				//Check for failure
+				if(text.substring(0,"failure:".length) == "failure:"){
+					alert("multiplayerQueuePost failed")
+				}else{
+					multiplayerPostQueue = ""
+				}
+			},
+			error: function(){console.log("multiplayerQueuePost ajax failure.")},
+			data:{value:multiplayerPostQueue}
+		});
+	}
 }
 
 function multiplayerQueueGet(){
@@ -1097,7 +1150,40 @@ function multiplayerQueueGet(){
 		url: DVS['multiplayerQueueGetURL'] + "?user_id=" + DVS['multiplayerUserId'],
 		dataType: "text",
 		success: function(text){
-			console.log(text)
+			//Check for failure
+			if(text.substring(0,"failure:".length) == "failure:"){
+				//alert("multiplayerQueueGet failed")
+			}else{
+				//Cycle through DV's and set the DV's
+				var dvArray = $(text).text().split(":")
+
+				$.each(dvArray,function(i,v){
+					if(v == ""){
+						return
+					}
+
+					var keyValPair = v.split(",")
+					setDV(keyValPair[0], keyValPair[1], false)
+				})
+
+				//Clear the queue
+				multiplayerQueueClear()
+			}
+			
+			//Handle waitingOn
+			if(DVS['multiplayerWaitingOn'] != ""){
+				var waitingParts = DVS['multiplayerWaitingOn'].split(',')
+				if(DVS[waitingParts[0]] != undefined  
+						&& DVS[waitingParts[0]] == waitingParts[1]){
+					//Todo - have to make all of this handle multiple 
+					// vars, and locations/scenes/pages
+					var scenePageParts = waitingParts[2].split(":")
+					loadPage(scenePageParts[1]);
+
+					//We found the match so clear it
+					setDV('multiplayerWaitingOn',"")
+				}
+			}			
 		},
 		error: function(){console.log("multiplayerQueueGet ajax failure.")}
 	});
@@ -1109,7 +1195,10 @@ function multiplayerQueueClear(){
 		async: false,
 		url: DVS['multiplayerQueueClearURL'] + "?user_id=" + DVS['multiplayerUserId'],
 		dataType: "text",
-		success: function(){},
+		success: function(text){
+			text = text //Just to set a breakpoint
+			//alert("multiplayerQueueClear: done")
+		},
 		error: function(){console.log("multiplayerQueueClear ajax failure.")}
 	});
 }
@@ -1117,39 +1206,79 @@ function multiplayerQueueClear(){
 ////////////////////////////////////////////////
 // UI 
 ////////////////////////////////////////////////
+function setState(state){
+	switch(state){
+		case "bookmarks":
+			$("body").attr("state", "bookmarks")
+			break;
+		case "main":
+			$("body").attr("state", "main")
+			break;
+		case "dev_mode":
+			$("body").attr("state", "dev_mode")
+			break;
+		case "settings":
+			$("body").attr("state", "settings")
+			break
+		case "set_bookmark":
+			$("#bookmarkName").attr("value", "")
+			$("body").attr("state", "set_bookmark")
+			break;
+	}
+	
+	window.scrollTo(0, 0)
+}
 
 function toggleMenuBar(){
-	if($("#menuBar").hasClass('displayNone')){
-		$("#menuBar").removeClass('displayNone')
+	if($("body").hasClass('showMenu')){
+		$("body").removeClass('showMenu')
 	}else{
-		$("#menuBar").addClass('displayNone')
+		$("body").addClass('showMenu')
 	}
 }
 
-function matteClicked(matte){
-	var p = canvasContext.getImageData(mouseX, mouseY, 1, 1).data;
+var clickLock = false
+function decisionClicked(theThis, id){
+	if(clickLock){
+		return
+	}else{
+		clickLock = true
+	}
 	
-	if(p[3] > 0){ //Something is here because the alpha isn't 0
-		var hexColor = rgbToHex(p[0],p[1],p[2])
+	//Todo - Find Stage Name
+	loadStage($(theThis).closest(".stage").attr("stage_name"))
 
-		//alert(Math.ceil(mouseX) + ":" + Math.ceil(mouseY) + ";" + hexColor  + "," + p[3])
-
-		while(hexColor.length < 6){
-			hexColor = "0" + hexColor
-		} 
-
-		var jLinkItem = $(xml).find("linktypes > linktype[color='" + hexColor + "']")
-		var linkItemName = jLinkItem.attr('name')
-
-		var jCurrentSceneLinkItem = jCurrentScene.find("> link[linktype='" + linkItemName + "']")
-		var linkItemLocationName = jCurrentSceneLinkItem.attr("location")
-		loadLocation(linkItemLocationName) 
+	var decision = jCurrentPage.find("decisions > decision#" + id)
+	
+	if($(decision).attr("calculate_duration") != undefined){
+		//Find route duration
+		addDurationToCurrentTime(
+			calculateRouteDuration($(decision).attr("calculate_duration"))
+		)
+	}else if($(decision).attr("duration") != undefined){
+		addDurationToCurrentTime($(decision).attr("duration"))
 	}
-}
-
-function matteHover(thisObj){
-	//var context = canvas.getContext('2d');
-	//var p = context.getImageData(mouseX, mouseY, 1, 1).data;
+	
+	//todo - append doesn't seem to work on IOS with xml
+	//todo - Is the narrationLog the same as the log DV?
+	//jDV("narrationLog").append("<p> You chose: " + $(decision).attr("label") +  "</p>\n")
+	
+	jDV("narrationLog").html(jDV("narrationLog").html() + "\n<p class='youChose' decision_id='" + id + "'> You chose: " + $(decision).attr("label") +  "</p>\n")
+	
+	$("#narrationLog").empty().append($(jDV("narrationLog").html()))
+	
+	if($(decision).attr("onclick") != undefined){
+		$(currentStage.pageContent).html("");
+		eval($(decision).attr("onclick"))
+	}
+	
+	if($(decision).attr("nextpage") != undefined){
+		loadPage($(decision).attr("nextpage"));
+	}else if($(decision).attr("location")){
+ 		loadLocation($(decision).attr("location"));	
+	}	
+	
+	clickLock = false
 }
 
 ////////////////////////////////////////////////
@@ -1287,7 +1416,11 @@ function unpauseAudio(){
 ////////////////////////////////////////////////
 
 //Will create the dv if it is undefined
-function setDV(name, value){
+function setDV(name, value, postToMultiplayerQueue){
+	if(postToMultiplayerQueue == undefined){
+		postToMultiplayerQueue = true //todo - is this correct?
+	}
+
 	var dVars = $(xml).find("config > decisionvars")
 
 	var dv = dVars.find("> variable[name='" + name + "']")
@@ -1312,27 +1445,41 @@ function setDV(name, value){
 			$("<variable name='" + name + "' " + valString + "/>"))
 	}
 
-	WriteDecisionVarsToLocalStorage()
+	if(!checkDecisionVarI(
+			"writeToLocalStorageOnlyOnSceneLoad","true")){
+		WriteDecisionVarsToLocalStorage()
+	}
 
-
-	if(DVS['multiplayerMode'] == "true" && !isDefaultValue(name)){
-		multiplayerQueuePost(dvXml)
+	if(postToMultiplayerQueue == true 
+			&& DVS['multiplayerMode'] == "true" 
+			&& !isDefaultValue(name)){
+		multiplayerAddToPostQueue(name + "," + value + ":")
 	}
 }
 
 function loadDecisionVars(container){	
-	$(container).find("> decisionvar").each(function(){
-		if($(this).attr("name") == undefined ||
-					$(this).attr("name").trim() == ""){
-			console.log("blank dv name found")
-			return;
-		}
-		
-		//Will create the DV if not already created
-		setDV($(this).attr("name"), $(this).attr("value"))
-	});
+	var selector = "> variable"
+	
+	//Todo - For some reason I got the great idea to change the decisionvar 
+	// node name to variable. This is a problem because all of the configs
+	// have to be changed as well, or we can roll back the "variable" name change
+	for(i=0;i<2;i++){
+		$(container).find(selector).each(function(){
+			if($(this).attr("name") == undefined ||
+						$(this).attr("name").trim() == ""){
+				console.log("blank dv name found")
+				return;
+			}
+
+			//Will create the DV if not already created
+			setDV($(this).attr("name"), $(this).attr("value"))
+		});
+
+		selector = "> decisionvar"
+	}
 }
 
+//Todo - Optimize
 function WriteDecisionVarsToLocalStorage(){
 	var t_xml = $(xml).clone()[0]
 	
@@ -1340,22 +1487,57 @@ function WriteDecisionVarsToLocalStorage(){
 	//var xmlClone = $(xml).clone()
 
 	//Don't save the local content if we're loading remotely
-	if(!undefinedOrNoLength(DVS["remotePageContentURL"])){
+	if(!uob(DVS["remotePageContentURL"])){
 		$(t_xml).find("config > scenes > scene > page > content").empty()
 	}
 
 	var config_xml_string = new XMLSerializer().serializeToString(t_xml)
 
 	//Use JSON to store more than one configuration
-	var jsonDecisionz = JSON.parse(localStorage.decisionz);
-	jsonDecisionz[configXmlFilename] = config_xml_string
+	var jsonDecisionz
+	if(disableCompression){
+		try{
+			jsonDecisionz = JSON.parse(localStorage.decisionz)
+		} catch(e){
+			alert("WriteDVs JSON decode on localStorage failed with " 
+					+ "disableCompression set. Maybe localStorage is compressed?")
+		}
+	}else{
+		jsonDecisionz = JSON.parse(LZString.decompress(localStorage.decisionz));
+	}
+
+	var configWriteName = configXmlFilename
+	if(params['localStorageName'] != undefined){
+		configWriteName = params['localStorageName']
+		jsonDecisionz[params['localStorageName']] = config_xml_string
+	}else{
+		jsonDecisionz[configXmlFilename] = config_xml_string
+	}		
+
 	var newJson =  JSON.stringify(jsonDecisionz)
-	localStorage.decisionz = newJson
+	
+	var lzString
+	if(disableCompression){
+		localStorage.decisionz = newJson
+	}else{
+		lzString = LZString.compress(newJson)
+		localStorage.decisionz = lzString		
+	}
+
+	if(params["debug"] != undefined){
+		console.log("config write to " + configWriteName 
+													+ ": " + newJson.length)
+		if(!disableCompression){
+			console.log("config write to " + configWriteName 
+													+ " compressed : " + lzString.length)
+		}
+	}
 
 	//Check that it actually saved
-	if(newJson.length != localStorage.decisionz.length){
-		alert("LocalStorage was not completeley stored")
-	}
+	//Todo - this doesn't appear to work for multiple configurations
+	/*if(lzString.length != localStorage.decisionz.length){
+		alert("LocalStorage was not completely stored")
+	}*/
 
 	$("#localStorageLength").text("Local Storage Length Is: " + localStorage.decisionz.length)
 
@@ -1408,12 +1590,38 @@ function jDV(name){
 	return $($(decisionVars).find("> variable:[name='" + name + "']"))
 }
 
+
 function updateDVS(){
 	DVS = []
+
+	//Added so that you can style based on decision vars
+	// (Good for maps, etc)
+	//Todo- Move this to ready function
+	var jDVsTag = $("#dvs")
 	
+	//Clean out attributes on dvs tag
+	while(jDVsTag[0].attributes.length > 0){
+		jDVsTag[0].removeAttribute(jDVsTag[0].attributes[0].name);
+	}
+
+	//Create the id attribute
+	//Todo - Note that this may momentarily screw up the page builds (css)
+	//  should be fixed
+	jDVsTag.attr("id", 'dvs'); 
+
+	//Copy all attrs to #dvs 
 	decisionVars.find("> variable").each(function(i,v){
 		if($(v).attr("value") != undefined){
 			DVS[$(v).attr("name")] = $(v).attr("value")
+
+			//Only add to dvs tag if this ISN'T Json
+			try{
+				a=JSON.parse($(v).attr("value"));
+			}catch(e){
+				jDVsTag.attr($(v).attr("name"),$(v).attr("value"))
+			}
+		}else{
+			jDVsTag.attr($(v).attr("name"),"")
 		}
 	})
 }
@@ -1432,6 +1640,39 @@ function checkDecisionVarI(name, value){
 	}
 }
 
+function handleDVDefaults(){
+	//loop through decisionVars_defaults_snippet
+	$("#decisionVars_defaults_snippet").find("> variable").each(function(i,v){
+		if(DVS[$(v).attr("name")] == undefined ){
+			if($(v).attr("value") == undefined){
+				//If dv is not present and there is no value 
+				//  then create the dv and set the value to ""
+				setDV($(v).attr("name"), "")
+			}else{
+	//Todo - It might be worth it to copy all other attributes as well if present
+				//If dv is not present and there is a default 
+				//  value then create the dv and set the value
+				setDV($(v).attr("name"), $(v).attr("value"))
+				
+			}
+		}
+
+		if($(v).attr("undefined_error") != undefined){
+			//If a dv has undefined_error attr then show dialog if not found or length 0
+			if(DVS[$(v).attr("name")] == undefined){
+				alert("DV undefined_error: " + $(v).attr("name"))
+				return
+			}		
+		}
+
+		if($(v).attr("zero_length_error") != undefined){
+			if(uob(DVS[$(v).attr("name")])){
+				alert("DV zero_length_error: " + $(v).attr("name"))
+				return
+			}
+		}
+	})
+}
 
 ////////////////////////////////////////////////
 // Util
@@ -1440,20 +1681,6 @@ function isDefaultValue(name){
 	if($("#decisionVars_defaults_snippet > variable[name='" 
 										+ name + "']").length > 0){
 		return true										
-	}else{
-		return false
-	}
-}
-
-function rgbToHex(r, g, b) {
-	if (r > 255 || g > 255 || b > 255)
-		throw "Invalid color component";
-	return ((r << 16) | (g << 8) | b).toString(16);
-}
-
-function undefinedOrNoLength(value){
-	if(value == undefined || value.length == 0){
-		return true
 	}else{
 		return false
 	}
@@ -1495,7 +1722,7 @@ function hideStatusText(){
 
 function convertXMLtoNewFormat(){
 	//Convert nextPage to decision.
-	$(xml).find("config > scenes > scene > page:not([type='pageForward'])").each(function(i,v){
+	$(xml).find("config page:not([type='pageForward'])").each(function(i,v){
 	    if($(this).attr("nextpage") != null){
 	        var nextPage = $(this).attr("nextpage")
 	        
@@ -1535,7 +1762,7 @@ function capitaliseFirstLetter(string)
 }
 
 function clearLocalStorage(){
-	localStorage.decisionz = "{}";
+	localStorage.decisionz = "";
 }
 
 function loadIFrame(source){
@@ -1580,71 +1807,6 @@ var DAY_INDEX = 3;
 var HOUR_INDEX = 4;
 var MIN_INDEX = 5;
 var SEC_INDEX = 6;
-
-var TICKS_PER_SEC = 1000;
-var TICKS_PER_MIN = 60 * TICKS_PER_SEC;
-var TICKS_PER_HOUR = 60 * TICKS_PER_MIN;
-var TICKS_PER_DAY = 24 * TICKS_PER_HOUR;
-
-var iso = /^(\d{4})-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/;
-
-function calculateTicksFromTimeString(timeString){
-	var timeParts = timeString.match(iso);
-	var timeTicks = (timeParts[DAY_INDEX] * TICKS_PER_DAY) + 
-							(timeParts[HOUR_INDEX] * TICKS_PER_HOUR)+ 
-							(timeParts[MIN_INDEX] * TICKS_PER_MIN)+ 
-							(timeParts[SEC_INDEX] * TICKS_PER_SEC);
-	return timeTicks;
-}
-
-function calculateTimeStringFromTicks(timeTicks){
-	//Days
-	var days =  Math.floor(timeTicks/TICKS_PER_DAY);
-	timeTicks -= (days * TICKS_PER_DAY);
-
-	//Hours
-	var hours =  Math.floor(timeTicks/TICKS_PER_HOUR);
-	timeTicks -= (hours * TICKS_PER_HOUR);	
-	
-	//Mins
-	var mins =  Math.floor(timeTicks/TICKS_PER_MIN);
-	timeTicks -= (mins * TICKS_PER_MIN);	
-	
-	//Seconds
-	var sec =  Math.floor(timeTicks/TICKS_PER_SEC);
-	timeTicks -= (sec * TICKS_PER_SEC);	
-
-	var timeString = "0000-00-";	
-
-	if(days < 10){
-		timeString += "0" + days;
-	}else{
-		timeString += days;
-	}
-	timeString += " ";
-
-	if(hours < 10){
-		timeString += "0" + hours;
-	}else{
-		timeString += hours;
-	}
-	timeString += ":";
-
-	if(mins < 10){
-		timeString += "0" + mins;
-	}else{
-		timeString += mins;
-	}
-	timeString += ":";
-	
-	if(sec < 10){
-		timeString += "0" + sec;
-	}else{
-		timeString += sec;
-	}	
-	
-	return timeString;
-}
 
 function updateTimeDiv(){
 	var timeParts = /([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})/.
@@ -1772,4 +1934,57 @@ function loadStage(name){
 
 	//Todo - Should I put these type of function here, or somewhere else
 	//updateTimeDiv()
+}
+
+////////////////////////////////////////////////
+// Clickmatte
+////////////////////////////////////////////////
+function clickMatte_mouseMove(e){
+	var now = Date.now()
+	if(lastDate + 100 > now){
+		//console.log("date filtered")
+		return
+	}else{
+		lastDate = now
+		//console.log("date passed")
+	}
+
+	mouseX = e.pageX - jContentContainer.offset()['left'];
+	mouseY = e.pageY - jContentContainer.offset()['top'];
+
+	var p = canvasContext.getImageData(mouseX, mouseY, 1, 1).data;
+
+	if(p[3] != 0){
+		jBody.css("cursor", "pointer")
+		//console.log(mouseX + ":" + mouseY)
+	}else{
+		jBody.css("cursor", "")
+
+	}
+}
+
+function matteClicked(matte){
+	var p = canvasContext.getImageData(mouseX, mouseY, 1, 1).data;
+	
+	if(p[3] > 0){ //Something is here because the alpha isn't 0
+		var hexColor = rgbToHex(p[0],p[1],p[2])
+
+		//alert(Math.ceil(mouseX) + ":" + Math.ceil(mouseY) + ";" + hexColor  + "," + p[3])
+
+		while(hexColor.length < 6){
+			hexColor = "0" + hexColor
+		} 
+
+		var jLinkItem = $(xml).find("linktypes > linktype[color='" + hexColor + "']")
+		var linkItemName = jLinkItem.attr('name')
+
+		var jCurrentSceneLinkItem = jCurrentScene.find("> link[linktype='" + linkItemName + "']")
+		var linkItemLocationName = jCurrentSceneLinkItem.attr("location")
+		loadLocation(linkItemLocationName) 
+	}
+}
+
+function matteHover(thisObj){
+	//var context = canvas.getContext('2d');
+	//var p = context.getImageData(mouseX, mouseY, 1, 1).data;
 }

@@ -1,4 +1,6 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+
 // Create connection
 $con=mysqli_connect("db480654236.db.1and1.com","dbo480654236","TjuQymcP","db480654236");
 

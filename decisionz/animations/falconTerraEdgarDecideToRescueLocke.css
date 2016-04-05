@@ -324,6 +324,7 @@ body div#pageContent{
     border-radius: 7px;
     /* border: 1px solid; */
     width: 466px;
+    left: 28px;
 }
 
 body div#pageContent > .decisionBtn{

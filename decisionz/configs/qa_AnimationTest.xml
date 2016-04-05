@@ -1,10 +1,7 @@
 <config devTools="true" perspective="MobilePerspective">
-	<characters>
-		<character name="Travis" defaultCharacter="true" startPage="true" />
-		<character name="Farse" />
-	</characters>
 	<decisionvars>
 		<variable name="currentSceneName" value="introAnimationTest" />
+		<variable name="music" value="true"/>
 	</decisionvars>
 	<scenes>
 		<!-- Impl - Impl - Your Cabin (text-only) -->

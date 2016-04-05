@@ -9,7 +9,7 @@
 		<variable name="gameMode" value="text"/>
 		<variable name="NoSound" value="true"/>
 		<variable name="UserName" value="DanB"/>
-		<variable name="currentSceneName" value="GameIntro"/>
+		<variable name="currentSceneName" value="introTableCouchDesk"/>
 		<variable name="currentPageName" value="pageStart"/>
 		<variable name="currentLocationName" value="introTableCouchDesk"/>
 		<variable name="previousSceneName" value=""/>
@@ -59,8 +59,9 @@
 					<script>
 						<![CDATA[
 						function GameIntro_pageStart_loaded(){
-						     //$("#pageContent").html("<h1>load" + "ed3</h1>");
+						     $("#pageContent").html("<h1>load" + "ed3</h1>");
 						}
+						GameIntro_pageStart_loaded()
 						]]>
 					</script>
 				</content>

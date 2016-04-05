@@ -1,14 +1,5 @@
 #menuBar{
-	display:none;
-	/* opacity: 1; */
-	position: fixed;
-	top: 24px;
-	left: 0px;
-	bottom: 0px;
-	/* right: 0px; */
-	overflow-y: auto;
-	overflow-x: hidden;
-	width: 118px;
+	/* display:none; */
 }
 
 #toggleMenuBar:hover{
@@ -33,6 +24,7 @@ body[state='set_bookmark'] #toggleMenuBar{
 }
 
 #currentTime{
+    display: none;
     cursor: default;
     font-size: 3em;
     text-align: center;
@@ -54,14 +46,15 @@ body[state='set_bookmark'] #toggleMenuBar{
 
 #pageContainer{
     -webkit-transform: rotateY(0);
-    margin-left: 60px;
+    margin-left: 100px;
     margin-top: 20px;
     border-radius: 10px;
     padding: 20px;
     background-color: darkgray;
     position: absolute;
     top: 0px;
-    min-width: 567px;
+    min-width: 482px;
+    /* margin-right: auto; */
 }
 
 #linkToConfigFile{
@@ -85,15 +78,14 @@ body[state='set_bookmark'] #toggleMenuBar{
 }
 
 #fixedBar{
-    /* z-index: 101; */
+    z-index: 101;
     left: 0px;
     top: 0px;
-    /* right: 0px; */
-    /* bottom: 0px; */
+    width: 100px;
+    
+    height: 100%;
     position: fixed;
     /* background-color: rgb(48, 47, 47); */
-    /* overflow-y: auto; */
-    /* overflow-x: hidden; */
 }
 
 .fixedBarBtn:hover{
@@ -111,7 +103,6 @@ body[state='set_bookmark'] #toggleMenuBar{
     font-weight: bold;
     text-align: center;
     padding-top: 23px;
-    margin-top: 2px;
 }
 
 #narrationLog .decisionBtn{
@@ -170,13 +161,9 @@ button{
 
 body{
     overflow-x: hidden;
-    background-color: black;
+    background-color: rgb(32, 67, 28);
     color: grey;
     font-family: Times New Roman;
-}
-
-#dvs[currentpagename=''] #pageContainer{
-	display:none;
 }
 
 div#devbar{
@@ -311,6 +298,7 @@ body:not([state='main']) #setBookmarkBtn{
     padding-bottom: 26px;
     position: relative;
     
+    display: none;
 }
 
 #bookmarksModeBtn,
@@ -326,6 +314,10 @@ body:not([state='main']) #setBookmarkBtn{
 }
 
 #devPanel{
+    font-size: 30px;
+    min-height: 800px;
+    min-width: 700px;
+    padding-left: 93px;
 }
 
 #settingsPanel{
@@ -333,8 +325,6 @@ body:not([state='main']) #setBookmarkBtn{
     min-height: 800px;
     min-width: 700px;
     padding-left: 93px;
-    /* background-color: red; */
-    color: white;
 }
 
 #decisionzLog > p {
@@ -449,11 +439,6 @@ body[debug='true'] #linkToConfigFile{
 
 #devTabs, #setTabs{
 	font-size: .5em;
-	margin-left: 0px;
-    position: absolute;
-    left: 0px;
-    /* top: 0px; */
-    width: 100%;
 }
 
 .ui-tabs > div.ui-tabs-panel{
@@ -510,25 +495,6 @@ body[disableDialog="true"] #pageContent > p{
     /* display: none; */
 }
 
-body[debug='true'] #backgroundClickMatte{
-	opacity: .5;
-	background: 
-	  /* On "top" */
-	  repeating-linear-gradient(
-		45deg,
-		transparent,
-		transparent 10px,
-		#ccc 10px,
-		#ccc 20px
-	  ),
-	  /* on "bottom" */
-	  linear-gradient(
-		to bottom,
-		#eee,
-		#999
-	  );
-}
-
 #backgroundClickMatte{
     position: absolute;
 	
@@ -554,29 +520,12 @@ body[debug='true'] #backgroundClickMatte{
     /* z-index: 10; */
 }
 
-#clickGuard{
-	position:fixed;
-	top:0px;
-	right:0px;
-	bottom:0px;
-	left:0px;
-	background-color:black;
-	opacity:.5;
-	display:none;
-}
-
-body.showMenu #menuBar,
-body.showMenu #clickGuard{
-	display:block;
-}
-
-.panel{
-	font-size: 30px;
-	min-height: 800px;
-	min-width: 700px;
-	padding-left: 93px;
-	position: absolute;
-	top: 25px;
-	/* background: red; */
-	left: 114px;
+#stageTest{
+    background-color: rgb(187, 124, 135);
+	
+    width: 400;
+    color: white;
+    padding: 20px;
+    position: absolute;
+    top: 229px;
 }

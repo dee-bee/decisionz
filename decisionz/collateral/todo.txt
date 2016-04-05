@@ -1,0 +1,31 @@
+todo (Note - Todo's' should generally be moved to gitHub repo issues)
+- Write a test for global conditions (conditions evaluated at every page load)
+- Pathfinding between locations
+- Undo move feature
+- Javadoc
+- Use less for animations test project, add pause support
+- Add video support
+- Add templating and conditional page building 
+- Fix "QA - Stage Frames and Default DV Values Test"
+- Fix Multiplayer test
+- More intelligent scrolling, don't always scroll back to top on page load 
+- Add json url param for loading tiered css files
+- Fix issues with loadGameState from error report for these variables
+		routes, bookmarks, log
+- change function first letter to indicate self contained functions
+- Figure out the intricacies of currentSceneName, currentLocationName, etc
+- Figure out what to do with currentLocationName
+- Add item support
+- Add new conversation option ticker flash, plus list of conversation options 
+- Add multiplayer default values in case some characters aren't taken for this session
+done- Add ability to load any dv from a url param
+- Add image support
+- Add video support
+- Add multi-character support
+- What to do with gameStartScene
+done- Add multi-player support
+- Add currentFrame support - Which will allow for multiple pages to run at the same time.
+done - Add code to give default values to undefined but neccessary dvs
+- Classify the DV functions (not neccessarly, just figure out the best way)
+done - localStorage should support multiple configs simultaniously
+

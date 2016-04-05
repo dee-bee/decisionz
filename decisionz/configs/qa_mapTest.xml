@@ -1,0 +1,21 @@
+<config>
+    <!--
+        two stages
+        one stage is the dialog where you explore
+        second stage are links to the maps that are currently available to you
+    -->
+	<scenes>
+		<scene name="start">
+		  <page id="pageStart" nextpage="p2">
+			<content>
+                <p>Started</p>
+            </content>
+		  </page>
+		  <page id="p2">
+			<content>
+                <p>p2</p>
+            </content>
+		  </page>
+		</scene>
+	</scenes>
+</config>
