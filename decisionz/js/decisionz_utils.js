@@ -103,6 +103,42 @@ function uob(value){
     return false
 }
 
+//Fubze = False/Undefined/Blank/Zero/Empty And much more!
+function fubze(value){
+    if(!value){
+        /*
+        will evaluate to true if value is :
+            null
+            undefined
+            NaN
+            empty string ("")
+            0
+            false
+
+        */
+
+        return true
+    }
+
+    if(value === "false")
+        return true
+
+    if(typeof value == "object"){
+        if(value instanceof Array){ 
+            //Check for zero length arrays
+            if(value.length == 0)
+                return true
+        }else{
+            //Must be object
+            //Check for empty object
+            if(Object.keys(value).length == 0)
+                return true
+        }
+    }
+
+    return false
+}
+
 ////////////////////////////////////////////////
 // Time
 ////////////////////////////////////////////////

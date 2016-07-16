@@ -44,6 +44,9 @@ var x2js = new X2JS()
 
 var configAlreadyLoaded = false
 
+//todo
+//var writeToLocalStorageOnlyOnPageLoad = false
+
 $(document).ready(function () {	
 	//Todo need to fix this
 	//audioInit();
@@ -86,47 +89,44 @@ $(document).ready(function () {
 			configXmlFilename = params["configXmlFilename"];		
 		} 
 	}
+
+	if(params['localStorageName'] != undefined){
+		localStorageName = params['localStorageName']
+	}else{
+		localStorageName = configXmlFilename
+	}
 	
+
+	//todo
+	/*
+	if(!uob(params['writeToLocalStorageOnlyOnPageLoad'])){
+		writeToLocalStorageOnlyOnPageLoad = 
+							params['writeToLocalStorageOnlyOnPageLoad']
+	}*/
+
 	$( "#devTabs" ).tabs();
 	$( "#setTabs" ).tabs();
 	
 	loadGame();
 });
 
-var disableCompression = true
+var localStorageName
 
 function loadGame(){
-	if(localStorage.decisionz == undefined || localStorage.decisionz.length == 0){
-		if(disableCompression){
-			localStorage.decisionz = "{}"
-		}else{
-			localStorage.decisionz = LZString.compress("{}")			
-		}
-	}
-	
-	var jsonDecisionz
-	if(disableCompression){
-		try{
-			jsonDecisionz = JSON.parse(localStorage.decisionz)
-		} catch(e){
-			alert("JSON decode on localStorage failed with disableCompression set." +
-					"Maybe localStorage is compressed?")
-		}
-	}else{
-		jsonDecisionz = JSON.parse(LZString.decompress(localStorage.decisionz))		
+	//Create localStorage for decisionz if not already there
+	if(uob(localStorage.decisionz)){
+		localStorage.decisionz = "{}"
 	}
 
+	var decisionzLocalStorageJson = JSON.parse(localStorage.decisionz)
 
 	//If decisionz localStorage isn't empty then load from it
 	//Othewise attempt to load from config file
-	if(params['localStorageName'] != undefined){
-		if(jsonDecisionz[params['localStorageName']] != undefined){
-			configAlreadyLoaded = true
-			parseXml(jsonDecisionz[params['localStorageName']])
-		}
-	}else if(jsonDecisionz[configXmlFilename] != undefined){
+	if(!uob(decisionzLocalStorageJson[localStorageName])){
 		configAlreadyLoaded = true
-		parseXml(jsonDecisionz[configXmlFilename])
+
+		//todo - handle for compression if necessary
+		parseXml(LZString.decompress(decisionzLocalStorageJson[localStorageName]))
 	}
 
 	if(!configAlreadyLoaded){
@@ -147,8 +147,12 @@ function parseXml(text_xml){
 		text_xml = text_xml.substr(text_xml.match(".*\n")[0].length, text_xml.length)
 	}
 	
-	xml = ( new window.DOMParser() ).
-				parseFromString(text_xml, "text/xml")
+	xml = (new window.DOMParser()).parseFromString(text_xml, "text/xml")
+
+	if($(xml).find("parsererror").length > 0){
+		alert("Error parsing xml in parseXml function")
+		return 
+	}
 
 	decisionVars = $(xml).find("config > decisionvars")
 
@@ -224,10 +228,10 @@ function parseXml(text_xml){
 	
 	loadBookmarksList()
 	
-	if(!checkDecisionVarI(
-			"writeToLocalStorageOnlyOnSceneLoad","true")){
+	//todo
+	/*if(writeToLocalStorageOnlyOnSceneLoad == "true"){
 		WriteDecisionVarsToLocalStorage()
-	}
+	}*/
 	
 	updateDVS()
 	
@@ -356,7 +360,8 @@ function loadScene(name, pageName){
 		}
 	}
 	
-	WriteDecisionVarsToLocalStorage()
+	//todo
+	//WriteDecisionVarsToLocalStorage()
 	
 	if(pageName != undefined){
 		//Loading a bookmark
@@ -526,6 +531,8 @@ function generatePage(){
 	if(jResultPage.find("> content > script")[0] != undefined &&
 			typeof(loadJSAttrSuccess) == "function"){
 		loadJSAttrSuccess($(jResultPage.find("> script")[0]).text())
+
+		WriteDecisionVarsToLocalStorage()
 	}else if(jResultPage.attr('loadJS') != undefined){
 		var remotePageUrl = ""
 		
@@ -552,12 +559,12 @@ function generatePage(){
 		});
 	}else{
 		//todo not sure if this is the right place for this
-		if(!checkDecisionVarI(
-					"writeToLocalStorageOnlyOnSceneLoad","true") &&
+		//todo
+		/*if(writeToLocalStorageOnlyOnSceneLoad != "true" &&
 				jCurrentScene.attr(
 					"disableLocalStorageWritesOnPageLoad") == undefined){
 			WriteDecisionVarsToLocalStorage()
-		}
+		}*/
 
 		if(jResultPage.attr("classimation") != undefined){
 			if(jResultPage.attr("classimationNextPage") != undefined){
@@ -571,6 +578,8 @@ function generatePage(){
 		loadMusic(jResultPage.attr("music"));
 		loadNarrationAudio(jCurrentScene.attr("name"), jResultPage.attr("id"))
 		unpauseAudio()
+
+		WriteDecisionVarsToLocalStorage()
 	}
 
 }
@@ -585,12 +594,12 @@ function generatePage_part2(text){
 	    sceneReturnObj.initPageScript()
 	}
 
-	if(!checkDecisionVarI(
-				"writeToLocalStorageOnlyOnSceneLoad","true") &&
+	//todo
+	/*if(writeToLocalStorageOnlyOnSceneLoad != "true" &&
 			jCurrentScene.attr(
 				"disableLocalStorageWritesOnPageLoad") == undefined){
 		WriteDecisionVarsToLocalStorage()
-	}
+	}*/
 
 
 	if(DVS["dontLoadContent"] == undefined 
@@ -605,6 +614,10 @@ function generatePage_part2(text){
 	if(jCurrentPage.attr("onload") != undefined){
 		eval(jCurrentPage.attr("onload"))
 	}
+
+	//todo - right now it writes twice on page load. Maybe we need
+	// something smarter here.
+	WriteDecisionVarsToLocalStorage()
 }
 
 function loadPage(pageId){
@@ -956,10 +969,10 @@ function setBookmark(label){
 	
 	setState('main')
 	
-	if(!checkDecisionVarI(
-			"writeToLocalStorageOnlyOnSceneLoad","true")){
+	//todo
+	//if(writeToLocalStorageOnlyOnSceneLoad != "true"){
 		WriteDecisionVarsToLocalStorage()
-	}
+	//}
 }
 
 
@@ -1445,10 +1458,10 @@ function setDV(name, value, postToMultiplayerQueue){
 			$("<variable name='" + name + "' " + valString + "/>"))
 	}
 
-	if(!checkDecisionVarI(
-			"writeToLocalStorageOnlyOnSceneLoad","true")){
+	//todo
+	/*if(writeToLocalStorageOnlyOnSceneLoad != "true"){
 		WriteDecisionVarsToLocalStorage()
-	}
+	}*/
 
 	if(postToMultiplayerQueue == true 
 			&& DVS['multiplayerMode'] == "true" 
@@ -1492,52 +1505,30 @@ function WriteDecisionVarsToLocalStorage(){
 	}
 
 	var config_xml_string = new XMLSerializer().serializeToString(t_xml)
+	var lzString = LZString.compress(config_xml_string)
 
 	//Use JSON to store more than one configuration
-	var jsonDecisionz
-	if(disableCompression){
-		try{
-			jsonDecisionz = JSON.parse(localStorage.decisionz)
-		} catch(e){
-			alert("WriteDVs JSON decode on localStorage failed with " 
-					+ "disableCompression set. Maybe localStorage is compressed?")
-		}
-	}else{
-		jsonDecisionz = JSON.parse(LZString.decompress(localStorage.decisionz));
-	}
+	var decisionzLocalStorageJson = JSON.parse(localStorage.decisionz)
+	decisionzLocalStorageJson[localStorageName] =  lzString
 
-	var configWriteName = configXmlFilename
-	if(params['localStorageName'] != undefined){
-		configWriteName = params['localStorageName']
-		jsonDecisionz[params['localStorageName']] = config_xml_string
-	}else{
-		jsonDecisionz[configXmlFilename] = config_xml_string
-	}		
+	var decisionzLocalStorageJson_stringified =
+										 JSON.stringify(decisionzLocalStorageJson)
+	localStorage.decisionz = decisionzLocalStorageJson_stringified
 
-	var newJson =  JSON.stringify(jsonDecisionz)
-	
-	var lzString
-	if(disableCompression){
-		localStorage.decisionz = newJson
-	}else{
-		lzString = LZString.compress(newJson)
-		localStorage.decisionz = lzString		
-	}
 
 	if(params["debug"] != undefined){
-		console.log("config write to " + configWriteName 
-													+ ": " + newJson.length)
-		if(!disableCompression){
-			console.log("config write to " + configWriteName 
+		console.log("config write to " + localStorageName 
+													+ ": " + config_xml_string.length)
+		console.log("config write to " + localStorageName 
 													+ " compressed : " + lzString.length)
-		}
 	}
 
 	//Check that it actually saved
 	//Todo - this doesn't appear to work for multiple configurations
-	/*if(lzString.length != localStorage.decisionz.length){
+	if(decisionzLocalStorageJson_stringified.length != 
+										localStorage.decisionz.length){
 		alert("LocalStorage was not completely stored")
-	}*/
+	}
 
 	$("#localStorageLength").text("Local Storage Length Is: " + localStorage.decisionz.length)
 
@@ -1987,4 +1978,8 @@ function matteClicked(matte){
 function matteHover(thisObj){
 	//var context = canvas.getContext('2d');
 	//var p = context.getImageData(mouseX, mouseY, 1, 1).data;
+}
+
+function onUnload(){
+	WriteDecisionVarsToLocalStorage()
 }
