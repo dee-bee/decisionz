@@ -25,20 +25,19 @@
 		<variable name="narration" value="false"/>
 		<variable name="music" value="false"/>
 
-		<variable name="currentTimeStageTest" value="0000-00-00 15:30:00" ></variable>
+		<variable name="currentSceneNameStageTest" value="introTableCouchDesk" ></variable>
+		<variable name="previousSceneNameStageTest" value="" ></variable>
+		<variable name="currentPageNameStageTest" value="pageStart" ></variable>
+		<variable name="previousPageNameStageTest" value="" ></variable>
 		<variable name="currentCharacterStageTest" value="testy" ></variable>
 		<variable name="currentLocationNameStageTest" value="introTableCouchDesk" ></variable>
-		<variable name="currentSceneNameStageTest" value="introTableCouchDesk" ></variable>
-		<variable name="currentPageNameStageTest" value="pageStart" ></variable>
-
 		<variable name="previousLocationNameStageTest" value="" ></variable>
-		<variable name="previousSceneNameStageTest" value="" ></variable>
-		<variable name="previousPageNameStageTest" value="" ></variable>
+		<variable name="currentTimeStageTest" value="0000-00-00 15:30:00" ></variable>
 				
 		<variable name="activeStages" value="defaultStage,stage2Stage" ></variable>
 		<variable name="stage2Stage" value='
 					{
-						"pageContent":"#main #stage2",
+						"pageContent":"#stage2",
 						"currentCharacter":"currentCharacterStageTest",
 						"currentSceneName":"currentSceneNameStageTest",
 						"previousSceneName":"previousSceneNameStageTest",

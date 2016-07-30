@@ -212,6 +212,7 @@ div#devbar{
 body:not([state='dev_mode']) #devPanel,
 body:not([state='main']) #devBtn,
 body:not([state='settings']) #settingsPanel,
+body:not([state='map']) #mapPanel,
 body:not([state='set_bookmark']) #setBookmarkPanel{
     display:none;
 }
@@ -228,11 +229,13 @@ body:not([debug='true']) #devBtn{
     padding-left: 93px;
 }
 
-#settingsBtn{
+#settingsBtn,
+#mapBtn{
 	display:none;	
 }
 
-body[state='main'] #settingsBtn{
+body[state='main'] #settingsBtn,
+body[state='main'] #mapBtn{
 	display:block
 }
 
@@ -248,6 +251,7 @@ body:not([state="main"]) #main {
 body[state='bookmarks'] #mainModeBtn,
 body[state='dev_mode'] #mainModeBtn,
 body[state='settings'] #mainModeBtn,
+body[state='map'] #mainModeBtn,
 body[state='set_bookmark'] #mainModeBtn{
     display:block;
 }
@@ -315,6 +319,7 @@ body:not([state='main']) #setBookmarkBtn{
 
 #bookmarksModeBtn,
 #settingsBtn,
+#mapBtn,
 #mainModeBtn{
 	font-size: 18px;
 	padding-top: 42px;
@@ -329,6 +334,15 @@ body:not([state='main']) #setBookmarkBtn{
 }
 
 #settingsPanel{
+    font-size: 30px;
+    min-height: 800px;
+    min-width: 700px;
+    padding-left: 93px;
+    /* background-color: red; */
+    color: white;
+}
+
+#mapPanel{
     font-size: 30px;
     min-height: 800px;
     min-width: 700px;

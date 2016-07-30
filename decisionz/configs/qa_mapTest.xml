@@ -1,21 +1,148 @@
-<config>
-    <!--
-        two stages
-        one stage is the dialog where you explore
-        second stage are links to the maps that are currently available to you
-    -->
+<!-- Todo- Add test to make sure the _expected_scene and _expected_page work correctly -->
+<config devTools="true" perspective="MobilePerspective">
+	<characters>
+		<character name="Travis" defaultCharacter="true" startPage="true" />
+		<character name="Farse" />
+	</characters>
+	<decisionvars>
+		<variable name="bookmarks" />
+		<variable name="currentTime" value="0000-00-00 00:00:00" />
+		<variable name="gameMode" value="text" />
+		<variable name="UserName" value="DanB" />
+		<variable name="remotePageContentURL" value="" />
+		<variable name="currentBookmark" value="" />
+		<variable name="currentCharacter" value="" />
+		<variable name="currentSceneName" value="one" />
+		<variable name="currentPageName" value="pageStart" />
+		<variable name="currentLocationName" value="one" />
+		<variable name="previousSceneName" value="" />
+		<variable name="previousPageId" value="" />
+		<variable name="previousLocationName" value="" />
+		<variable name="gameStartTime" value="0000-00-00 00:00:00" />
+		<variable name="showMatteInfo" value="false" />
+		<variable name="gameStartScene" value="one" />
+		<variable name="lastSavedSceneName" value="one" />
+		<variable name="narrationAudio" value="true" />
+		<variable name="music" value="true" />
+		<variable name="log">
+		</variable>
+	</decisionvars>
+    <routes>
+		  <route id="oneToTwo" start="one" end="two" connections="oneToTwo"> </route>
+		  <route id="oneToThree" start="one" end="three" connections="oneToTwo,twoToThree"> </route>
+		  <route id="fourToOne" start="four" end="one" connections="fourToOne"> </route>
+		  <route id="twoToThree" start="two" end="three" connections="twoToThree"> </route>
+		  <route id="twoToFour" start="two" end="four" connections="twoToThree,threeToFour"> </route>
+		  <route id="threeToFour" start="three" end="four" connections="threeToFour"> </route>    
+    </routes>
+    <connections>
+        <connection id="oneToTwo" a="one" b="two" 
+                        a_expect_scene="one" a_expect_page="pageStart" 
+                        b_expect_scene="two" b_expect_page="pageStart" 
+                        duration="0000-00-00 00:01:00"></connection>
+        <connection id="twoToThree" a="two" b="three" duration="0000-00-00 00:02:00"></connection>
+        <connection id="threeToFour" a="three" b="four" duration="0000-00-00 00:03:00"></connection>
+        <connection id="fourToOne" a="four" b="one" duration="0000-00-00 00:04:00"></connection>
+    </connections>
 	<scenes>
-		<scene name="start">
-		  <page id="pageStart" nextpage="p2">
+		<scene name="one">
+		  <page id="pageStart">
 			<content>
-                <p>Started</p>
+                <p>One</p>
             </content>
-		  </page>
-		  <page id="p2">
-			<content>
-                <p>p2</p>
-            </content>
+			<decisions>
+				<decision label="Go To Two" location="two">
+					<condition name="availableRoute_oneToTwo" value="true">
+					</condition>
+				</decision>
+				<decision id="linkOne" label="Unlock door to two" location="unlockTwo">
+					<condition name="availableRoute_oneToTwo">
+					</condition>
+				</decision>
+				<decision label="Routes" location="routes">
+				</decision>
+			</decisions>
 		  </page>
 		</scene>
+
+		<scene name="unlockTwo">
+		  <page id="pageStart">
+		  	<decisionvar name="availableRoute_oneToTwo" value="true" />
+			<content>
+                <p>Two is unlocked</p>
+			</content>
+			<decisions>
+				<decision label="Back to one" location="one">
+				</decision>
+			</decisions>
+		  </page>
+		</scene>
+
+		<scene name="two">
+		  <page id="pageStart">
+			<content>
+                <p>Two</p>
+                <div id="twoToOne" onclick="runRoute('one')">Go to One</div>
+                <div onclick="runRoute('three')">Go to Three</div>
+                <div onclick="runRoute('four')">Go to Four</div>
+			</content>
+		  </page>
+		</scene>
+
+		<scene name="three">
+		  <page id="pageStart">
+			<content>
+                <p>Three</p>
+                <div onclick="runRoute('one')">Go to One</div>
+                <div onclick="runRoute('two')">Go to Two</div>
+                <div onclick="runRoute('four')">Go to Four</div>
+			</content>
+		  </page>
+		</scene>
+
+		<scene name="four">
+		  <page id="pageStart">
+			<content>
+                <p>Four</p>
+                <div onclick="runRoute('two')">Go to Two</div>
+                <div onclick="runRoute('three')">Go to Three</div>
+                <div onclick="runRoute('one')">Go to One</div>
+			</content>
+		  </page>
+		</scene>
+
+		<scene name="routes">
+		  <page id="pageStart">
+			<script>
+				alert("hey")
+			</script>
+			<style>
+				#pageContainer #linkOne{
+					background-color:red;
+				}
+			</style>
+			<content>
+				<p>Routes</p>
+			</content>				
+			<decisions>
+				<decision id="linkOne" label="Go Back To One" location="one">
+					<condition name="previousSceneName" value="one">
+					</condition>
+				</decision>
+				<decision id="linkTwo" label="Go To Two" location="two">
+					<condition name="previousSceneName" value="one">
+						<condition name="availableRoute_oneToTwo" value="true">
+						</condition>
+					</condition>
+				</decision>
+			</decisions>
+		  </page>
+		</scene>
+
 	</scenes>
+	<locations>
+	</locations>
+	<diagrams>
+		
+	</diagrams>
 </config>

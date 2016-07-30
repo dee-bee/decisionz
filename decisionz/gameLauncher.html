@@ -69,7 +69,8 @@
 				<div id="bookmarksModeBtn" class="fixedBarBtn" onclick="setState('bookmarks')">bookmarks</div>
 				<div id="mainModeBtn" class="fixedBarBtn" onclick="setState('main')">Back</div>
 				<div id="setBookmarkBtn" class="fixedBarBtn" onclick="setState('set_bookmark')">set bookmark</div>
-				<div id="settingsBtn" class="fixedBarBtn" onclick="setState('settings')">settings</div>
+				<div id="mapBtn" class="fixedBarBtn" onclick="setState('settings')">settings</div>
+				<div id="settingsBtn" class="fixedBarBtn" onclick="setState('map')">map</div>
 				<div id="devBtn" class="fixedBarBtn" onclick="setState('dev_mode')">dev</div>
 			</div>
 		</div>
@@ -86,6 +87,11 @@
 			</div>
 		</div>
 
+		<div id="mapPanel" class="panel">
+			<div>
+			</div>
+		</div>
+
 		<div id="settingsPanel" class="panel">
 			<div id="setTabs">
 				  <ul>
@@ -99,6 +105,8 @@
 								 onclick='narrationAudioOnChange()' >Narration Audio On<br></p>  
 					<p><input id="checkbox_disableDialog" type="checkbox"
 								 onclick='showDialogOnChange()' >Hide Dialog<br></p> 
+					<p><input id="checkbox_fullscreen" type="checkbox"
+								 onclick='fullscreenOnChange()' >Fullscreen<br></p> 
 				  </div>
 				  <div id="set_tabs-2">
 						<div id="narrationLog"></div>

@@ -332,6 +332,7 @@
 			<page id="pg_where_to_go">
 				<decisions>
 					<decision label="Fast forward" nextpage="pg_fast_forward" />
+					
 					<!--<decision label="Fast forward 1 hour" nextpage="pg_fast_forward_1_hour"/> -->
 
 					<!-- Impl - Butterfly Lounge (testsuite) (needs cleaning) -->

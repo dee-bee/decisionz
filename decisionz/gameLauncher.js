@@ -247,22 +247,22 @@ function parseXml(text_xml){
 function start(){ 
 	setState("main")
 	
-	$.each(DVS['activeStages'].split(","), function(i,v){
-		loadStage(v)
+	//Note/Todo - Just loading the first stage will trigger the other stages to load
+	var stageOneName = DVS['activeStages'].split(",")[0]
+	loadStage(stageOneName)
 
-		updateTimeDiv();
+	updateTimeDiv();
 
-		//Fix for issue where on reload previousSceneName is messed up
-		var currentSceneName = DVS[currentStage.currentSceneName]
+	//Fix for issue where on reload previousSceneName is messed up
+	var currentSceneName = DVS[currentStage.currentSceneName]
 
-		if(currentSceneName == undefined){
-			alert("No currentSceneName set")
-		}
+	if(currentSceneName == undefined){
+		alert("No currentSceneName set")
+	}
 
-		setDV(currentStage.currentSceneName, DVS[currentStage.previousSceneName])
+	setDV(currentStage.currentSceneName, DVS[currentStage.previousSceneName])
 
-		loadScene(currentSceneName, DVS[currentStage.currentPageName])
-	})
+	loadScene(currentSceneName, DVS[currentStage.currentPageName])
 }
 
 ////////////////////////////////////////////////
@@ -532,10 +532,11 @@ function generatePage(){
 			typeof(loadJSAttrSuccess) == "function"){
 		loadJSAttrSuccess($(jResultPage.find("> script")[0]).text())
 
-		WriteDecisionVarsToLocalStorage()
+		pageLoaded()
 	}else if(jResultPage.attr('loadJS') != undefined){
 		var remotePageUrl = ""
 		
+		//Todo - Does this handle for writing to decision vars or pageLoaded?
 		//Todo - Handle for loading locally. 
 		if(jResultPage.attr('loadJS') == ""){
 			//Generate the page name automatically
@@ -579,9 +580,62 @@ function generatePage(){
 		loadNarrationAudio(jCurrentScene.attr("name"), jResultPage.attr("id"))
 		unpauseAudio()
 
-		WriteDecisionVarsToLocalStorage()
+		pageLoaded()
 	}
 
+}
+
+var pageLoaded_lock = false
+var pageLoaded_stagesArrLength
+var pageLoaded_calledNumTimes
+var pageLoaded_initialStageName
+
+function pageLoaded(){
+	if(pageLoaded_lock == true){
+		pageLoaded_calledNumTimes++
+		if(pageLoaded_calledNumTimes == pageLoaded_stagesArrLength - 1){
+											//Minus 1 because the first stage
+											//was already loaded when pageLoaded
+											//was originally called
+			//We just finished the last stage load so write the vars
+			WriteDecisionVarsToLocalStorage()
+			pageLoaded_lock = false
+		}
+	}else{
+		pageLoaded_initialStageName = currentStage.name
+
+		pageLoaded_stagesArrLength = DVS['activeStages'].split(",").length
+
+		//Are there more stages
+		if(pageLoaded_stagesArrLength > 1){
+			//Prevents recursion
+			pageLoaded_lock = true
+			pageLoaded_calledNumTimes = 0
+
+			//Refresh the other stages (Note - don't get caught in infinite loop!)
+			$.each(DVS['activeStages'].split(","), function(i,v){
+				if(pageLoaded_initialStageName == v){
+					//No need to reload this stage so just exit
+					return
+				}
+
+				loadStage(v)
+
+				updateTimeDiv();
+
+				//Fix for issue where on reload previousSceneName is messed up
+				var currentSceneName = DVS[currentStage.currentSceneName]
+
+				if(currentSceneName == undefined){
+					alert("No currentSceneName set")
+				}
+
+				setDV(currentStage.currentSceneName, DVS[currentStage.previousSceneName])
+
+				loadScene(currentSceneName, DVS[currentStage.currentPageName])
+			})
+		}
+	}		
 }
 
 function generatePage_part2(text){
@@ -635,6 +689,7 @@ function loadPage(pageId){
 	
 	sceneReturnObj = undefined
 	
+	//Todo - this currently doesn't work with multiple stages
 	var pageQuery = "> page:[id='" + pageId + "']"
 	console.log(pageQuery)
 	jCurrentPage = jCurrentScene.find(pageQuery);
@@ -1233,6 +1288,9 @@ function setState(state){
 		case "settings":
 			$("body").attr("state", "settings")
 			break
+		case "map":
+			$("body").attr("state", "map")
+			break
 		case "set_bookmark":
 			$("#bookmarkName").attr("value", "")
 			$("body").attr("state", "set_bookmark")
@@ -1292,6 +1350,15 @@ function decisionClicked(theThis, id){
 	}	
 	
 	clickLock = false
+}
+
+function fullscreenOnChange(){
+	if($("#checkbox_fullscreen").attr("checked") == "checked"){
+		var i = document.getElementsByTagName("body")[0]
+		i.webkitRequestFullScreen()
+	}else{
+		document.webkitExitFullscreen()
+	}
 }
 
 ////////////////////////////////////////////////
@@ -1429,7 +1496,7 @@ function unpauseAudio(){
 ////////////////////////////////////////////////
 
 //Will create the dv if it is undefined
-function setDV(name, value, postToMultiplayerQueue){
+function setDV(name, value, postToMultiplayerQueue, type){
 	if(postToMultiplayerQueue == undefined){
 		postToMultiplayerQueue = true //todo - is this correct?
 	}
@@ -1445,10 +1512,35 @@ function setDV(name, value, postToMultiplayerQueue){
 	}
 	
 	var dvXml = "<variable name='" + name + "' " + valString + "/>"
-	if(dv.length == 0){
+	if(dv.length == 0){//Create a new var
 		$(dVars).append($(dvXml));
 	}else if(value != undefined){
-		dv.attr("value", value)	
+		//Change the already existing var
+		//Note - If we are in "add" mode you want to add it to the current dv
+
+		if(!fubze(type)){
+			var dvValue = parseFloat(dv.attr("value"))
+			value = parseFloat(value)
+
+			switch(type){
+				case "add":
+					dvValue = dvValue + value
+					break;
+				case "multiply":
+					dvValue = dvValue * value
+					break;
+				case "divide":
+					dvValue = dvValue / value
+					break;
+				case "subtract":
+					dvValue = dvValue - value
+					break;
+			}	
+
+			dv.attr("value", dvValue)
+		}else{
+			dv.attr("value", value)	
+		}
 	}
 	
 	updateDVS()
@@ -1476,7 +1568,8 @@ function loadDecisionVars(container){
 	//Todo - For some reason I got the great idea to change the decisionvar 
 	// node name to variable. This is a problem because all of the configs
 	// have to be changed as well, or we can roll back the "variable" name change
-	for(i=0;i<2;i++){
+	//Todo - WHAT A MESS! Doesn't handle for "decisionVar"!
+	for(i=0;i<2;i++){ //The loop is to handle for both "variable" and "decisionvar"s
 		$(container).find(selector).each(function(){
 			if($(this).attr("name") == undefined ||
 						$(this).attr("name").trim() == ""){
@@ -1485,7 +1578,8 @@ function loadDecisionVars(container){
 			}
 
 			//Will create the DV if not already created
-			setDV($(this).attr("name"), $(this).attr("value"))
+			setDV($(this).attr("name"), $(this).attr("value"), 
+					undefined, $(this).attr("type"))
 		});
 
 		selector = "> decisionvar"
@@ -1919,12 +2013,21 @@ function checkConditions(conditionsContainer){
 // Stages
 ////////////////////////////////////////////////
 function loadStage(name){
+	currentStage.name = name
+
 	$.each(JSON.parse(DVS[name]), function(k,v){
 		currentStage[k] = v
 	})
 
 	//Todo - Should I put these type of function here, or somewhere else
 	//updateTimeDiv()
+
+	jCurrentScene = $(xml).find("config > scenes > scene:[name='" 
+						+  DVS[currentStage.currentSceneName] + "']");
+
+	var pageQuery = "> page:[id='" + DVS[currentStage.currentPageName] + "']"
+	console.log(pageQuery)
+	jCurrentPage = jCurrentScene.find(pageQuery);
 }
 
 ////////////////////////////////////////////////
