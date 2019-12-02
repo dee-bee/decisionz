@@ -1,0 +1,19 @@
+What decisionz is:
+-Conditional display of content (text, music, images, videos, forwardPages)
+-Conditional loading of content (text, music, images, videos, configuration files)
+-Conditional interactions (masks, maps)
+-Serialization of state (bookmarking)
+-Multiple simultanious stages (also multiplayer sync'ing)
+-Time tracking
+-Routing from location to location
+-Hooks for animation/transitions between scenes (classimation). The hooks call javascript functions
+-Integration with other engines (such as iframes, X3Dom, D3, CSS3, Z8, etc)
+-History of events, conversations, etc
+-Utilities to help edit the content (wiki, JSEditor, etc)
+-Demo UI as example on how to impliment engine
+-Workes on a variety of devices (responsive designed) and can load to resemble a progressive web app (PWA, manifest files, fullscreen, etc)
+-Debugging features (console, etc)
+
+
+What decisionz is NOT:
+-Menuing system -  It can be used as a menuing system, but you'll have to work hard to make this happen if you have form controls. Might be easier to do outside of the decisionz engine

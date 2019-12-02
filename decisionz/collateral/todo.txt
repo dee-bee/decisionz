@@ -1,4 +1,9 @@
 todo (Note - Todo's' should generally be moved to gitHub repo issues)
+- Only write a page to the dom when it has changed
+- Use showView() function for links that change view
+- Localization
+- Optimize - Don't write to dom unless you have to, don't reload a page that doesn't have any DVs that are changed. Compress only the parts that have changed to serialize, make bookmarks share data between other bookmarks. 
+- Concept of commandline interface like Zork. Possible Decisionz are hidden. The user types in the correct commandline string to enable a decision.
 - Write a test for global conditions (conditions evaluated at every page load)
 - Pathfinding between locations
 - Undo move feature
