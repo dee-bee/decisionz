@@ -1,0 +1,202 @@
+<html>
+<head> 
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">		
+	
+	<script type="text/javascript" src="../js/decisionz_utils.js"></script>
+	
+	
+	<script type="text/javascript" src="../js/html_audio.js"></script>
+	<script src="../lib/xml2json.js"></script>
+	<script type="text/javascript" src="../lib/lz-string-master/libs/lz-string.min.js"></script>
+	<script type="text/javascript" src="../js/firbug_check.js"></script>
+	
+	<link type="text/css" href="../css/DomRpg.css" rel="stylesheet" />
+	
+	<link type="text/css" href="../lib/jquery_ui/css/smoothness/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
+	<script type="text/javascript" src="../lib/jquery/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="../lib/jquery_ui/js/jquery-ui-1.8.20.custom.min.js"></script>
+	<script type="text/javascript" src="../lib/jquery.ui.touch-punch.js"></script>
+	
+	<!--<script type="text/javascript" src="../js/decisionz_audio.js"></script>-->
+
+	<script type="text/javascript" src="../js/classimation.js"></script>
+	 
+	<script type="text/javascript" src="../js/gameLauncher.js"></script>
+</head>
+<body state="main" onunload="onUnload()">
+	<div id="dvs">
+		<div id="audios">
+			<div id="musicPlayerDiv">
+			</div>
+			<div id="narrationPlayerDiv">
+			</div>
+
+			<!--<div id="flashAudioPlayerDiv"></div>
+			<div id="htmlAudioPlayerDiv"></div>
+			<div id="embeddedAudioPlayerDiv"></div>-->
+		</div>
+		
+		<div id="main">
+			<div id="devbar">
+				<div id="clearLocalStorage"onclick="clearLocalStorage();location.reload()">Reset Game</div>
+				<a id="linkToWiki" target="blank">Edit Content</a>
+				<a id="linkToJSEditor" href="../../../../JSEditor/JSEditor/jsEditor.html" target="blank">JSEdit Config (refresh to reload)</a>
+				<a id="linkToConfigFile" href="" target="blank">Edit Config</a>
+			</div>
+
+			<div id="titleBar">
+				<div id="title">Decisionz</div>
+				<div id="statusTxt"></div>
+			</div>
+
+			<div id="currentTime">Time:</div>
+
+			<div id="contentContainer">
+				<canvas id="backgroundClickMatteCanvas"></canvas>
+				<img id="backgroundImage"></img>
+				<img id="backgroundClickMatte" onload="matteLoaded()" onclick="matteClicked(this)"></img>
+				<div id="pageContainer" >
+					<div id="pageContent" stage_name="defaultStage" class="stage"></div>
+					<div id="peopleStage_pageContent" stage_name="peopleStage" class="stage"></div>
+				</div>
+			</div>
+		</div>
+			
+		<div id="clickGuard"></div>
+
+		<div id="fixedBar">
+			<div id="toggleMenuBar" onclick="toggleMenuBar()">*</div>
+			<div id="menuBar">
+				<div id="bookmarksModeBtn" class="fixedBarBtn" onclick="setState('bookmarks')">bookmarks</div>
+				<div id="mainModeBtn" class="fixedBarBtn" onclick="setState('main')">Back</div>
+				<div id="setBookmarkBtn" class="fixedBarBtn" onclick="setState('set_bookmark')">set bookmark</div>
+				<div id="mapBtn" class="fixedBarBtn" onclick="setState('settings')">settings</div>
+				<div id="settingsBtn" class="fixedBarBtn" onclick="setState('map')">map</div>
+				<div id="devBtn" class="fixedBarBtn" onclick="setState('dev_mode')">dev</div>
+			</div>
+		</div>
+
+		<div id="bookmarkPanel" class="panel"></div>
+
+		<div id="setBookmarkPanel" class="panel">
+			<div id="setBookmark_container">
+				<div id="setBookmarkTitle">Bookmark Name</div>
+				<div id="bookmarkNameInvalid">Invalid characters in bookmark name. 
+								Only alpha numberic characters and spaces allowed.</div>
+				<input id="bookmarkName" type="text"></input>
+				<div id="setBookmarkSubmit" onclick="setBookmarkOkClicked()">Ok</div>
+			</div>
+		</div>
+
+		<div id="mapPanel" class="panel">
+			<div>
+			</div>
+		</div>
+
+		<div id="settingsPanel" class="panel">
+			<div id="setTabs">
+				  <ul>
+					<li><a href="#set_tabs-1">General</a></li>
+					<li><a href="#set_tabs-2">Narration Log</a></li>
+				  </ul>
+				  <div id="set_tabs-1">
+					<p><input id="checkbox_musicOn" type="checkbox"
+								 onclick='musicOnChange()' >Music On<br></p>
+					<p><input id="checkbox_narrationAudioOn" type="checkbox"
+								 onclick='narrationAudioOnChange()' >Narration Audio On<br></p>  
+					<p><input id="checkbox_disableDialog" type="checkbox"
+								 onclick='showDialogOnChange()' >Hide Dialog<br></p> 
+					<p><input id="checkbox_fullscreen" type="checkbox"
+								 onclick='fullscreenOnChange()' >Fullscreen<br></p> 
+				  </div>
+				  <div id="set_tabs-2">
+						<div id="narrationLog"></div>
+				  </div>
+			</div>
+		</div>
+
+		<div id="devPanel" class="panel">
+			<div id="devTabs">
+			  <ul>
+				<li><a href="#tabs-1">General</a></li>
+				<li><a href="#tabs-2">Advanced</a></li>
+			  </ul>
+			  <div id="tabs-1">
+				<p>Dev</p>
+				<div id="sendErrorBtn" onclick="sendErrorReport()">Send Error Report</div>
+				<p>Load Game State</p>
+				<textarea id="errorTextArea"></textarea>
+				<div id="loadErrorBtn" onclick="loadGameState()">Load</div>
+				<div id="localStorageLength"></div>		  </div>
+			  <div id="tabs-2">
+
+			  </div>
+			</div>	
+		</div>
+
+		<!--Todo- figure out where this should go-->
+		<div id="stage2"  stage_name="stage2Stage" class="stage"></div>
+
+
+		<div id="snippets">
+			<div id="iframe_snippet">
+				<iframe id="templateIframe"></iframe>
+			</div>
+			<div id="pageContent_snippet">
+				<div id="pageContent"></div>
+			</div>
+			<div id="decisionVars_defaults_snippet">
+				<variable name="bookmarks" ></variable>
+				<variable name="log"></variable>
+				<variable name="remotePageContentURL"  ></variable>
+				<variable name="narrationAudio" value="false" ></variable>
+				<variable name="narrationLog" ></variable>
+
+				<variable name="SoundMediaPath" ></variable>
+				<variable name="music" value="false" ></variable>
+
+				<variable name="currentTime" value="0000-00-00 00:00:00" ></variable>
+				<variable name="currentBookmark" ></variable>
+				<variable name="currentCharacter" ></variable>
+				<variable name="currentLocationName" ></variable>
+				<variable name="currentSceneName" value="start"></variable>
+				<variable name="currentPageName" value="pageStart" ></variable>
+
+				<variable name="previousLocationName" ></variable>
+				<variable name="previousSceneName" ></variable>
+				<variable name="previousPageName" ></variable>
+
+				<variable name="routes"></variable>
+
+				<variable name="activeStages" value="defaultStage" ></variable>
+
+				<!-- Todo - Do we need json type? -->
+				<variable name="defaultStage" type="json"  value='
+								{
+									"pageContent":"#main #pageContent",
+									"currentCharacter":"currentCharacter",
+									"currentSceneName":"currentSceneName",
+									"previousSceneName":"previousSceneName",
+									"currentPageName":"currentPageName",
+									"previousPageName":"previousPageName",
+									"currentLocationName":"currentLocationName",
+									"previousLocationName":"previousLocationName",
+									"currentTime":"currentTime"
+								}
+				' ></variable>
+
+				<variable name="multiplayerMode" value="false" ></variable>
+				<variable name="multiplayerWaitingOn" value="" ></variable>
+				<variable name="multiplayerQueueGetURL" value="http://decisionz.org/multiplayerQueueGet.php" ></variable>
+				<variable name="multiplayerQueuePostURL" value="http://decisionz.org/multiplayerQueuePost.php" ></variable>
+				<variable name="multiplayerQueueClearURL" value="http://decisionz.org/multiplayerQueueClear.php" ></variable>
+				<variable name="multiplayerUserId" value="test1111" ></variable>
+				<variable name="multiplayerSessionId" value="test2222" ></variable>
+
+				<variable name="gameMode" value="text"></variable>
+			</div>
+		</div>
+		<div id="xml"></div>
+	</div>
+</body>
+</html>

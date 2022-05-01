@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scene selector="#pageContainer"
-		loadhtml="animations/falconTerraEdgarDecideToRescueLocke_transistions.html"
+		loadhtml="../animations/falconTerraEdgarDecideToRescueLocke_transistions.html"
 		default="default">
 	
 	<animation id="default">	

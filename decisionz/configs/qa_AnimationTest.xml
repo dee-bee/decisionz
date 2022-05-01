@@ -6,7 +6,7 @@
 	<scenes>
 		<!-- Impl - Impl - Your Cabin (text-only) -->
 		<scene name="introAnimationTest" disableLocalStorageWritesOnPageLoad="true"
-				loadClassimation="animations/falconTerraEdgarDecideToRescueLocke.xml">
+				loadClassimation="../animations/falconTerraEdgarDecideToRescueLocke.xml">
 			<page id="pageStart" classimation="zoomFalcon" classimationNextPage="p2" 
 					music="ff3atmabattle2.mp3">
 				<content ></content>

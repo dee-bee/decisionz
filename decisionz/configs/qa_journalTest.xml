@@ -1,0 +1,25 @@
+<config>
+    <decisionvars>
+		<variable name="journal" value="page2,page3,page1"></variable>
+		<variable name="journalStage" value="defaultStage"></variable>
+	</decisionvars>
+	<scenes>
+		<scene name="start" build_start_page_from_dv="journal">
+		  <page id="page1" >
+			<content>
+                <p>Page 1</p>
+            </content>
+		  </page>
+		  <page id="page2" >
+			<content>
+                <p>Page 2</p>
+            </content>
+		  </page>
+		  <page id="page3" >
+			<content>
+                <p>Page 3</p>
+            </content>
+		  </page>
+		</scene>
+	</scenes>
+</config>

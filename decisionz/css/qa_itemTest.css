@@ -1,0 +1,32 @@
+#mapPanel{
+    background-color:blue;
+    color:white;
+    position:absolute;
+    bottom:0px;
+    height:200px;
+}
+
+
+div#appendixListStage {
+    width: 119px;
+    height: 400px;
+    float: left;
+    background-color: red;
+    font-size: 12px;
+}
+
+div#appendixStage {
+    height: 400px;
+    width: 600px;
+    float: left;
+    background-color: blue;
+}
+
+div#uiTabs {
+    width: 761px;
+}
+
+#appendixListStage .decisionBtn {
+    width: 60px;
+    height: 25px;
+}

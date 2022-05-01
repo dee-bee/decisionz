@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scene selector="#pageContainer"
-		loadhtml="animations/falconTerraEdgarDecideToRescueLocke.html">
+		loadhtml="../animations/falconTerraEdgarDecideToRescueLocke.html">
 	<animation id="zoomFalcon" next_anim="edgarTerraIntro" endtime="4000" >
 		<group selector="#falcon">
 			<keyframe starttime="0" class=""></keyframe>

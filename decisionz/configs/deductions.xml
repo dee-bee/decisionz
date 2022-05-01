@@ -1,0 +1,66 @@
+<!-- Todo- Add test to make sure the _expected_scene and _expected_page work correctly -->
+<config devTools="true" perspective="MobilePerspective">
+	<characters>
+		<character name="Travis" defaultCharacter="true" startPage="true" />
+		<character name="Farse" />
+	</characters>
+	
+	<decisionvars>
+		<variable name="currentSceneName_PeopleStage" value="peopleScene" ></variable>
+		<variable name="currentPageName_PeopleStage" value="pageStart" ></variable>
+				
+		<variable name="activeStages" value="defaultStage,peopleStage" ></variable>
+		<variable name="peopleStage" value='
+					{
+						"disableNarrationLog":"true",
+						"pageContent":"#main #peopleStage_pageContent",
+						"currentSceneName":"currentSceneName_PeopleStage",
+						"currentPageName":"currentPageName_PeopleStage"
+					}
+		' />
+	</decisionvars>
+
+	<scenes>
+		<scene name="start">
+			<page id="pageStart">
+				<content>
+					<p>Start Scene.</p>
+				</content>
+			</page>
+		</scene>		
+		<scene name="peopleScene">
+			<page id="pageStart" nextpage="pg2">
+				<content>
+					<p>People Scene.</p>
+				</content>
+			</page>
+			<!--<page id="pg2" onload="doHey()" nextpage="pg3">-->
+			<page id="pg2" nextpage="pg3">
+				<content_script>
+					//Clears out the pageObj. This obj can be used by the page so that
+					//the page is cleanly removed on next page load
+					//Todo - Not stage safe!!
+					var pageObj = {}
+
+					pageObj.doAHey = function(){
+						alert("Hey therez")					
+					}
+				</content_script>
+				<content>
+					<p onclick="pageObj.doAHey()">People Scene. Pg2</p>
+				</content>
+			</page>
+			<page id="pg3" >
+				<content_script>
+					//Clears out the pageObj. This obj can be used by the page so that
+					//the page is cleanly removed on next page load
+					//Todo - Not stage safe!!
+					var pageObj = {}
+				</content_script>
+				<content>
+					<p onclick="pageObj.doAHey()">People Scene. Pg3. Is doAHey() still around?</p>d
+				</content>
+			</page>
+		</scene>
+	</scenes>
+</config>

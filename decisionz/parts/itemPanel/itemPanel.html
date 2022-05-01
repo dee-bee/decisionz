@@ -1,0 +1,13 @@
+<html>
+ <script src="jquery-1.10.2.js"></script>
+ <script>
+    function hi(){
+        if(parent.DVS['item'] != undefined){
+            $("#hi").text("Item count = " + parent.DVS['item'])
+        }
+    }
+ </script>
+ <body onload="hi()">
+    <h1 id="hi">Hi</h1>
+ </body>
+</html>

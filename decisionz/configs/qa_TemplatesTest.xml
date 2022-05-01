@@ -39,7 +39,7 @@
 	<scenes>
 		<!-- Impl - Impl - Your Cabin (text-only) -->
 		<scene name="startScene"
-				loadIFrameTemplate="templates/RTLScramble_html/RTLScramble.html?debug=true">
+				loadIFrameTemplate="../parts/itemPanel/itemPanel.html">
 		</scene>
 	</scenes>
 	<locations>

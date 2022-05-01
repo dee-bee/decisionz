@@ -1,7 +1,7 @@
 <config>
 	<decisionvars>
 	</decisionvars>
-	<shared>
+	<!--<shared>
 		<page id="pageTestGlobal" nextpage="pageTestCompleted">
 			<content>
 				<p>Global page loaded. Next should take you to page loading
@@ -12,13 +12,19 @@
         <content id="sharedTest">
 		
         </content>
-    </shared>
+    </shared>-->
 
 	<scenes>
 		<scene name="start">
-			<page id="pageStart" nextpage="pageTestLocation">
+			<!--<page id="pageStart" nextpage="pageTestLocation">
 				<content>
 					<p>Scene page loaded. Next should take you to a Location Page.</p>
+				</content>
+			</page>-->
+			
+			<page id="pageStart" nextpage="pageTestCompleted">
+				<content>
+					<p>Scene pageStart loaded. </p>
 				</content>
 			</page>
 			
@@ -123,12 +129,12 @@
 		</scene>
 	</scenes>
 	<locations>
-		<location name="start">
+		<!--<location name="start">
 			<page id="pageTestLocation" nextpage="pageTestGlobal">
 				<content>
 					<p>Location page loaded. Next should take you to a Global Page.</p>
 				</content>
 			</page>
-		</location>
+		</location>-->
 	</locations>
 </config>

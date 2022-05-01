@@ -85,7 +85,7 @@ body[state='set_bookmark'] #toggleMenuBar{
 }
 
 #fixedBar{
-    /* z-index: 101; */
+    z-index: 101;
     left: 0px;
     top: 0px;
     /* right: 0px; */
@@ -175,7 +175,7 @@ body{
     font-family: Times New Roman;
 }
 
-#dvs[currentpagename=''] #pageContainer{
+#dvs[currentpagename=''] #pageContainer #pageContent{
 	display:none;
 }
 
@@ -212,7 +212,7 @@ div#devbar{
 body:not([state='dev_mode']) #devPanel,
 body:not([state='main']) #devBtn,
 body:not([state='settings']) #settingsPanel,
-body:not([state='map']) #mapPanel,
+body:not([state='ui']) #uiPanel,
 body:not([state='set_bookmark']) #setBookmarkPanel{
     display:none;
 }
@@ -230,12 +230,12 @@ body:not([debug='true']) #devBtn{
 }
 
 #settingsBtn,
-#mapBtn{
+#uiBtn{
 	display:none;	
 }
 
 body[state='main'] #settingsBtn,
-body[state='main'] #mapBtn{
+body[state='main'] #uiBtn{
 	display:block
 }
 
@@ -251,7 +251,7 @@ body:not([state="main"]) #main {
 body[state='bookmarks'] #mainModeBtn,
 body[state='dev_mode'] #mainModeBtn,
 body[state='settings'] #mainModeBtn,
-body[state='map'] #mainModeBtn,
+body[state='ui'] #mainModeBtn,
 body[state='set_bookmark'] #mainModeBtn{
     display:block;
 }
@@ -319,7 +319,7 @@ body:not([state='main']) #setBookmarkBtn{
 
 #bookmarksModeBtn,
 #settingsBtn,
-#mapBtn,
+#uiBtn,
 #mainModeBtn{
 	font-size: 18px;
 	padding-top: 42px;
@@ -342,8 +342,8 @@ body:not([state='main']) #setBookmarkBtn{
     color: white;
 }
 
-#mapPanel{
-    font-size: 30px;
+#uiPanel{
+    font-size: 13px;
     min-height: 800px;
     min-width: 700px;
     padding-left: 93px;
@@ -577,6 +577,7 @@ body[debug='true'] #backgroundClickMatte{
 	background-color:black;
 	opacity:.5;
 	display:none;
+	z-index: 0;
 }
 
 body.showMenu #menuBar,
@@ -593,4 +594,8 @@ body.showMenu #clickGuard{
 	top: 25px;
 	/* background: red; */
 	left: 114px;
+}
+
+div#mapPanel {
+    display: none;
 }

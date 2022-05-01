@@ -28,7 +28,7 @@
     </linktypes>
     <scenes>    
         <!-- gameStart sets location to cabin-Bed-Door for new games, or to currentLocation for returning games -->
-        <scene name="gameStart" disableClock="true" gameStartScene="true" music="assets/music/Faces_Without_Names.mp3"
+        <scene name="gameStart" disableClock="true" gameStartScene="true" music="../assets/music/Faces_Without_Names.mp3"
             musicRepeat="true"/>
 
         <!-- ////////// Warp ////////////  -->

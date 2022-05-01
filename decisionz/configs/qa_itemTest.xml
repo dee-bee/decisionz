@@ -1,0 +1,70 @@
+<config>
+    <styles>
+        <style src="../css/qa_itemTest.css"/>
+    </styles>
+    <decisionvars>
+		<variable name="currentSceneNameStageTest" value="itemsPanel" ></variable>
+		<variable name="previousSceneNameStageTest" value="" ></variable>
+		<variable name="currentPageNameStageTest" value="pageStart" ></variable>
+		<variable name="previousPageNameStageTest" value="" ></variable>
+		<variable name="currentCharacterStageTest" value="itemsChar" ></variable>
+		<variable name="currentLocationNameStageTest" value="" ></variable>
+		<variable name="previousLocationNameStageTest" value="" ></variable>
+		<variable name="currentTimeStageTest" value="0000-00-00 15:30:00" ></variable>
+		
+		<variable name="activeStages" value="defaultStage,stage2Stage" ></variable>
+		
+		<variable name="stage2Stage" value='
+					{
+						"pageContent":"#mapPanel",
+						"currentCharacter":"currentCharacterStageTest",
+						"currentSceneName":"currentSceneNameStageTest",
+						"previousSceneName":"previousSceneNameStageTest",
+						"currentPageName":"currentPageNameStageTest",
+						"previousPageName":"previousPageNameStageTest",
+						"currentLocationName":"currentLocationNameStageTest",
+						"previousLocationName":"previousLocationNameStageTest",
+						"currentTime":"currentTimeStageTest"
+					}
+		' />
+	</decisionvars>
+	<scenes>
+		<scene name="start">
+		  <page id="pageStart" >
+			<content>
+                <p>What would you like?</p>
+            </content>
+			<decisions>
+				<decision label="Add Item" nextpage="itemAdded">
+				</decision>
+			</decisions>
+		  </page>
+		  <page id="itemAdded" nextpage="pageStart">
+			<decisionvar name="item" value="1" type="add"/>
+			<content>
+                <p>Item Added</p>
+            </content>
+		  </page>
+		</scene>
+		<scene name="itemsPanel"
+				loadIFrameTemplate="../parts/itemPanel/itemPanel.html">
+		</scene>
+		<!--<scene name="itemsPanel">
+		  <page id="pageStart" >
+			<content>
+			    <dynamic>
+					<condition name="item" value=""/>
+					<content>
+						Items = Zero
+					</content>
+				</dynamic>
+                <dynamic>
+					<content>
+						You have <print dvname='item'></print> items.
+					</content>
+				</dynamic>
+            </content>
+		  </page>
+		</scene>-->
+	</scenes>
+</config>

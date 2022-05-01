@@ -1,0 +1,124 @@
+<config>
+    <styles>
+        <style src="../css/qa_itemTest.css"/>
+    </styles>
+    <decisionvars>		
+		<variable name="activeStages" value="defaultStage,appendixStage,appendixListStage" ></variable>
+		
+		
+		<variable name="appendixListStage_currentSceneNameStageTest" value="appendixList" ></variable>
+		<variable name="appendixListStage_previousSceneNameStageTest" value="" ></variable>
+		<variable name="appendixListStage_currentPageNameStageTest" value="pageStart" ></variable>
+		<variable name="appendixListStage_previousPageNameStageTest" value="" ></variable>
+		<variable name="appendixListStage_currentCharacterStageTest" value="whatIsThis" ></variable>
+		<variable name="appendixListStage_currentLocationNameStageTest" value="" ></variable>
+		<variable name="appendixListStage_previousLocationNameStageTest" value="" ></variable>
+		<variable name="appendixListStage_currentTimeStageTest" value="0000-00-00 15:30:00" ></variable>
+		
+		<variable name="appendixListStage" value='
+					{
+						"pageContent":"#appendixListStage",
+						"currentCharacter":"appendixListStage_currentCharacterStageTest",
+						"currentSceneName":"appendixListStage_currentSceneNameStageTest",
+						"previousSceneName":"appendixListStage_previousSceneNameStageTest",
+						"currentPageName":"appendixListStage_currentPageNameStageTest",
+						"previousPageName":"appendixListStage_previousPageNameStageTest",
+						"currentLocationName":"appendixListStage_currentLocationNameStageTest",
+						"previousLocationName":"appendixListStage_previousLocationNameStageTest",
+						"currentTime":"appendixListStage_currentTimeStageTest"
+					}
+		' />
+		
+		<variable name="appendixStage_currentSceneNameStageTest" value="appendix_default" ></variable>
+		<variable name="appendixStage_previousSceneNameStageTest" value="" ></variable>
+		<variable name="appendixStage_currentPageNameStageTest" value="pageStart" ></variable>
+		<variable name="appendixStage_previousPageNameStageTest" value="" ></variable>
+		<variable name="appendixStage_currentCharacterStageTest" value="whatIsThis" ></variable>
+		<variable name="appendixStage_currentLocationNameStageTest" value="" ></variable>
+		<variable name="appendixStage_previousLocationNameStageTest" value="" ></variable>
+		<variable name="appendixStage_currentTimeStageTest" value="0000-00-00 15:30:00" ></variable>
+
+
+		<variable name="appendixStage" value='
+					{
+						"pageContent":"#appendixStage",
+						"currentCharacter":"appendixStage_currentCharacterStageTest",
+						"currentSceneName":"appendixStage_currentSceneNameStageTest",
+						"previousSceneName":"appendixStage_previousSceneNameStageTest",
+						"currentPageName":"appendixStage_currentPageNameStageTest",
+						"previousPageName":"appendixStage_previousPageNameStageTest",
+						"currentLocationName":"appendixStage_currentLocationNameStageTest",
+						"previousLocationName":"appendixStage_previousLocationNameStageTest",
+						"currentTime":"appendixStage_currentTimeStageTest"
+					}
+		' />
+	</decisionvars>
+	<scenes>
+		<scene name="start">
+		  <page id="pageStart" >
+			<content>
+                <p>This is the appendix test (UI > Appedix).</p>
+            </content>
+			<decisions>
+				<decision label="Meet Dan" nextpage="metDan">
+				</decision>
+				<decision label="Meet Joe" nextpage="metJoe">
+				</decision>
+			</decisions>
+		  </page>
+		  <page id="metDan" nextpage="pageStart">
+			<decisionvar name="met_dan" value="true" />
+			<content>
+                <p>You met Dan.</p>
+            </content>
+		  </page>
+		  <page id="metJoe" nextpage="pageStart">
+			<decisionvar name="met_joe" value="true" />
+			<content>
+                <p>You met Joe.</p>
+            </content>
+		  </page>
+		</scene>
+
+		<scene name="appendixList">
+		  <page id="pageStart" >
+			<content>
+			    <h1>Appendix List</h1>
+            </content>
+			<decisions>
+                <decision label="Dan" stage_name="appendixStage" location="appendix_dan">
+				    <condition name="met_dan" value="true"/>
+			    </decision>
+                <decision label="Joe" stage_name="appendixStage" location="appendix_joe">
+				    <condition name="met_joe" value="true"/>
+			    </decision>
+			</decisions>
+		  </page>
+		</scene>	
+
+		<scene name="appendix_default">
+		  <page id="pageStart" >
+			<content>
+			    <h1>Default page</h1>
+            </content>
+		  </page>
+		</scene>
+
+		<scene name="appendix_dan">
+		  <page id="pageStart" >
+			<content>
+			    <h1>Hi Dan!</h1>
+            </content>
+		  </page>
+		</scene>
+		
+		<scene name="appendix_joe">
+		  <page id="pageStart" >
+			<content>
+			    <h1>Hi Joe!</h1>
+            </content>
+		  </page>
+		</scene>
+			
+	</scenes>
+</config>

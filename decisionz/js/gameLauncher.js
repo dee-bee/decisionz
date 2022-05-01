@@ -1,5 +1,5 @@
 //var params;
-var configXmlFilename = "configs/sandbox.xml";
+var configXmlFilename = "../configs/sandbox.xml";
 var xml;
 var decisionVars;
 var DVS = []
@@ -73,7 +73,7 @@ $(document).ready(function () {
 			loadjscssfile(cssArr[i], "css")
 		}
 	}else{
-		loadjscssfile("css/gameLauncher.css", "css")
+		loadjscssfile("../css/gameLauncher.css", "css")
 	}
 
 
@@ -106,6 +106,7 @@ $(document).ready(function () {
 
 	$( "#devTabs" ).tabs();
 	$( "#setTabs" ).tabs();
+	$( "#uiTabs" ).tabs();
 	
 	loadGame();
 });
@@ -204,6 +205,11 @@ function parseXml(text_xml){
 
 	if(params["SoundMediaPath"] != null){
 		setDV("SoundMediaPath",params["SoundMediaPath"])
+	}else{
+		//Nothing set on url so set a default value if the dv is blank
+		if(uob(DVS["SoundMediaPath"])){
+			setDV("SoundMediaPath","../")
+		}
 	}
 
 	if(params["multiplayerUserId"] != null){
@@ -350,7 +356,8 @@ function loadScene(name, pageName){
 			$("#backgroundClickMatte").removeClass("hidden")
 			loadClickMatte(jCurrentScene.attr("name"))
 		}else if(!uob(jCurrentScene.attr("background"))){
-			$("#backgroundImage").attr("src","scenes/" 
+			//Todo - Use a variable to set the path to the scenes dir not "../"
+			$("#backgroundImage").attr("src","../scenes/" 
 											+ jCurrentScene.attr("background") 
 											+ "/background.png")
 			$("#backgroundImage").removeClass("hidden")
@@ -362,9 +369,14 @@ function loadScene(name, pageName){
 	
 	//todo
 	//WriteDecisionVarsToLocalStorage()
-	
+	/*var build_start_page_from_dv = jCurrentScene.attr("build_start_page_from_dv")
+	if(fubze(build_start_page_from_dv)){
+		
+	}*/
+
+
 	if(pageName != undefined){
-		//Loading a bookmark
+		//Loading a bookmark -- todo Is this comment correct?
 		loadPage(pageName);		
 	}else{
 		loadDecisionVars(jCurrentScene);
@@ -468,7 +480,13 @@ function generatePage(){
 				divId = "id='" + $(v).attr("id") + "'"
 			}
 
-        	output = output + "<div " + divId + " class='decisionBtn' onclick='decisionClicked(this,\"" 
+			var divStage = ""
+			if($(v).attr("stage_name") != undefined){
+				divStage = "stage_name='" + $(v).attr("stage_name") + "'"
+			}
+ 
+        	output = output + "<div " + divId + divStage +
+        							" class='decisionBtn' onclick='decisionClicked(this,\"" 
         								+ $(v).attr("id") + 
         								"\")' >" + $(this).attr("label") + "</div>";
 		}
@@ -482,9 +500,15 @@ function generatePage(){
 	//  Also need to figure out how loadJS/et all work into the big picture.
 	var scriptTag = jResultPage.find("> content > script")
 	if(scriptTag.length > 0){
+		//output += "\n<script>\n" + scriptTag.text() + "\n</script>\n"
+	}
+	
+	//Todo the above just save for compatibility with older code
+	var scriptTag = jResultPage.find("> content_script")
+	if(scriptTag.length > 0){
 		output += "\n<script>\n" + scriptTag.text() + "\n</script>\n"
 	}
-
+	
 	//Load the style tag from the page if present
 	var styleTag = jResultPage.find("> content > style")
 	if(styleTag.length > 0){
@@ -501,6 +525,14 @@ function generatePage(){
 	}*/
 	
 	$(currentStage.pageContent).html(output);
+
+	//Actually creates a script tag. Just testing out this feature
+	if(scriptTag.length > 0){	
+		var script   = document.createElement("script");
+		script.type  = "text/javascript";
+		script.text  = scriptTag.text()              // use this for inline script
+		$(currentStage.pageContent)[0].appendChild(script);
+	}
 	
 	//Todo - remove this
 	var jNarrationLog = jDV("narrationLog")
@@ -517,17 +549,21 @@ function generatePage(){
 	
 	//Doesn't seem to work on IOS
 	//jDV("narrationLog").append(output)
-	if(jNarrationLog.children().last().hasClass("youChose")){
-		//Todo - Remove script tags automatically. And remove the script tag fix
-		//output = output.replaceAll("<script*>*</script>", "");
-		jNarrationLog.html(jNarrationLog.html() + narrationLogText)
+	if(currentStage["disableNarrationLog"] == undefined){
+		if(jNarrationLog.children().last().hasClass("youChose")){
+			//Todo - Remove script tags automatically. And remove the script tag fix
+			//output = output.replaceAll("<script*>*</script>", "");
+			jNarrationLog.html(jNarrationLog.html() + narrationLogText)
 
+		}
 	}
 
 	jNarrationLog.find("div.decisionBtn").removeAttr("onclick")
 
 	$("#narrationLog").empty().append($(jNarrationLog.html()))
 
+	//Todo - Not sure if loadJSAttrSuccess is actually connected to anything
+	// Maybe a hold over attr from Flex version
 	if(jResultPage.find("> content > script")[0] != undefined &&
 			typeof(loadJSAttrSuccess) == "function"){
 		loadJSAttrSuccess($(jResultPage.find("> script")[0]).text())
@@ -681,6 +717,7 @@ function loadPage(pageId){
 	setDV(currentStage.previousPageName, DVS[currentStage.currentPageName])
     
     //Clear it out in case the page doesn't exist (click_matte/etc)
+    //Todo - Need to fix this because it may be another stage
     setDV(currentStage.currentPageName, "")
 
 	//todo wipes out animation if playing
@@ -1288,8 +1325,8 @@ function setState(state){
 		case "settings":
 			$("body").attr("state", "settings")
 			break
-		case "map":
-			$("body").attr("state", "map")
+		case "ui":
+			$("body").attr("state", "ui")
 			break
 		case "set_bookmark":
 			$("#bookmarkName").attr("value", "")
@@ -1317,10 +1354,26 @@ function decisionClicked(theThis, id){
 	}
 	
 	//Todo - Find Stage Name
+	//First we need the currentStage of the stage that the decision resides in
 	loadStage($(theThis).closest(".stage").attr("stage_name"))
 
+	//Todo need to fix for multiple stages. It looks like it runs
+	// with the wrong scene name for another stage
+	jCurrentScene = $(xml).find("config > scenes > scene:[name='" 
+						+  DVS[currentStage.currentSceneName] + "']");
+
+	var pageQuery = "> page:[id='" + DVS[currentStage.currentPageName] + "']"
+	console.log(pageQuery)
+	jCurrentPage = jCurrentScene.find(pageQuery);
+ 
 	var decision = jCurrentPage.find("decisions > decision#" + id)
 	
+	//When one stage opens a page in another stage have to take the decision from the
+	// first stage, but the "currentStage" of the target stage.
+	if($(theThis).attr("stage_name") != undefined){
+		loadStage($(theThis).attr("stage_name"))
+	}
+
 	if($(decision).attr("calculate_duration") != undefined){
 		//Find route duration
 		addDurationToCurrentTime(
@@ -1333,8 +1386,10 @@ function decisionClicked(theThis, id){
 	//todo - append doesn't seem to work on IOS with xml
 	//todo - Is the narrationLog the same as the log DV?
 	//jDV("narrationLog").append("<p> You chose: " + $(decision).attr("label") +  "</p>\n")
-	
-	jDV("narrationLog").html(jDV("narrationLog").html() + "\n<p class='youChose' decision_id='" + id + "'> You chose: " + $(decision).attr("label") +  "</p>\n")
+	//Todo fix narration log for multiple stages
+	jDV("narrationLog").html(jDV("narrationLog").html() 
+			+ "\n<p class='youChose' decision_id='" + id + "'> You chose: " 
+			+ $(decision).attr("label") +  "</p>\n")
 	
 	$("#narrationLog").empty().append($(jDV("narrationLog").html()))
 	
@@ -1454,8 +1509,8 @@ function loadMusic(name){
 		$("#musicPlayerDiv").empty().append($('<audio id="musicAudioPlayer" width="0" height="0">' + 
 													'<source src="' + DVS['SoundMediaPath'] + "ogg/" +
 													parts[1] + '.ogg"' +
-													'type="audio/ogg"></source>' + 
-													'<source src="mp3/' +
+													'type="audio/ogg"></source>' + //Todo - Just updated mp3 to use SoundMediaPath var. Need to test it.
+													'<source src="' + DVS['SoundMediaPath'] + "mp3/" +
 													parts[1] + '.mp3"' +
 													'type="audio/mp3"></source>' + 
 												'</audio>'));
@@ -1864,8 +1919,9 @@ function loadIFrame(source){
 
 
 function loadClickMatte(name){
-	$("#backgroundImage").attr("src","scenes/" + name + "/background.png")
-	$("#backgroundClickMatte").attr("src","scenes/" + name + "/matte.png")
+	//Todo - use something like DVS['SoundMediaPath'] to set scene path. Note this is a repeated todo.
+	$("#backgroundImage").attr("src","../scenes/" + name + "/background.png")
+	$("#backgroundClickMatte").attr("src","../scenes/" + name + "/matte.png")
 }
 
 function matteLoaded(){
@@ -2018,21 +2074,21 @@ function checkConditions(conditionsContainer){
 // Stages
 ////////////////////////////////////////////////
 function loadStage(name){
+	currentStage = []
+
 	currentStage.name = name
+
+	//Clearing vals with defaultStage. 
+	//Note that this allows you to only create the vars you need for that
+	// particular stage. All the other vals are the ones used by defaultStage.
+	//Note - This may cause issues with previous[Page/Scene/Location]
+	$.each(JSON.parse(DVS["defaultStage"]), function(k,v){
+		currentStage[k] = v
+	})
 
 	$.each(JSON.parse(DVS[name]), function(k,v){
 		currentStage[k] = v
 	})
-
-	//Todo - Should I put these type of function here, or somewhere else
-	//updateTimeDiv()
-
-	jCurrentScene = $(xml).find("config > scenes > scene:[name='" 
-						+  DVS[currentStage.currentSceneName] + "']");
-
-	var pageQuery = "> page:[id='" + DVS[currentStage.currentPageName] + "']"
-	console.log(pageQuery)
-	jCurrentPage = jCurrentScene.find(pageQuery);
 }
 
 ////////////////////////////////////////////////
