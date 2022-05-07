@@ -1,4 +1,6 @@
 todo (Note - Todo's' should generally be moved to gitHub repo issues)
+- Merge make decisionz.js an object that it triggered to start from main.js
+- Make decisionz.js it's own module/repo
 - Only write a page to the dom when it has changed
 - Use showView() function for links that change view
 - Localization
