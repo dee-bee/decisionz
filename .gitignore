@@ -1,1 +1,6 @@
-**/tempz/*
+**/tempz/
+decisionz/templates
+decisionz/narration
+decisionz/music
+decisionz/collateral/recordings
+node_modules/

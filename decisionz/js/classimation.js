@@ -1,20 +1,19 @@
 //loadAnimation("../animations/falconTerraEdgarDecideToRescueLocke.xml", true)
+export class Classimation {
+  constructor(url, callback){
+    this.animXml = undefined
+    this.htmlLoaded = false
+    this.finishedCallback = undefined
+    this.currentAnimName = undefined
+    this.animationPlaying = false
+    this.stepMode = false
 
-function Classimation(url, callback){
-	if(url != undefined){
-		this.load(url,callback)
-	}
-}
+    if(url != undefined){
+      this._load(url,callback)
+    }
+  }
 
-Classimation.prototype = {
-	animXml:undefined,
-	htmlLoaded: false,
-	finishedCallback: undefined,
-	currentAnimName: undefined,
-	animationPlaying: false,
-	stepMode: false,
-
-	load: function(filename, callback){	
+  _load(filename, callback){
 		//todo - do we need the callback?
 
 		if(filename == undefined){
@@ -25,19 +24,19 @@ Classimation.prototype = {
 		var thisVar = this;
 
 		//Load xml
+    fetch(filename, options)
 		$.ajax({
 				type: "GET",
 				async: false,
-				url: filename,
 				dataType: "xml",
 				success: function( t_xml ) {
 							thisVar.animXml = t_xml
-							thisVar.parseAnimation()
+							thisVar._parseAnimation()
 						}
 			});
-	},
+	}
 
-	parseAnimation: function(){
+  _parseAnimation(){
 		var animScene = $(this.animXml).find("scene")[0]
 
 		if(!this.htmlLoaded && $(animScene).attr("loadhtml") != undefined){
@@ -60,9 +59,9 @@ Classimation.prototype = {
 						}
 			});
 		}
-	},
+	}
 
-	playFrame: function(index, selector, keyframeNode){
+	_playFrame(index, selector, keyframeNode){
 		//Sprite
 		$(selector).removeClass()
 
@@ -75,27 +74,27 @@ Classimation.prototype = {
 		}
 
 		$(selector).addClass($(keyframeNode).attr('class'))
-	},
+	}
 
-	playAnimationGroup: function(groupNode){
+	_playAnimationGroup(groupNode){
 		var time = 0
 		var selector = $(groupNode).attr("selector")
 
 		var thisVar = this
 		$(groupNode).find("keyframe").each(function(i,v){
 			if(parseInt($(v).attr("starttime")) == 0){
-				thisVar.playFrame(i,selector,v)
+				thisVar._playFrame(i,selector,v)
 			}else{
 				if(!thisVar.stepMode){
 					var timer = new Timer(function(){
-								thisVar.playFrame(i,selector,v)
+								thisVar._playFrame(i,selector,v)
 							}, parseInt($(v).attr("starttime")))
 				}
 			}
 		})
-	},
+	}
 
-	playAnimation: function(id, callback, t_stepMode){
+	playAnimation(id, callback, t_stepMode){
 		if(t_stepMode != undefined){
 			this.stepMode = t_stepMode
 		}
@@ -127,7 +126,7 @@ Classimation.prototype = {
 		var thisVar = this;
 		$(animNode).find("group").each(function(i,v){
 			//numAnimations++
-			thisVar.playAnimationGroup(v)
+			thisVar._playAnimationGroup(v)
 		})
 
 		//Set callback that animation is finished
@@ -136,13 +135,13 @@ Classimation.prototype = {
 		}else{
 			if(!this.stepMode){
 				var timer = new Timer(function(){
-									thisVar.animationFinished()}, 
+									thisVar._animationFinished()}, 
 								$(animNode).attr("endtime"))
 			}
 		}
-	},
+	}
 
-	animationFinished: function(){
+	_animationFinished(){
 		//numAnimations--
 
 		var animNode = $(this.animXml).find("scene > animation[id='" 	
@@ -150,21 +149,26 @@ Classimation.prototype = {
 		this.animationPlaying = false
 
 		if($(animNode).attr("next_anim") != undefined){
-			this.playAnimation($(animNode).attr("next_anim"), this.finishedCallback)
+			this._playAnimation($(animNode).attr("next_anim"), this.finishedCallback)
 		}else if(this.finishedCallback != undefined){
 			 this.finishedCallback()
 		}
 
 		//if(numAnimations == 0){
-			//animationsFinished()
+			//this._animationsFinished()
 		//}
-	},
+	}
 
-	animationsFinished: function(){
+	_animationsFinished(){
 		//todo
-	},
+	}
 
-  Timer: function(callback, delay) {
+
+}
+
+
+class Timer {
+  constructor(callback, delay){
       var timerId, start, remaining = delay;
 
       this.pause = function() {

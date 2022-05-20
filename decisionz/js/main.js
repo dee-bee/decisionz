@@ -35,3 +35,8 @@ function getParams(url, ignoreArray) {
 
     return params;
 }
+
+$(document).ready(function () {	
+
+
+})
